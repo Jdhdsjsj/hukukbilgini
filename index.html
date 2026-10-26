@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexAI - Hukuk ve İçtihat Asistanı (Prototip)</title>
+    <title>HukukBilgini - Yapay Zeka Hukuk Asistanı & İçtihat Arama</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,342 +12,550 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#0f172a',
-                        cardbg: '#1e293b',
-                        sidebarbg: '#090d16',
-                        accent: '#3b82f6',
-                        accenthover: '#2563eb'
+                        hb: {
+                            sidebar: '#0b0f19',
+                            canvas: '#0f172a',
+                            card: '#161f32',
+                            cardhover: '#1e2942',
+                            border: '#243049',
+                            borderlight: '#334155',
+                            gold: '#cda85b',
+                            goldlight: '#dfbe79',
+                            blue: '#2563eb',
+                            accent: '#3b82f6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif']
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #243049;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
 </head>
-<body class="bg-darkbg text-slate-100 font-sans antialiased h-screen flex overflow-hidden">
+<body class="bg-hb-canvas text-slate-100 font-sans antialiased h-screen flex overflow-hidden selection:bg-hb-gold/30 selection:text-white">
 
-    <!-- Sol Kenar Çubuğu (Sidebar) -->
-    <aside class="w-64 bg-sidebarbg border-r border-slate-800 flex flex-col justify-between shrink-0 select-none">
-        <div>
-            <!-- Logo / Marka -->
-            <div class="h-16 flex items-center px-6 border-b border-slate-800/60 gap-3">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                    <i class="fa-solid fa-scale-balanced text-white text-lg"></i>
+    <!-- SOL KENAR ÇUBUĞU (APILEX MİMARİSİ) -->
+    <aside class="w-64 bg-hb-sidebar border-r border-hb-border flex flex-col justify-between shrink-0 select-none z-30">
+        <div class="flex flex-col h-full">
+            <!-- Marka ve Logo -->
+            <div class="h-16 flex items-center px-5 border-b border-hb-border gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 via-hb-gold to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-900/30">
+                    <i class="fa-solid fa-scale-balanced text-slate-950 text-base font-bold"></i>
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg tracking-wide bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">LexAI</h1>
-                    <span class="text-[10px] uppercase tracking-widest text-blue-400 font-semibold">Hukuk & İçtihat</span>
+                <div class="flex flex-col">
+                    <span class="font-bold text-base tracking-tight text-white flex items-center gap-1.5">
+                        HukukBilgini
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-hb-gold border border-hb-gold/30 font-semibold tracking-normal">AI</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400">Yapay Zeka Hukuk Platformu</span>
                 </div>
             </div>
 
-            <!-- Navigasyon Menüsü -->
-            <nav class="p-4 space-y-1.5">
-                <a href="#" onclick="switchTab('dashboard')" id="nav-dashboard" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium bg-blue-600/15 text-blue-400 border border-blue-500/30 transition-all">
-                    <i class="fa-solid fa-house w-5 text-center"></i>
-                    <span>Genel Bakış</span>
-                </a>
-                <a href="#" onclick="switchTab('ictihat')" id="nav-ictihat" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
-                    <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-center"></i>
-                    <span>İçtihat Arama</span>
-                </a>
-                <a href="#" onclick="switchTab('dilekce')" id="nav-dilekce" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
-                    <i class="fa-solid fa-file-pen w-5 text-center"></i>
-                    <span>Dilekçe & Sözleşme</span>
-                </a>
-                <a href="#" onclick="switchTab('dosyalar')" id="nav-dosyalar" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
-                    <i class="fa-solid fa-folder-open w-5 text-center"></i>
-                    <span>Dava Dosyalarım</span>
-                </a>
-            </nav>
-        </div>
+            <!-- Yeni Çalışma / Yeni Sohbet Butonu -->
+            <div class="p-3">
+                <button onclick="switchTab('asistan')" class="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-md shadow-blue-900/30 transition-all border border-blue-400/20 active:scale-[0.98]">
+                    <i class="fa-solid fa-plus text-[11px]"></i>
+                    <span>Yeni Soru & Analiz</span>
+                </button>
+            </div>
 
-        <!-- Alt Bölüm: Kullanıcı Profil ve Durum -->
-        <div class="p-4 border-t border-slate-800/60">
-            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 font-bold flex items-center justify-center text-sm border border-blue-500/30">
-                        ME
-                    </div>
-                    <div class="leading-tight">
-                        <div class="text-xs font-semibold text-slate-200">Mehmet Ege</div>
-                        <div class="text-[10px] text-emerald-400 flex items-center gap-1 mt-0.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span>Prototip Modu</span>
+            <!-- Ana Navigasyon (Apilex Bölümleri) -->
+            <div class="px-3 py-1 space-y-1">
+                <div class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-2 py-1">Ana Menü</div>
+                
+                <button onclick="switchTab('asistan')" id="nav-asistan" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium bg-blue-600/15 text-blue-400 border border-blue-500/30 transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles w-4 text-center text-sm"></i>
+                    <span>Yapay Zeka Asistanı</span>
+                </button>
+
+                <button onclick="switchTab('ictihat')" id="nav-ictihat" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all">
+                    <i class="fa-solid fa-magnifying-glass-arrow-right w-4 text-center text-sm"></i>
+                    <span>Emsal Karar & İçtihat</span>
+                </button>
+
+                <button onclick="switchTab('belge')" id="nav-belge" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all">
+                    <i class="fa-solid fa-file-signature w-4 text-center text-sm"></i>
+                    <span>Dilekçe & Belge Üretimi</span>
+                </button>
+
+                <button onclick="switchTab('projeler')" id="nav-projeler" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all">
+                    <i class="fa-solid fa-briefcase w-4 text-center text-sm"></i>
+                    <span>Dava Projeleri & Dosyalar</span>
+                </button>
+            </div>
+
+            <!-- Dava Çalışma Alanları Listesi (Apilex Dosya Ağacı) -->
+            <div class="flex-1 px-3 py-2 overflow-y-auto space-y-1 border-t border-hb-border/70 mt-2">
+                <div class="flex items-center justify-between px-2 py-1.5">
+                    <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Aktif Dosyalarım</span>
+                    <button class="text-slate-500 hover:text-slate-300 text-xs"><i class="fa-solid fa-folder-plus"></i></button>
+                </div>
+                
+                <div class="space-y-0.5 text-xs">
+                    <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-hb-card transition-colors group">
+                        <i class="fa-regular fa-folder text-hb-gold group-hover:scale-105 transition-transform"></i>
+                        <span class="truncate">Yılmaz Ltd. - İşe İade</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-hb-card transition-colors group">
+                        <i class="fa-regular fa-folder text-blue-400 group-hover:scale-105 transition-transform"></i>
+                        <span class="truncate">Kira Tahliye - Kadıköy</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-hb-card transition-colors group">
+                        <i class="fa-regular fa-folder text-emerald-400 group-hover:scale-105 transition-transform"></i>
+                        <span class="truncate">Trafik Kazası Manevi Taz.</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-hb-card transition-colors group">
+                        <i class="fa-regular fa-folder text-purple-400 group-hover:scale-105 transition-transform"></i>
+                        <span class="truncate">Hisseli Tapu İptali & Tescil</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Alt Bilgi / Hesap -->
+            <div class="p-3 border-t border-hb-border bg-hb-sidebar/60">
+                <div class="flex items-center justify-between p-2 rounded-xl bg-hb-card/80 border border-hb-border">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center text-xs font-bold">
+                            HB
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xs font-semibold text-slate-200">Avukat Hesabı</span>
+                            <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Türk Hukuku v2026.1
+                            </span>
                         </div>
                     </div>
+                    <i class="fa-solid fa-sliders text-slate-500 hover:text-slate-300 cursor-pointer text-xs"></i>
                 </div>
-                <i class="fa-solid fa-gear text-slate-500 hover:text-slate-300 cursor-pointer text-xs"></i>
             </div>
         </div>
     </aside>
 
-    <!-- Ana İçerik Alanı -->
-    <main class="flex-1 flex flex-col min-w-0 bg-darkbg overflow-y-auto">
+    <!-- ANA İÇERİK ALANI -->
+    <main class="flex-1 flex flex-col min-w-0 bg-hb-canvas overflow-hidden">
         
-        <!-- Üst Bar -->
-        <header class="h-16 border-b border-slate-800 flex items-center justify-between px-8 bg-darkbg/80 backdrop-blur sticky top-0 z-20">
-            <div class="flex items-center gap-4 w-96">
-                <div class="relative w-full">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                    <input type="text" placeholder="Yargıtay kararı, kanun maddesi veya anahtar kelime ara..." class="w-full bg-cardbg/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
+        <!-- ÜST PANEL / HEADER -->
+        <header class="h-16 border-b border-hb-border flex items-center justify-between px-6 bg-hb-sidebar/70 backdrop-blur shrink-0 z-20">
+            <!-- Sol: Sekme Başlığı & Breadcrumb -->
+            <div class="flex items-center gap-3">
+                <div class="text-xs text-slate-400 flex items-center gap-2">
+                    <span class="text-slate-500">Çalışma Alanı</span>
+                    <span>/</span>
+                    <span id="current-tab-title" class="text-slate-200 font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles text-blue-400"></i>
+                        Yapay Zeka Hukuk Asistanı
+                    </span>
                 </div>
             </div>
-            
+
+            <!-- Sağ: Hızlı Araçlar, Entegrasyonlar ve Arama -->
             <div class="flex items-center gap-3">
-                <button class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium shadow-lg shadow-blue-600/20 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Yeni Dava / Dosya</span>
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-hb-card border border-hb-border text-[11px] text-slate-300">
+                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    <span class="text-slate-400">Veritabanı:</span>
+                    <strong class="text-slate-200">11M+ İçtihat & Mevzuat</strong>
+                </div>
+
+                <button class="px-3 py-1.5 rounded-xl bg-hb-card hover:bg-hb-cardhover border border-hb-border text-xs text-slate-300 font-medium transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-hb-gold"></i>
+                    <span>Dosya Yükle</span>
+                </button>
+
+                <button onclick="switchTab('belge')" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-md shadow-blue-600/20 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Dilekçe Hazırla</span>
                 </button>
             </div>
         </header>
 
-        <!-- İçerik Sekmeleri İçin Container -->
-        <div class="p-8 flex-1 max-w-7xl w-full mx-auto">
+        <!-- ÇALIŞMA ALANLARI / SEKMELER -->
+        <div class="flex-1 overflow-y-auto p-6 flex flex-col">
             
-            <!-- 1. DASHBOARD SEKMESİ -->
-            <div id="tab-dashboard" class="space-y-6">
-                <div class="flex flex-col gap-1">
-                    <h2 class="text-xl font-bold text-white tracking-tight">Hoş Geldiniz, Avukat Bey</h2>
-                    <p class="text-xs text-slate-400">Bugünkü hukuki araştırmalarınız ve yapay zeka analizleriniz için hazırız.</p>
+            <!-- 1. SEKME: YAPAY ZEKA ASİSTANI -->
+            <div id="tab-asistan" class="max-w-5xl w-full mx-auto flex-1 flex flex-col justify-between space-y-6">
+                <!-- Hoş Geldin / Rehber -->
+                <div class="text-center py-4 space-y-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-hb-card border border-hb-border text-xs text-hb-gold font-medium mb-1">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        Türk Hukukuna Özel Eğitilmiş Yapay Zeka
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">HukukBilgini Asistanı'na Sorun</h2>
+                    <p class="text-xs text-slate-400 max-w-lg mx-auto">Somut olayı özetleyin, hukuki sorunuzu yöneltin veya karşı tarafın dilekçesini yükleyerek savunma stratejisi oluşturun.</p>
                 </div>
 
-                <!-- Hızlı İstatistik Kartları -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800/80 flex items-center justify-between">
-                        <div>
-                            <div class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Aktif Dosyalar</div>
-                            <div class="text-2xl font-bold text-white mt-1">12</div>
-                            <div class="text-[10px] text-blue-400 mt-1 flex items-center gap-1">
-                                <i class="fa-solid fa-arrow-up"></i>
-                                <span>Bu hafta 3 yeni dosya</span>
-                            </div>
+                <!-- Örnek Senaryo Kartları -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div onclick="fillPrompt('İş sözleşmesi haksız feshedilen işçinin fazla mesai alacağı ispatında tanık beyanlarının sınırları nelerdir?')" class="p-3.5 rounded-xl bg-hb-card/80 hover:bg-hb-card border border-hb-border hover:border-hb-borderlight cursor-pointer transition-all space-y-1.5 group">
+                        <div class="flex items-center justify-between text-xs font-semibold text-slate-200">
+                            <span>İşçi Alacakları & Fesih</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] text-slate-500 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all"></i>
                         </div>
-                        <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-lg">
-                            <i class="fa-solid fa-folder-closed"></i>
-                        </div>
+                        <p class="text-[11px] text-slate-400 line-clamp-2">Fazla çalışma ispatında puantaj kayıtları ve tanık anlatımlarının çelişkisi.</p>
                     </div>
 
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800/80 flex items-center justify-between">
-                        <div>
-                            <div class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Taranan İçtihatlar</div>
-                            <div class="text-2xl font-bold text-white mt-1">1,482</div>
-                            <div class="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
-                                <i class="fa-solid fa-bolt"></i>
-                                <span>Ort. yanıt süresi 0.8s</span>
-                            </div>
+                    <div onclick="fillPrompt('Kira sözleşmesinde 10 yıllık uzama süresi sonunda tahliye ihtarnamesinin tebliğ şartları ve dava açma süresi nedir?')" class="p-3.5 rounded-xl bg-hb-card/80 hover:bg-hb-card border border-hb-border hover:border-hb-borderlight cursor-pointer transition-all space-y-1.5 group">
+                        <div class="flex items-center justify-between text-xs font-semibold text-slate-200">
+                            <span>Kira & Tahliye Hukuku</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] text-slate-500 group-hover:text-hb-gold group-hover:translate-x-0.5 transition-all"></i>
                         </div>
-                        <div class="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg">
-                            <i class="fa-solid fa-brain"></i>
-                        </div>
+                        <p class="text-[11px] text-slate-400 line-clamp-2">TBK m. 347 kapsamında 10 yılı dolduran konut kiralarında tahliye davası açılması.</p>
                     </div>
 
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800/80 flex items-center justify-between">
-                        <div>
-                            <div class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Hazırlanan Dilekçe</div>
-                            <div class="text-2xl font-bold text-white mt-1">28</div>
-                            <div class="text-[10px] text-purple-400 mt-1 flex items-center gap-1">
-                                <i class="fa-solid fa-check"></i>
-                                <span>Tümü denetlendi</span>
-                            </div>
+                    <div onclick="fillPrompt('Trafik kazasında vefat eden desteğin yakınları için destekten yoksun kalma tazminatında hatır taşıması indirimi oranı nedir?')" class="p-3.5 rounded-xl bg-hb-card/80 hover:bg-hb-card border border-hb-border hover:border-hb-borderlight cursor-pointer transition-all space-y-1.5 group">
+                        <div class="flex items-center justify-between text-xs font-semibold text-slate-200">
+                            <span>Tazminat & Sigorta</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all"></i>
                         </div>
-                        <div class="w-12 h-12 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-lg">
-                            <i class="fa-solid fa-file-shield"></i>
-                        </div>
+                        <p class="text-[11px] text-slate-400 line-clamp-2">Destekten yoksun kalma ve cismani zararlarda Yargıtay'ın güncel hakkaniyet indirimi uygulaması.</p>
                     </div>
                 </div>
 
-                <!-- Son Aramalar ve Hızlı Aksiyon -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
-                    <div class="lg:col-span-2 p-6 rounded-2xl bg-cardbg/60 border border-slate-800/80 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-sm font-semibold text-slate-200">Son Yapay Zeka Sorguları</h3>
-                            <button class="text-xs text-blue-400 hover:underline">Tümünü Gör</button>
+                <!-- Chat / Çıktı Penceresi -->
+                <div id="asistan-stream" class="flex-1 space-y-4 pt-2">
+                    <div class="p-5 rounded-2xl bg-hb-card border border-hb-border space-y-4">
+                        <div class="flex items-center justify-between border-b border-hb-border pb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-6 h-6 rounded bg-hb-gold/20 text-hb-gold flex items-center justify-center text-xs font-bold">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-slate-200">HukukBilgini Değerlendirmesi & İçtihat Özeti</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30">Mevzuat Atıflı</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="copyResponse()" class="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 px-2 py-1 rounded hover:bg-hb-canvas">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span>Kopyala</span>
+                                </button>
+                                <button onclick="exportToWord()" class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 px-2 py-1 rounded hover:bg-hb-canvas">
+                                    <i class="fa-regular fa-file-word"></i>
+                                    <span>UYAP / Word'e Aktar</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="space-y-2.5">
-                            <div class="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-between hover:border-slate-700 transition-all cursor-pointer">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-scale-unbalanced text-blue-400 text-sm"></i>
-                                    <div>
-                                        <div class="text-xs font-medium text-slate-200">İşçinin haklı fesih nedenleri ve kıdem tazminatı emsal kararları</div>
-                                        <div class="text-[10px] text-slate-500 mt-0.5">Yargıtay 9. Hukuk Dairesi • 2 saat önce</div>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
-                            </div>
 
-                            <div class="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-between hover:border-slate-700 transition-all cursor-pointer">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-house-chimney-crack text-blue-400 text-sm"></i>
-                                    <div>
-                                        <div class="text-xs font-medium text-slate-200">Kiralananın tahliyesi ihtarname süresi ve dava şartları</div>
-                                        <div class="text-[10px] text-slate-500 mt-0.5">Yargıtay 3. Hukuk Dairesi • Dün</div>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+                        <div class="prose prose-invert max-w-none text-xs leading-relaxed text-slate-300 space-y-3 font-sans">
+                            <p>
+                                <strong>Hukuki Nitelendirme:</strong> İş Kanunu'nun 41. maddesi ve Yargıtay 9. ile 22. Hukuk Dairelerinin istikrarlı içtihatlarına göre, fazla çalışma yaptığını iddia eden işçi bu iddiasını ispatla yükümlüdür.
+                            </p>
+                            <div class="p-3.5 rounded-xl bg-slate-900/80 border-l-4 border-hb-gold text-slate-300 text-xs italic font-serif">
+                                "İmzalı bordrolarda fazla çalışma ücreti ödenmiş görünüyorsa işçi ancak daha fazla çalışma yaptığını yazılı delille ispatlayabilir. Bordro ihtirazi kayıtsız imzalanmışsa tanık dinletilemez..." (Yargıtay 9. HD, 2023/14298 E., 2024/2105 K.)
                             </div>
+                            <ul class="list-disc pl-5 space-y-1.5 text-slate-300">
+                                <li><strong>Tanıkların Durumu:</strong> Husumetli işçi tanıklarının anlatımları tek başına hükme esas alınamaz, yan delillerle desteklenmelidir.</li>
+                                <li><strong>Elektronik Kayıtlar:</strong> Turnike ve kart basma verileri aksi sabit oluncaya kadar kesin delil mahiyetindedir.</li>
+                            </ul>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Hızlı Araçlar -->
-                    <div class="p-6 rounded-2xl bg-cardbg/60 border border-slate-800/80 space-y-4 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-sm font-semibold text-slate-200 mb-3">Hızlı Kısayollar</h3>
-                            <div class="space-y-2">
-                                <button onclick="switchTab('ictihat')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 text-xs font-medium text-slate-300 flex items-center gap-2.5 transition-all">
-                                    <i class="fa-solid fa-magnifying-glass text-blue-400"></i>
-                                    <span>Emsal Karar Sorgula</span>
-                                </button>
-                                <button onclick="switchTab('dilekce')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 text-xs font-medium text-slate-300 flex items-center gap-2.5 transition-all">
-                                    <i class="fa-solid fa-pen-nib text-purple-400"></i>
-                                    <span>Dilekçe Taslağı Oluştur</span>
-                                </button>
+                <!-- Soru Yazma Alanı -->
+                <div class="sticky bottom-0 bg-hb-canvas/90 backdrop-blur pt-2 pb-1">
+                    <div class="p-2.5 rounded-2xl bg-hb-card border border-hb-border shadow-2xl focus-within:border-blue-500 transition-all">
+                        <textarea id="asistan-input" rows="2" class="w-full bg-transparent px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none resize-none" placeholder="Hukuki uyuşmazlığınızı anlatın, soru sorun veya üretilmesini istediğiniz dilekçeyi tarif edin..."></textarea>
+                        
+                        <div class="flex items-center justify-between pt-2 px-2 border-t border-hb-border/50">
+                            <div class="flex items-center gap-2">
+                                <label class="cursor-pointer text-slate-400 hover:text-slate-200 text-xs flex items-center gap-1.5 px-2.5 py-1 rounded-lg hover:bg-slate-800">
+                                    <i class="fa-solid fa-paperclip"></i>
+                                    <span class="text-[11px]">Belge Ekle (PDF/DOCX)</span>
+                                    <input type="file" class="hidden">
+                                </label>
+                                <span class="text-slate-600 text-xs">|</span>
+                                <span class="text-[11px] text-slate-400">Yargıtay • Danıştay • BAM • AYM</span>
                             </div>
+                            
+                            <button onclick="sendQuestion()" class="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-2 transition-all">
+                                <span>Gönder</span>
+                                <i class="fa-solid fa-arrow-up text-[11px]"></i>
+                            </button>
                         </div>
-                        <div class="p-3 rounded-xl bg-blue-600/10 border border-blue-500/20 text-[11px] text-blue-300 leading-relaxed">
-                            <i class="fa-solid fa-circle-info mr-1.5"></i>
-                            GitHub taslak sürümündesiniz. Tüm arayüz bileşenleri offline simülasyon modunda çalışmaktadır.
-                        </div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 text-center mt-2">
+                        HukukBilgini yapay zeka analizleri yalnızca mesleki araştırmayı destekleme amaçlıdır.
                     </div>
                 </div>
             </div>
 
-            <!-- 2. İÇTİHAT ARAMA SEKMESİ -->
-            <div id="tab-ictihat" class="hidden space-y-6">
-                <div class="flex flex-col gap-1">
-                    <h2 class="text-xl font-bold text-white tracking-tight">Akıllı İçtihat ve Mevzuat Arama</h2>
-                    <p class="text-xs text-slate-400">Yargıtay, Danıştay ve BAM kararlarını yapay zeka ile somut olayınza göre analiz edin.</p>
+            <!-- 2. SEKME: EMSAL KARAR & İÇTİHAT ARAMA -->
+            <div id="tab-ictihat" class="hidden max-w-5xl w-full mx-auto space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white tracking-tight">Akıllı Karar Arama Motoru</h2>
+                    <p class="text-xs text-slate-400">Anahtar kelime aramayı bırakın; somut olayı anlatın, HukukBilgini bağlamı anlayarak emsal kararları getirsin.</p>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-cardbg/60 border border-slate-800/80 space-y-4">
+                <div class="p-5 rounded-2xl bg-hb-card border border-hb-border space-y-4">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-2">Somut Olay Özeti veya Hukuki Uyuşmazlık</label>
-                        <textarea rows="4" class="w-full bg-slate-900/80 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-none transition-all" placeholder="Örn: İşçinin haklı sebep olmaksızın işten çıkarılması durumunda kıdem ve ihbar tazminatı hesaplama kriterleri ve fazla mesai ispat yükü..."></textarea>
+                        <label class="block text-xs font-medium text-slate-300 mb-2">Somut Olay / Uyuşmazlık Tanımı</label>
+                        <textarea rows="3" class="w-full bg-slate-900/90 border border-hb-border rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold transition-all" placeholder="Örn: Arsa payı karşılığı inşaat sözleşmesinde müteahhidin temerrüdü halinde arsa sahiplerinin sözleşmeden dönme ve menfi zarar talepleri..."></textarea>
                     </div>
 
-                    <div class="flex items-center justify-between pt-2">
-                        <div class="flex items-center gap-2">
-                            <select class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
-                                <option>Tüm Yüksek Mahkemeler</option>
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+                        <div>
+                            <label class="block text-[11px] text-slate-400 mb-1">Yüksek Mahkeme</label>
+                            <select class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-blue-500">
                                 <option>Yargıtay</option>
                                 <option>Danıştay</option>
-                                <option>Anayasa Mahkemesi</option>
-                            </select>
-                            <select class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
-                                <option>Tüm Daireler</option>
-                                <option>9. Hukuk Dairesi</option>
-                                <option>4. Hukuk Dairesi</option>
-                                <option>12. Hukuk Dairesi</option>
+                                <option>Anayasa Mahkemesi (Bireysel)</option>
+                                <option>Bölge Adliye Mahkemesi (BAM)</option>
                             </select>
                         </div>
-                        <button onclick="simulateSearch()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium shadow-lg shadow-blue-600/20 transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-sparkles"></i>
-                            <span>Yapay Zeka ile Karar Ara</span>
-                        </button>
+
+                        <div>
+                            <label class="block text-[11px] text-slate-400 mb-1">Daire / Kurul</label>
+                            <select class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-blue-500">
+                                <option>Tüm Hukuk Daireleri</option>
+                                <option>15. Hukuk Dairesi (Eski)</option>
+                                <option>6. Hukuk Dairesi</option>
+                                <option>Hukuk Genel Kurulu (HGK)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] text-slate-400 mb-1">Taraf Niteliği</label>
+                            <select class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-blue-500">
+                                <option>Farketmez / Genel Emsal</option>
+                                <option>Davacı Lehine Emsaller</option>
+                                <option>Davalı Lehine Emsaller</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-end">
+                            <button class="w-full py-2 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 hover:to-yellow-400 text-slate-950 text-xs font-bold shadow-md shadow-amber-900/30 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>Karar Ara</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Arama Sonuç Alanı (Simüle) -->
-                <div id="search-results" class="space-y-4 hidden">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Benzerlik Skoru En Yüksek Emsal Kararlar</h3>
-                    
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">%96 Benzerlik</span>
-                                <span class="text-xs font-semibold text-slate-300">Yargıtay 9. Hukuk Dairesi, 2023/1245 E., 2023/4521 K.</span>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between px-1">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Benzerlik Sıralı Kararlar (14 Karar Bulundu)</span>
+                        <div class="text-xs text-slate-500">Sıralama: <strong>En Güncel & En Yüksek Emsal Puanı</strong></div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border transition-all space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 text-[11px] font-bold border border-emerald-500/20">%98 Eşleşme</span>
+                                    <h3 class="text-xs font-bold text-slate-100">Yargıtay 6. Hukuk Dairesi, 2023/1842 E. , 2023/3910 K.</h3>
+                                    <span class="text-[10px] text-slate-500">Tarih: 18.11.2023</span>
+                                </div>
+                                <div class="text-[11px] text-hb-gold font-medium">Uyuşmazlık: Eser Sözleşmesinde Yüklenicinin Temerrüdü ve İfa İmkansızlığı</div>
                             </div>
-                            <button class="text-xs text-blue-400 hover:underline">Kararı İncele</button>
+                            <div class="flex items-center gap-2">
+                                <button class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs border border-hb-border">
+                                    <i class="fa-regular fa-bookmark"></i>
+                                </button>
+                                <button class="px-3 py-1 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-medium border border-blue-500/30 transition-all">
+                                    Tam Metin
+                                </button>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">
-                            "İşçinin fazla çalışma alacağının ispatında işyeri kayıtları, özellikle giriş-çıkış çizelgeleri ve iş yeri iç yazışmaları öncelikli delil niteliğindedir. Yazılı delil bulunmadığı hallerde tanık beyanları ile sonuca gidilir..."
+                        <p class="text-xs text-slate-300 font-serif leading-relaxed line-clamp-3 bg-slate-900/40 p-3 rounded-xl border border-hb-border/50">
+                            "...arsa payı karşılığı inşaat sözleşmelerinde yüklenicinin işi belirlenen sürede tamamlayamaması durumunda arsa sahiplerinin TBK m. 125 uyarınca seçimlik haklarını kullanabileceği, geriye etkili fesih halinde ancak menfi zararın talep edilebileceği, müspet zarar kapsamındaki kira mahrumiyeti talebinin ise reddi gerektiği..."
                         </p>
+                        <div class="flex items-center gap-4 text-[11px] text-slate-400 pt-1">
+                            <span><i class="fa-solid fa-gavel mr-1 text-slate-500"></i> İçtihat Türü: <strong>Bozma Kararı</strong></span>
+                            <span><i class="fa-solid fa-book-bookmark mr-1 text-slate-500"></i> İlgili Madde: <strong>TBK 123, 125</strong></span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. DİLEKÇE & SÖZLEŞME SEKMESİ -->
-            <div id="tab-dilekce" class="hidden space-y-6">
-                <div class="flex flex-col gap-1">
-                    <h2 class="text-xl font-bold text-white tracking-tight">Dilekçe ve Sözleşme Stüdyosu</h2>
-                    <p class="text-xs text-slate-400">Yapay zeka denetimli dilekçe ve ihtarnameler hazırlayın.</p>
+            <!-- 3. SEKME: DİLEKÇE & SÖZLEŞME ÜRETİMİ -->
+            <div id="tab-belge" class="hidden max-w-5xl w-full mx-auto space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white tracking-tight">Hukuki Belge & Dilekçe Stüdyosu</h2>
+                    <p class="text-xs text-slate-400">Yapay zeka desteğiyle UYAP ve Word formatlarına tam uyumlu profesyonel dilekçe ve sözleşme taslakları hazırlayın.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800 hover:border-blue-500/50 cursor-pointer transition-all space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center text-base">
-                            <i class="fa-solid fa-file-contract"></i>
+                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border hover:border-hb-gold/50 cursor-pointer transition-all space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-hb-gold flex items-center justify-center text-lg border border-hb-gold/20">
+                            <i class="fa-solid fa-file-invoice"></i>
                         </div>
                         <div>
-                            <h3 class="text-xs font-bold text-slate-200">İşçilik Alacağı Dava Dilekçesi</h3>
-                            <p class="text-[11px] text-slate-400 mt-1">Kıdem, ihbar, fazla mesai ve UBGT talepli tam taslak.</p>
+                            <h3 class="text-xs font-bold text-slate-100">Dava Dilekçesi Hazırla</h3>
+                            <p class="text-[11px] text-slate-400 mt-1">İş, ticaret, tüketici ve asliye hukuk davaları için gerekçeli ve içtihat atıflı dava taslağı.</p>
+                        </div>
+                        <div class="pt-2 text-[10px] text-hb-gold font-semibold flex items-center gap-1">
+                            <span>Şablonu Başlat</span>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
 
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800 hover:border-blue-500/50 cursor-pointer transition-all space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center text-base">
-                            <i class="fa-solid fa-envelope-open-text"></i>
+                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border hover:border-blue-500/50 cursor-pointer transition-all space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg border border-blue-500/20">
+                            <i class="fa-solid fa-reply"></i>
                         </div>
                         <div>
-                            <h3 class="text-xs font-bold text-slate-200">İhtarname Hazırlama</h3>
-                            <p class="text-[11px] text-slate-400 mt-1">Kira borcu, sözleşme feshi ve ihtarı ihtarname taslakları.</p>
+                            <h3 class="text-xs font-bold text-slate-100">Cevap & Savunma Dilekçesi</h3>
+                            <p class="text-[11px] text-slate-400 mt-1">Dava dilekçesini yükleyin; usul itirazları (zamanaşımı, yetki, derdestlik) ve esasa cevap taslağı çıksın.</p>
+                        </div>
+                        <div class="pt-2 text-[10px] text-blue-400 font-semibold flex items-center gap-1">
+                            <span>Analiz Et & Yaz</span>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
 
-                    <div class="p-5 rounded-2xl bg-cardbg/60 border border-slate-800 hover:border-blue-500/50 cursor-pointer transition-all space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-400 flex items-center justify-center text-base">
-                            <i class="fa-solid fa-shield-halved"></i>
+                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border hover:border-emerald-500/50 cursor-pointer transition-all space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg border border-emerald-500/20">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
                         </div>
                         <div>
-                            <h3 class="text-xs font-bold text-slate-200">Karşı Taraf Dilekçe Analizi</h3>
-                            <p class="text-[11px] text-slate-400 mt-1">Rakip dilekçedeki hukuki çelişkileri ve zayıf yönleri tespit et.</p>
+                            <h3 class="text-xs font-bold text-slate-100">Sözleşme Risk Analizi</h3>
+                            <p class="text-[11px] text-slate-400 mt-1">Sözleşme taslağındaki cezai şart, fesih ve tek taraflı aleyhe hükümleri kırmızıyla işaretleyin.</p>
                         </div>
+                        <div class="pt-2 text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+                            <span>Metni İncele</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-hb-card border border-hb-border space-y-4">
+                    <div class="flex items-center justify-between border-b border-hb-border pb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-regular fa-file-lines text-hb-gold"></i>
+                            <span class="text-xs font-bold text-slate-200">Taslak Editörü: İşe İade Dava Dilekçesi</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="px-3 py-1 rounded-lg bg-slate-800 text-xs text-slate-300 hover:text-white border border-hb-border">PDF İndir</button>
+                            <button class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs text-white font-semibold shadow">DOCX Olarak Al</button>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-slate-900 border border-hb-border text-xs font-serif leading-relaxed text-slate-200 space-y-3 max-h-64 overflow-y-auto">
+                        <p class="text-center font-bold">NÖBETÇİ İŞ MAHKEMESİNE<br>İSTANBUL</p>
+                        <p><strong>DAVACI:</strong> [Müvekkil Adı Soyadı] - T.C. Kimlik No: [...]</p>
+                        <p><strong>VEKİLİ:</strong> Av. [Avukat Adı Soyadı] - İstanbul Barosu</p>
+                        <p><strong>DAVALI:</strong> [Şirket Unvanı] A.Ş.</p>
+                        <p><strong>KONU:</strong> İş Kanunu m. 20 uyarınca feshin geçersizliğinin tespiti, işe iade ve boşta geçen süre ücreti talebidir.</p>
+                        <p><strong>AÇIKLAMALAR:</strong> Müvekkil davalı iş yerinde ... tarihinden itibaren kıdemli uzman olarak görev yapmaktadır. İş sözleşmesi geçerli veya haklı bir neden gösterilmeksizin feshedilmiştir...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. DOSYALARIM SEKMESİ -->
-            <div id="tab-dosyalar" class="hidden space-y-6">
-                <div class="flex flex-col gap-1">
-                    <h2 class="text-xl font-bold text-white tracking-tight">Dava Dosyalarım</h2>
-                    <p class="text-xs text-slate-400">Müvekkil ve dosya bazlı organize edilen yapay zeka çalışma alanları.</p>
+            <!-- 4. SEKME: PROJELER & DAVA DOSYALARI -->
+            <div id="tab-projeler" class="hidden max-w-5xl w-full mx-auto space-y-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-white tracking-tight">Dava Projeleri & Çalışma Alanları</h2>
+                        <p class="text-xs text-slate-400">Dağınık belgeleri tek merkezde toplayarak her dava için özel yapay zeka hafızası oluşturun.</p>
+                    </div>
+                    <button class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-folder-plus"></i>
+                        <span>Yeni Proje Oluştur</span>
+                    </button>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-cardbg/60 border border-slate-800/80 text-center py-12 space-y-3">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-900 text-slate-500 flex items-center justify-center mx-auto text-xl border border-slate-800">
-                        <i class="fa-solid fa-folder-open"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border transition-all space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold">İş Mahkemesi</span>
+                            <span class="text-[11px] text-slate-500">Son işlem: 15 dk önce</span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-100">Yılmaz Ltd. - İşe İade ve Fazla Mesai</h3>
+                            <p class="text-xs text-slate-400 mt-1">İçerik: 6 belge, 3 Yargıtay emsal kararı, 1 taslak dilekçe.</p>
+                        </div>
+                        <div class="pt-2 border-t border-hb-border flex items-center justify-between text-xs">
+                            <span class="text-slate-400">İlerleme: <strong>Dilekçe Aşaması</strong></span>
+                            <span class="text-hb-gold hover:underline cursor-pointer font-medium">Projeyi Aç →</span>
+                        </div>
                     </div>
-                    <div class="text-xs font-medium text-slate-300">Henüz aktif bir dosya eklenmedi</div>
-                    <p class="text-[11px] text-slate-500 max-w-xs mx-auto">GitHub prototip aşamasında yeni klasörler açarak dosyalarınızı organize edebilirsiniz.</p>
+
+                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border transition-all space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2 py-0.5 rounded bg-amber-500/10 text-hb-gold text-[10px] font-bold">Sulh Hukuk</span>
+                            <span class="text-[11px] text-slate-500">Son işlem: Dün</span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-100">Kira Tahliye - Kadıköy Dairesi</h3>
+                            <p class="text-xs text-slate-400 mt-1">İçerik: İhtarname sureti, kira kontratı, arabuluculuk tutanağı.</p>
+                        </div>
+                        <div class="pt-2 border-t border-hb-border flex items-center justify-between text-xs">
+                            <span class="text-slate-400">İlerleme: <strong>Dava Açıldı</strong></span>
+                            <span class="text-hb-gold hover:underline cursor-pointer font-medium">Projeyi Aç →</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- JavaScript ile Sekme Yönetimi -->
+    <!-- Sekme Değiştirme ve Arayüz Kontrol Skripti -->
     <script>
-        function switchTab(tabId) {
-            // Tüm sekmeleri gizle
-            document.getElementById('tab-dashboard').classList.add('hidden');
+        function switchTab(tabKey) {
+            document.getElementById('tab-asistan').classList.add('hidden');
             document.getElementById('tab-ictihat').classList.add('hidden');
-            document.getElementById('tab-dilekce').classList.add('hidden');
-            document.getElementById('tab-dosyalar').classList.add('hidden');
+            document.getElementById('tab-belge').classList.add('hidden');
+            document.getElementById('tab-projeler').classList.add('hidden');
 
-            // Tüm menü stillerini sıfırla
-            const navs = ['nav-dashboard', 'nav-ictihat', 'nav-dilekce', 'nav-dosyalar'];
-            navs.forEach(id => {
-                const el = document.getElementById(id);
-                el.className = "flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all";
+            const titles = {
+                'asistan': '<i class="fa-solid fa-wand-magic-sparkles text-blue-400"></i> Yapay Zeka Hukuk Asistanı',
+                'ictihat': '<i class="fa-solid fa-magnifying-glass-arrow-right text-hb-gold"></i> Emsal Karar & İçtihat Arama',
+                'belge': '<i class="fa-solid fa-file-signature text-purple-400"></i> Dilekçe & Belge Stüdyosu',
+                'projeler': '<i class="fa-solid fa-briefcase text-emerald-400"></i> Dava Projeleri & Çalışma Alanları'
+            };
+
+            const navIds = ['nav-asistan', 'nav-ictihat', 'nav-belge', 'nav-projeler'];
+            navIds.forEach(id => {
+                const btn = document.getElementById(id);
+                btn.className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all";
             });
 
-            // Seçilen sekmeyi aç ve menüyü aktif yap
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            document.getElementById('nav-' + tabId).className = "flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium bg-blue-600/15 text-blue-400 border border-blue-500/30 transition-all";
+            document.getElementById('tab-' + tabKey).classList.remove('hidden');
+            document.getElementById('current-tab-title').innerHTML = titles[tabKey];
+            document.getElementById('nav-' + tabKey).className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium bg-blue-600/15 text-blue-400 border border-blue-500/30 transition-all";
         }
 
-        function simulateSearch() {
-            const results = document.getElementById('search-results');
-            results.classList.remove('hidden');
+        function fillPrompt(text) {
+            document.getElementById('asistan-input').value = text;
+            document.getElementById('asistan-input').focus();
+        }
+
+        function sendQuestion() {
+            const input = document.getElementById('asistan-input');
+            if (!input.value.trim()) return;
+            alert('Sorgunuz analiz ediliyor: "' + input.value + '"');
+            input.value = '';
+        }
+
+        function copyResponse() {
+            navigator.clipboard.writeText('Yargıtay 9. HD içtihat özeti kopyalandı.');
+            alert('Hukuki metin panoya kopyalandı.');
+        }
+
+        function exportToWord() {
+            alert('Metin UYAP / Microsoft Word formatında dışa aktarılıyor.');
         }
     </script>
 </body>
