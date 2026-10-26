@@ -109,6 +109,12 @@
                     <i class="fa-solid fa-briefcase w-4 text-center text-sm"></i>
                     <span>Dava Dosyalarım</span>
                 </button>
+
+                <!-- Gizli PIN Paneli Butonu -->
+                <button onclick="openPinModal()" id="nav-admin" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-amber-400/80 hover:text-amber-300 hover:bg-amber-500/10 border border-amber-500/20 transition-all mt-3">
+                    <i class="fa-solid fa-key w-4 text-center text-sm"></i>
+                    <span>Yönetici Paneli (PIN)</span>
+                </button>
             </div>
 
             <!-- Aktif Dosyalar Listesi -->
@@ -159,7 +165,7 @@
                             <span class="text-[10px] text-slate-400">HMK & UYAP Tam Uyumlu</span>
                         </div>
                     </div>
-                    <i class="fa-solid fa-gear text-slate-500 hover:text-slate-300 cursor-pointer text-xs"></i>
+                    <i class="fa-solid fa-lock text-slate-500 hover:text-amber-400 cursor-pointer text-xs" title="Yönetici Paneli" onclick="openPinModal()"></i>
                 </div>
             </div>
         </div>
@@ -366,7 +372,7 @@
 
             </div>
 
-            <!-- 2. SEKME: HUKUK DANIŞMA ASİSTANI (TAM ÇALIŞIR, ETKİLEŞİMLİ VE YANIT ÜRETEN MOTOR) -->
+            <!-- 2. SEKME: HUKUK DANIŞMA ASİSTANI -->
             <div id="tab-asistan" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto bg-hb-card rounded-2xl border border-hb-border overflow-hidden">
                 <div class="p-4 border-b border-hb-border flex items-center justify-between bg-hb-sidebar/60">
                     <div class="flex items-center gap-3">
@@ -425,7 +431,7 @@
                 </div>
             </div>
 
-            <!-- 3. SEKME: İÇTİHAT VE MEVZUAT ARAMA (TAM ÇALIŞIR FİLTRE VE ARAMA MOTORU) -->
+            <!-- 3. SEKME: İÇTİHAT VE MEVZUAT ARAMA -->
             <div id="tab-ictihat" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-5 overflow-y-auto">
                 <div>
                     <h2 class="text-xl font-bold text-white tracking-tight">Akıllı İçtihat & Mevzuat Arama Motoru</h2>
@@ -545,13 +551,161 @@
                 </div>
             </div>
 
+            <!-- 5. SEKME: GİZLİ YÖNETİCİ PANELİ (PIN İLE KORUNAN VERİ EKLEME MERKEZİ) -->
+            <div id="tab-admin" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-hb-border pb-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-hb-gold border border-hb-gold/30 text-[10px] font-bold">YÖNETİCİ MODU</span>
+                            <h2 class="text-xl font-bold text-white tracking-tight">HukukBilgini Veri Yönetim Paneli</h2>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Siteye manuel içtihat kararı ve mevzuat maddesi ekleyin veya silin.</p>
+                    </div>
+                    <button onclick="lockAdminPanel()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950/60 hover:text-rose-400 border border-hb-border text-xs text-slate-300 font-semibold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Paneli Kilitle</span>
+                    </button>
+                </div>
+
+                <!-- Veri Ekleme Formu -->
+                <div class="p-6 rounded-2xl bg-hb-card border border-hb-border space-y-4">
+                    <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle text-blue-400"></i>
+                        <span>Yeni İçtihat veya Mevzuat Kaydı Ekle</span>
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Kayıt Türü</label>
+                            <select id="admin-tur" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-hb-gold">
+                                <option value="ictihat">İçtihat / Mahkeme Kararı</option>
+                                <option value="kanun">Kanun / Mevzuat Maddesi</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Merci / Kurum</label>
+                            <input id="admin-daire" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: Yargıtay 9. Hukuk Dairesi">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Esas / Karar No veya Kanun No</label>
+                            <input id="admin-esas" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: 2024/1102 E. , 2024/5400 K.">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Uyuşmazlık Konusu / Başlık</label>
+                            <input id="admin-konu" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: Mobbing Sebebiyle Haklı Fesih ve Manevi Tazminat">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">İlgili Kanun Maddeleri</label>
+                            <input id="admin-madde" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: 4857 Sayılı İş Kanunu m. 24/II-b; TBK m. 417">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Karar Özeti veya Hüküm Fıkrası</label>
+                        <textarea id="admin-ozet" rows="4" class="w-full bg-slate-900 border border-hb-border rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold leading-relaxed" placeholder="Mahkemenin gerekçeli karar özetini veya kanun maddesinin tam metnini buraya yapıştırın..."></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-[11px] text-slate-400">Eklenen veriler anında arama motorunda ve asistanda görünür.</span>
+                        <button onclick="saveManualRecord()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>Veritabanına Kaydet</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mevcut Veri Listesi ve Yönetimi -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Veritabanındaki Kayıtlar</h3>
+                        <span id="admin-total-records" class="text-xs text-hb-gold font-semibold">0 Kayıt</span>
+                    </div>
+
+                    <div id="admin-records-list" class="space-y-2">
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
+    <!-- PIN GİRİŞ POPUP (MODAL) -->
+    <div id="pin-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-hb-card border border-hb-border rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-hb-gold/30 text-hb-gold flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <h3 class="text-base font-bold text-white">Yönetici Doğrulaması</h3>
+                <p class="text-xs text-slate-400 mt-1">Veri yönetim paneline erişmek için 4 haneli PIN kodunuzu giriniz.</p>
+            </div>
+
+            <div>
+                <input id="pin-input" type="password" maxlength="6" class="w-44 text-center tracking-[0.5em] text-lg font-bold bg-slate-900 border border-hb-border rounded-xl py-2.5 text-white focus:outline-none focus:border-hb-gold" placeholder="••••">
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="closePinModal()" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 transition-all">İptal</button>
+                <button onclick="verifyPin()" class="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white shadow-md transition-all">Giriş Yap</button>
+            </div>
+            
+            <div class="text-[10px] text-slate-500 pt-1">
+                Varsayılan Güvenlik PIN: <span class="text-slate-400 font-mono font-bold">1234</span>
+            </div>
+        </div>
+    </div>
+
     <!-- ETKİLEŞİMLİ VERİTABANI & MOTOR SCRIPTLERİ -->
     <script>
+        // === YÖNETİCİ PIN SİSTEMİ (VARSAYILAN: 1234) ===
+        const ADMIN_PIN = "1234";
+        let isAdminLoggedIn = false;
+
+        function openPinModal() {
+            if (isAdminLoggedIn) {
+                switchTab('admin');
+                return;
+            }
+            document.getElementById('pin-modal').classList.remove('hidden');
+            const input = document.getElementById('pin-input');
+            input.value = '';
+            input.focus();
+        }
+
+        function closePinModal() {
+            document.getElementById('pin-modal').classList.add('hidden');
+        }
+
+        function verifyPin() {
+            const input = document.getElementById('pin-input').value.trim();
+            if (input === ADMIN_PIN) {
+                isAdminLoggedIn = true;
+                closePinModal();
+                switchTab('admin');
+                renderAdminRecordsList();
+                alert("Yönetici girişi başarılı! Artık dilediğiniz gibi içtihat veya kanun ekleyebilirsiniz.");
+            } else {
+                alert("Hatalı PIN kodu! Lütfen tekrar deneyiniz.");
+                document.getElementById('pin-input').value = '';
+                document.getElementById('pin-input').focus();
+            }
+        }
+
+        function lockAdminPanel() {
+            isAdminLoggedIn = false;
+            switchTab('ictihat');
+            alert("Yönetici paneli kilitlendi.");
+        }
+
+        document.getElementById('pin-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verifyPin();
+        });
+
         // === 1. İÇTİHAT VE MEVZUAT VERİTABANI ===
-        const legalDatabase = [
+        const defaultLegalDatabase = [
             {
                 id: 1,
                 tur: "ictihat",
@@ -626,7 +780,102 @@
             }
         ];
 
-        // === 2. ARAMA MOTORUNU ÇALIŞTIRMA FONKSİYONU ===
+        function getStoredDatabase() {
+            const stored = localStorage.getItem('hb_custom_legal_db');
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch(e) {
+                    return defaultLegalDatabase;
+                }
+            }
+            localStorage.setItem('hb_custom_legal_db', JSON.stringify(defaultLegalDatabase));
+            return defaultLegalDatabase;
+        }
+
+        function saveStoredDatabase(db) {
+            localStorage.setItem('hb_custom_legal_db', JSON.stringify(db));
+        }
+
+        // === MANUEL YENİ VERİ EKLEME (YÖNETİCİ İŞLEMİ) ===
+        function saveManualRecord() {
+            const tur = document.getElementById('admin-tur').value;
+            const daire = document.getElementById('admin-daire').value.trim();
+            const esas = document.getElementById('admin-esas').value.trim();
+            const konu = document.getElementById('admin-konu').value.trim();
+            const madde = document.getElementById('admin-madde').value.trim();
+            const ozet = document.getElementById('admin-ozet').value.trim();
+
+            if (!daire || !esas || !konu || !ozet) {
+                alert("Lütfen merci, esas/karar no, konu ve özet alanlarını eksiksiz doldurunuz.");
+                return;
+            }
+
+            let merci = "yargitay";
+            if (daire.toLowerCase().includes("danıştay")) merci = "danistay";
+            if (daire.toLowerCase().includes("anayasa") || daire.toLowerCase().includes("aym")) merci = "aym";
+            if (tur === "kanun") merci = "mevzuat";
+
+            const db = getStoredDatabase();
+            const newRecord = {
+                id: Date.now(),
+                tur: tur,
+                merci: merci,
+                daire: daire,
+                esasKarar: esas,
+                tarih: "Manuel Eklendi",
+                konu: konu,
+                ozet: ozet,
+                madde: madde || "İlgili Mevzuat",
+                benzerlik: "%100 Doğrudan Eşleşme"
+            };
+
+            db.unshift(newRecord);
+            saveStoredDatabase(db);
+
+            document.getElementById('admin-daire').value = '';
+            document.getElementById('admin-esas').value = '';
+            document.getElementById('admin-konu').value = '';
+            document.getElementById('admin-madde').value = '';
+            document.getElementById('admin-ozet').value = '';
+
+            renderAdminRecordsList();
+            executeSearch();
+            alert("Yeni hukuki kayıt başarıyla eklendi! Arama sekmesinde ve asistanda hemen kullanılabilir.");
+        }
+
+        function deleteRecord(id) {
+            if (!confirm("Bu kararı / mevzuatı silmek istediğinize emin misiniz?")) return;
+            let db = getStoredDatabase();
+            db = db.filter(item => item.id !== id);
+            saveStoredDatabase(db);
+            renderAdminRecordsList();
+            executeSearch();
+        }
+
+        function renderAdminRecordsList() {
+            const db = getStoredDatabase();
+            document.getElementById('admin-total-records').innerText = `${db.length} Kayıt Mevcut`;
+            const container = document.getElementById('admin-records-list');
+
+            container.innerHTML = db.map(item => `
+                <div class="p-3.5 rounded-xl bg-slate-900 border border-hb-border flex items-center justify-between text-xs hover:border-slate-700 transition-all">
+                    <div class="space-y-0.5">
+                        <div class="flex items-center gap-2">
+                            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${item.tur === 'ictihat' ? 'bg-blue-500/10 text-blue-400' : 'bg-amber-500/10 text-amber-400'} border border-slate-700">${item.tur.toUpperCase()}</span>
+                            <span class="font-bold text-slate-200">${item.daire} - ${item.esasKarar}</span>
+                        </div>
+                        <div class="text-[11px] text-slate-400 truncate max-w-xl">${item.konu}</div>
+                    </div>
+                    <button onclick="deleteRecord(${item.id})" class="px-2.5 py-1.5 rounded-lg bg-rose-950/40 text-rose-400 hover:bg-rose-900 hover:text-white border border-rose-900/50 text-xs transition-all flex items-center gap-1">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Sil</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // === 2. ARAMA MOTORU ===
         function executeSearch() {
             const query = document.getElementById('ictihat-search-query').value.trim().toLowerCase();
             const filterKaynak = document.getElementById('filter-kaynak').value;
@@ -635,7 +884,9 @@
             const container = document.getElementById('ictihat-results-container');
             const countEl = document.getElementById('search-result-count');
 
-            let filtered = legalDatabase.filter(item => {
+            const currentDb = getStoredDatabase();
+
+            let filtered = currentDb.filter(item => {
                 const matchQuery = !query || 
                     item.konu.toLowerCase().includes(query) || 
                     item.ozet.toLowerCase().includes(query) || 
@@ -769,44 +1020,47 @@
 
         function generateLegalAdvice(query) {
             const lower = query.toLowerCase();
+            const db = getStoredDatabase();
+
+            const matchedRecord = db.find(item => 
+                lower.includes(item.konu.toLowerCase()) || 
+                lower.includes(item.madde.toLowerCase()) ||
+                lower.split(' ').some(w => w.length > 4 && item.konu.toLowerCase().includes(w))
+            );
+
+            if (matchedRecord) {
+                return `
+                    <p><strong>Veritabanı Emsal Eşleşmesi (${matchedRecord.daire} - ${matchedRecord.esasKarar}):</strong></p>
+                    <p class="italic text-slate-300 p-2.5 rounded-xl bg-slate-950/60 border-l-2 border-hb-gold">"${matchedRecord.ozet}"</p>
+                    <p class="pt-1"><strong>Hukuki Değerlendirme & Tavsiye:</strong> İlgili uyuşmazlıkta <em>${matchedRecord.madde}</em> hükümleri ve söz konusu yüksek mahkeme ilamı çerçevesinde davanın temellendirilmesi önem arz etmektedir.</p>
+                `;
+            }
 
             if (lower.includes('fazla mesai') || lower.includes('işçi') || lower.includes('kıdem')) {
                 return `
                     <p><strong>Hukuki Değerlendirme (İş Kanunu m. 41 & Yargıtay 9. HD İçtihadı):</strong></p>
                     <p>Fazla çalışma yaptığını iddia eden işçi bu iddiasını ispatla mükelleftir. İspatta delil hiyerarşisi şu şekildedir:</p>
                     <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Yazılı ve İmzalı Bordrolar:</strong> Ücret bordrosunda fazla mesai tahakkuku var ve ihtirazi kayıtsız imzalanmışsa, tanık dinletilemez. Fazla çalışma ancak yazılı kesin delille ispatlanabilir.</li>
-                        <li><strong>Tanık Beyanları:</strong> Yazılı kayıt yoksa tanık dinlenebilir; ancak işverenle husumeti bulunan işçilerin beyanları tek başına hükme esas alınamaz, yan delillerle desteklenmelidir.</li>
-                        <li><strong>Elektronik Kayıtlar:</strong> Turnike ve kart basma verileri aksi sabit oluncaya kadar geçerli delil niteliğindedir.</li>
+                        <li><strong>Yazılı ve İmzalı Bordrolar:</strong> Ücret bordrosunda fazla mesai tahakkuku var ve ihtirazi kayıtsız imzalanmışsa, tanık dinletilemez.</li>
+                        <li><strong>Tanık Beyanları:</strong> Yazılı kayıt yoksa tanık dinlenebilir; ancak husumetli işçi tanıklarının anlatımları yan delillerle desteklenmelidir.</li>
+                        <li><strong>Elektronik Kayıtlar:</strong> Turnike ve kart basma verileri aksi sabit oluncaya kadar delil mahiyetindedir.</li>
                     </ul>
                 `;
             } else if (lower.includes('kira') || lower.includes('tahliye') || lower.includes('347')) {
                 return `
                     <p><strong>Hukuki Değerlendirme (TBK m. 347 Kapsamında 10 Yıllık Tahliye):</strong></p>
-                    <p>Konut ve çatılı işyeri kiralarında kiracı sözleşmeyi feshetmedikçe sözleşme birer yıllık sürelerle uzar. Ancak kanun kiraya verene 10 yıllık uzama sonrasında fesih hakkı tanımıştır:</p>
                     <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Süre Hesabı:</strong> Sözleşme süresi (örn. 1 yıl) + 10 yıllık uzama süresi = Toplam 11. yılın bitiminde tahliye talep edilebilir.</li>
-                        <li><strong>3 Ay Önceden Bildirim Şartı:</strong> Kiraya veren, uzama yılının bitiminden en az 3 ay önce noter kanalıyla tahliye iradesini kiracıya tebliğ ettirmelidir. Aksi halde dava şartı yokluğundan dava reddedilir.</li>
-                        <li><strong>Sebep Gösterme Zorunluluğu:</strong> Bu madde uyarınca kiraya verenin ihtiyaç, tadilat veya başka bir haklı sebep gösterme zorunluluğu yoktur.</li>
-                    </ul>
-                `;
-            } else if (lower.includes('hatır') || lower.includes('trafik') || lower.includes('destekten')) {
-                return `
-                    <p><strong>Hukuki Değerlendirme (TBK m. 51-52 & Yargıtay 4. HD Emsalleri):</strong></p>
-                    <p>Trafik kazasında vefat eden ya da yaralanan kişinin hatır için taşınması durumunda tazminat hesaplama kuralları:</p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Hakkaniyet İndirimi:</strong> Taşımanın hiçbir maddi karşılık ve menfaat gözetilmeksizin gerçekleştirildiği durumlarda, hesaplanan destekten yoksun kalma ve manevi tazminattan kural olarak %20 oranında indirim yapılır.</li>
-                        <li><strong>Müterafik Kusur:</strong> Eğer kazada yolcu sürücünün alkollü olduğunu bilerek araca binmişse, ayrıca müterafik kusur indirimi de uygulanır.</li>
+                        <li><strong>Süre Hesabı:</strong> Sözleşme süresi + 10 yıllık uzama süresi = Toplam 11. yılın bitiminde tahliye istenebilir.</li>
+                        <li><strong>3 Ay Önceden Bildirim Şartı:</strong> Uzama yılının bitiminden en az 3 ay önce noter kanalıyla tebligat yapılması zorunludur.</li>
                     </ul>
                 `;
             } else {
                 return `
                     <p><strong>Hukuki Analiz ve Yol Haritası:</strong></p>
-                    <p>İlettiğiniz uyuşmazlık vakıası 6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) ve Türk Medeni Kanunu m. 6 (İspat Yükü) çerçevesinde değerlendirilmiştir:</p>
+                    <p>İlettiğiniz uyuşmazlık 6100 sayılı HMK ve TMK m. 6 (İspat Yükü) çerçevesinde değerlendirilmiştir:</p>
                     <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Dava Şartları:</strong> Davayı açmadan evvel uyuşmazlığın zorunlu arabuluculuk kapsamında olup olmadığı denetlenmelidir.</li>
-                        <li><strong>Delil Durumu:</strong> İddiaların yazılı sözleşme, resmi kayıt, banka dekontları ve yasal delillerle somutlaştırılması esastır.</li>
-                        <li><strong>Öneri:</strong> Sol menüden <em>Dilekçe Prompt Stüdyosu</em> sekmesine geçerek bu vakıayı doğrudan HMK m. 119 formatında resmi dilekçeye dönüştürebilirsiniz.</li>
+                        <li>Dava açmadan evvel dava şartı arabuluculuk kapsamında olup olmadığı denetlenmelidir.</li>
+                        <li>Yönetici panelinden (PIN ile) yeni eklediğiniz emsal kararlar da otomatik olarak bu analizlere dahil edilmektedir.</li>
                     </ul>
                 `;
             }
@@ -916,27 +1170,32 @@
             document.getElementById('tab-ictihat').classList.add('hidden');
             document.getElementById('tab-belge').classList.add('hidden');
             document.getElementById('tab-projeler').classList.add('hidden');
+            document.getElementById('tab-admin').classList.add('hidden');
 
             const titles = {
                 'asistan': '<i class="fa-solid fa-wand-magic-sparkles text-blue-400"></i> Hukuk Danışma Asistanı',
                 'ictihat': '<i class="fa-solid fa-magnifying-glass-arrow-right text-hb-gold"></i> İçtihat & Mevzuat Arama Motoru',
                 'belge': '<i class="fa-solid fa-file-signature text-blue-400"></i> Dilekçe Prompt Stüdyosu (HMK m. 119 Uyumlu)',
-                'projeler': '<i class="fa-solid fa-briefcase text-emerald-400"></i> Dava Dosyalarım'
+                'projeler': '<i class="fa-solid fa-briefcase text-emerald-400"></i> Dava Dosyalarım',
+                'admin': '<i class="fa-solid fa-key text-amber-400"></i> Yönetici Paneli (Manuel Veri Ekleme)'
             };
 
-            const navIds = ['nav-asistan', 'nav-ictihat', 'nav-belge', 'nav-projeler'];
+            const navIds = ['nav-asistan', 'nav-ictihat', 'nav-belge', 'nav-projeler', 'nav-admin'];
             navIds.forEach(id => {
                 const btn = document.getElementById(id);
-                btn.className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all";
+                if (btn) btn.className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all";
             });
 
             document.getElementById('tab-' + tabKey).classList.remove('hidden');
             document.getElementById('current-tab-title').innerHTML = titles[tabKey];
-            document.getElementById('nav-' + tabKey).className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium bg-blue-600/15 text-blue-400 border border-blue-500/30 transition-all";
-
-            if (tabKey === 'ictihat') {
-                executeSearch();
+            
+            const activeNav = document.getElementById('nav-' + tabKey);
+            if (activeNav) {
+                activeNav.className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium bg-blue-600/15 text-blue-400 border border-blue-500/30 transition-all";
             }
+
+            if (tabKey === 'ictihat') executeSearch();
+            if (tabKey === 'admin') renderAdminRecordsList();
         }
 
         const templates = {
