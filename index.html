@@ -157,19 +157,22 @@
                     <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-500 font-bold border border-emerald-500/20">Aktif</span>
                 </div>
 
-                <div class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-hb-card/60 border border-slate-200 dark:border-hb-border">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center text-xs font-bold">
+                <div id="sidebar-user-card" class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-hb-card/60 border border-slate-200 dark:border-hb-border">
+                    <div class="flex items-center gap-2.5 truncate">
+                        <div id="sidebar-user-avatar" class="w-7 h-7 rounded-lg bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center text-xs font-bold shrink-0">
                             HB
                         </div>
-                        <div class="flex flex-col">
-                            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Avukat Hesabı</span>
-                            <span class="text-[10px] text-slate-500 dark:text-slate-400">HMK & UYAP Tam Uyumlu</span>
+                        <div class="flex flex-col truncate">
+                            <span id="sidebar-user-name" class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">Avukat Hesabı</span>
+                            <span id="sidebar-user-email" class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Giriş Yapılmadı</span>
                         </div>
                     </div>
-                    <a href="admin.html" target="_blank" class="text-slate-400 hover:text-amber-500 cursor-pointer text-xs" title="Yönetici Paneli (Ayrı Sayfa)">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </a>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button onclick="openAuthModal()" class="text-blue-500 hover:underline text-[11px]" title="Hesap Değiştir">Değiştir</button>
+                        <a href="admin.html" target="_blank" class="text-slate-400 hover:text-amber-500 cursor-pointer text-xs" title="Yönetici Paneli">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,14 +200,10 @@
                     <i id="theme-icon" class="fa-solid fa-sun text-amber-500"></i>
                 </button>
 
-                <div class="text-[11px] text-emerald-600 dark:text-emerald-400 bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-sm dark:shadow-none">
-                    <i class="fa-solid fa-infinity text-emerald-500"></i>
-                    <span>Dilekçe Üretimi: <strong>Sınırsız</strong></span>
-                </div>
-
-                <button onclick="copyDilekce()" class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-hb-card hover:bg-slate-100 dark:hover:bg-hb-cardhover border border-slate-200 dark:border-hb-border text-xs text-slate-700 dark:text-slate-300 font-medium transition-all flex items-center gap-2 shadow-sm dark:shadow-none">
-                    <i class="fa-regular fa-copy"></i>
-                    <span class="hidden sm:inline">Kopyala</span>
+                <!-- Hesap / Giriş Yap Butonu -->
+                <button onclick="openAuthModal()" id="header-auth-btn" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow-sm transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Giriş Yap / Kayıt Ol</span>
                 </button>
 
                 <!-- Formatlı İndirme Butonları (DOCX & UYAP) -->
@@ -392,7 +391,7 @@
 
                             <div class="mb-4">
                                 <h4 class="font-bold underline mb-1.5 uppercase">HUKUKİ DELİLLER</h4>
-                                <p class="text-justify">1. SGK tescil ve hizmet döküm kayıtları (Ek-1), 2. İşyeri şahsi özlük dosyası (Ek-2), 3. Arabuluculuk Son Tutanağı aslı (Ek-3), 4. Tanık beyanları, 5. Bilirkişi incelemesi.</p>
+                                <p class="text-justify">SGK dökümleri, özlük dosyası, arabuluculuk tutanağı, tanık beyanları, bilirkişi.</p>
                             </div>
 
                             <div class="mb-6">
@@ -529,173 +528,6 @@
                 <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-hb-border text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                     <i class="fa-solid fa-circle-info mr-1.5 text-blue-500"></i>
                     <strong>Adli Tatil ve Hafta Sonu Kuralı:</strong> HMK m. 93 uyarınca sürenin son günü resmi tatile (Cumartesi, Pazar veya Ulusal Bayram) rastlarsa süre tatili takip eden ilk iş gününün çalışma saati bitimine kadar uzar. Adli tatilde (20 Temmuz - 31 Ağustos) biten süreler adli tatilin bittiği günü izleyen tarihten itibaren 1 hafta uzamış sayılır.
-                </div>
-            </div>
-
-            <!-- 7. SEKME: YARGI HARÇ, MASRAF VE AAÜT VEKALET ÜCRETİ HESAPLAYICI (YENİ EKLENDİ) -->
-            <div id="tab-harclar" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Dava Harç, Masraf & AAÜT Vekalet Ücreti Hesaplayıcı</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Harçlar Kanunu ve Türkiye Barolar Birliği AAÜT uyarınca dava öncesi peşin harç, gider avansı ve yasal vekalet ücreti dökümü.</p>
-                    </div>
-                    <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 font-bold">2026 Yargı Tarifesi</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Giriş Parametreleri -->
-                    <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-4 shadow-sm dark:shadow-none">
-                        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-sliders text-indigo-500"></i>
-                            <span>Dava Bilgileri</span>
-                        </h3>
-
-                        <div>
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Dava Değeri / Müddeabih (TL)</label>
-                            <input id="calc-harc-deger" type="number" value="100000" min="0" step="1000" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 font-bold" oninput="calculateLegalFees()">
-                        </div>
-
-                        <div>
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Mahkeme Türü</label>
-                            <select id="calc-harc-mahkeme" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-300 focus:outline-none" onchange="calculateLegalFees()">
-                                <option value="asliye_hukuk">Asliye Hukuk Mahkemesi</option>
-                                <option value="asliye_ticaret">Asliye Ticaret Mahkemesi</option>
-                                <option value="is_mahkemesi">İş Mahkemesi</option>
-                                <option value="sulh_hukuk">Sulh Hukuk Mahkemesi</option>
-                                <option value="tuketici">Tüketici Mahkemesi (Harçtan Muafiyet Kontrollü)</option>
-                                <option value="icra_takip">İlamsız İcra Takibi</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Taraf Sayısı (Tebligat & Masraf İçin)</label>
-                            <input id="calc-harc-taraf" type="number" value="2" min="2" max="20" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500" oninput="calculateLegalFees()">
-                        </div>
-
-                        <button onclick="calculateLegalFees()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md">
-                            Yeniden Hesapla
-                        </button>
-                    </div>
-
-                    <!-- Çıktı Tablosu 1: Dava Açılış Harç ve Masrafları -->
-                    <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-3.5 shadow-sm dark:shadow-none">
-                        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-receipt text-emerald-500"></i>
-                            <span>Dava Açılış Masraf Cetveli</span>
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Başvurma Harcı (Maktu):</span>
-                                <strong id="out-basvuru-harc" class="text-slate-900 dark:text-white">427,60 TL</strong>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Peşin Nisbi Harç (%1,7075):</span>
-                                <strong id="out-pesin-harc" class="text-slate-900 dark:text-white">1.707,50 TL</strong>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Gider Avansı (Tebligat + Posta):</span>
-                                <strong id="out-gider-avansi" class="text-slate-900 dark:text-white">1.850,00 TL</strong>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Vekalet Suret Harcı & Baro Pulu:</span>
-                                <strong id="out-baro-pulu" class="text-slate-900 dark:text-white">160,00 TL</strong>
-                            </div>
-                            <div class="flex justify-between py-2 pt-3 border-t-2 border-indigo-500 text-sm font-bold text-slate-900 dark:text-white">
-                                <span>Toplam Peşin Maliyet:</span>
-                                <span id="out-toplam-harc" class="text-indigo-600 dark:text-indigo-400 font-extrabold text-base">4.145,10 TL</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Çıktı Tablosu 2: AAÜT Yasal Vekalet Ücreti -->
-                    <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-3.5 shadow-sm dark:shadow-none">
-                        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-gavel text-hb-gold"></i>
-                            <span>AAÜT Yasal Vekalet Ücreti</span>
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Kazanılan Davada Karşı Vekalet:</span>
-                                <strong id="out-vekalet-nisbi" class="text-slate-900 dark:text-white">16.000,00 TL</strong>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Maktu Asgari Taban (Tarife):</span>
-                                <strong id="out-vekalet-maktu" class="text-slate-900 dark:text-white">17.900,00 TL</strong>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                                <span>Hükmedilecek Yasal Vekalet Ücreti:</span>
-                                <strong id="out-vekalet-final" class="text-hb-gold font-bold">17.900,00 TL</strong>
-                            </div>
-                            <p class="text-[10px] text-slate-400 pt-1 leading-snug">
-                                *AAÜT Madde 13/2 uyarınca hükmedilen vekalet ücreti dava değerini geçemez; maktu ücret alt sınırı uygulanmıştır.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. SEKME: DURUŞMA & İŞ TAKVİMİ (GOOGLE TAKVİM / iCAL DIŞA AKTARMA) -->
-            <div id="tab-takvim" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Duruşma & Yasal İş Takvimi</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Duruşma günlerini ve son gün sürelerini takip edin; tek tıkla Google Takvim veya Apple Takvime (.ics) aktarın.</p>
-                    </div>
-                    <button onclick="exportAllCalendarICS()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold shadow-md transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-calendar-arrow-down"></i>
-                        <span>Takvimi Dışa Aktar (.ics / Google / Apple)</span>
-                    </button>
-                </div>
-
-                <!-- Yeni Etkinlik / Duruşma Ekleme Formu -->
-                <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-4 shadow-sm dark:shadow-none">
-                    <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-calendar-plus text-rose-500"></i>
-                        <span>Yeni Duruşma / Süre Hatırlatıcısı Ekle</span>
-                    </h3>
-
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-                        <div class="md:col-span-2">
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Duruşma / İş Başlığı</label>
-                            <input id="ev-title" type="text" placeholder="Örn: İstanbul 14. İş Mah. 2. Duruşma (Ahmet Kaya)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-rose-500">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Tarih</label>
-                            <input id="ev-date" type="date" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-rose-500">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Saat</label>
-                            <input id="ev-time" type="time" value="10:30" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-rose-500">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div>
-                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Kategori</label>
-                            <select id="ev-category" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-300 focus:outline-none">
-                                <option value="durusma">Mahkeme Duruşması</option>
-                                <option value="istinaf">İstinaf / Temyiz Son Günü</option>
-                                <option value="ihtar">Kira / Tahliye İhtar Günü</option>
-                                <option value="kesif">Keşif & Bilirkişi İncelemesi</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2 flex items-end">
-                            <button onclick="addCalendarEvent()" class="w-full py-2 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 text-white text-xs font-bold transition-all shadow">
-                                Takvime Kaydet & Alarm Oluştur
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ajanda / Etkinlikler Listesi -->
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between px-1">
-                        <span id="calendar-event-count" class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Planlanmış Duruşma ve İşler</span>
-                    </div>
-
-                    <div id="calendar-events-container" class="space-y-2.5"></div>
                 </div>
             </div>
 
@@ -854,11 +686,342 @@
                 </div>
             </div>
 
+            <!-- 7. SEKME: YARGI HARÇ, MASRAF VE AAÜT VEKALET ÜCRETİ HESAPLAYICI -->
+            <div id="tab-harclar" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Dava Harç, Masraf & AAÜT Vekalet Ücreti Hesaplayıcı</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Harçlar Kanunu ve TBB AAÜT uyarınca dava öncesi peşin harç, gider avansı ve yasal vekalet ücreti dökümü.</p>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 font-bold">2026 Yargı Tarifesi</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-4 shadow-sm dark:shadow-none">
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-indigo-500"></i>
+                            <span>Dava Bilgileri</span>
+                        </h3>
+
+                        <div>
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Dava Değeri / Müddeabih (TL)</label>
+                            <input id="calc-harc-deger" type="number" value="100000" min="0" step="1000" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 font-bold" oninput="calculateLegalFees()">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Mahkeme Türü</label>
+                            <select id="calc-harc-mahkeme" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-300 focus:outline-none" onchange="calculateLegalFees()">
+                                <option value="asliye_hukuk">Asliye Hukuk Mahkemesi</option>
+                                <option value="asliye_ticaret">Asliye Ticaret Mahkemesi</option>
+                                <option value="is_mahkemesi">İş Mahkemesi</option>
+                                <option value="sulh_hukuk">Sulh Hukuk Mahkemesi</option>
+                                <option value="tuketici">Tüketici Mahkemesi (Harçtan Muafiyet Kontrollü)</option>
+                                <option value="icra_takip">İlamsız İcra Takibi</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Taraf Sayısı (Tebligat & Masraf İçin)</label>
+                            <input id="calc-harc-taraf" type="number" value="2" min="2" max="20" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500" oninput="calculateLegalFees()">
+                        </div>
+
+                        <button onclick="calculateLegalFees()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md">
+                            Yeniden Hesapla
+                        </button>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-3.5 shadow-sm dark:shadow-none">
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-receipt text-emerald-500"></i>
+                            <span>Dava Açılış Masraf Cetveli</span>
+                        </h3>
+
+                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Başvurma Harcı (Maktu):</span>
+                                <strong id="out-basvuru-harc" class="text-slate-900 dark:text-white">427,60 TL</strong>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Peşin Nisbi Harç (%1,7075):</span>
+                                <strong id="out-pesin-harc" class="text-slate-900 dark:text-white">1.707,50 TL</strong>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Gider Avansı (Tebligat + Posta):</span>
+                                <strong id="out-gider-avansi" class="text-slate-900 dark:text-white">1.850,00 TL</strong>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Vekalet Suret Harcı & Baro Pulu:</span>
+                                <strong id="out-baro-pulu" class="text-slate-900 dark:text-white">160,00 TL</strong>
+                            </div>
+                            <div class="flex justify-between py-2 pt-3 border-t-2 border-indigo-500 text-sm font-bold text-slate-900 dark:text-white">
+                                <span>Toplam Peşin Maliyet:</span>
+                                <span id="out-toplam-harc" class="text-indigo-600 dark:text-indigo-400 font-extrabold text-base">4.145,10 TL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-3.5 shadow-sm dark:shadow-none">
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-gavel text-hb-gold"></i>
+                            <span>AAÜT Yasal Vekalet Ücreti</span>
+                        </h3>
+
+                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Kazanılan Davada Karşı Vekalet:</span>
+                                <strong id="out-vekalet-nisbi" class="text-slate-900 dark:text-white">16.000,00 TL</strong>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Maktu Asgari Taban (Tarife):</span>
+                                <strong id="out-vekalet-maktu" class="text-slate-900 dark:text-white">17.900,00 TL</strong>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                                <span>Hükmedilecek Yasal Vekalet Ücreti:</span>
+                                <strong id="out-vekalet-final" class="text-hb-gold font-bold">17.900,00 TL</strong>
+                            </div>
+                            <p class="text-[10px] text-slate-400 pt-1 leading-snug">
+                                *AAÜT Madde 13/2 uyarınca hükmedilen vekalet ücreti dava değerini geçemez; maktu ücret alt sınırı uygulanmıştır.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. SEKME: DURUŞMA & İŞ TAKVİMİ -->
+            <div id="tab-takvim" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Duruşma & Yasal İş Takvimi</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Duruşma günlerini ve son gün sürelerini takip edin; tek tıkla Google Takvim veya Apple Takvime (.ics) aktarın.</p>
+                    </div>
+                    <button onclick="exportAllCalendarICS()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-arrow-down"></i>
+                        <span>Takvimi Dışa Aktar (.ics / Google / Apple)</span>
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-4 shadow-sm dark:shadow-none">
+                    <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-plus text-rose-500"></i>
+                        <span>Yeni Duruşma / Süre Hatırlatıcısı Ekle</span>
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                        <div class="md:col-span-2">
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Duruşma / İş Başlığı</label>
+                            <input id="ev-title" type="text" placeholder="Örn: İstanbul 14. İş Mah. 2. Duruşma (Ahmet Kaya)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-rose-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Tarih</label>
+                            <input id="ev-date" type="date" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-rose-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Saat</label>
+                            <input id="ev-time" type="time" value="10:30" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-rose-500">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Kategori</label>
+                            <select id="ev-category" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-300 focus:outline-none">
+                                <option value="durusma">Mahkeme Duruşması</option>
+                                <option value="istinaf">İstinaf / Temyiz Son Günü</option>
+                                <option value="ihtar">Kira / Tahliye İhtar Günü</option>
+                                <option value="kesif">Keşif & Bilirkişi İncelemesi</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 flex items-end">
+                            <button onclick="addCalendarEvent()" class="w-full py-2 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 text-white text-xs font-bold transition-all shadow">
+                                Takvime Kaydet & Alarm Oluştur
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between px-1">
+                        <span id="calendar-event-count" class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Planlanmış Duruşma ve İşler</span>
+                    </div>
+
+                    <div id="calendar-events-container" class="space-y-2.5"></div>
+                </div>
+            </div>
+
         </div>
     </main>
 
+    <!-- HESAP AÇMA / GİRİŞ YAP MODALI -->
+    <div id="auth-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border rounded-3xl max-w-md w-full p-6 text-left shadow-2xl space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-hb-border pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center text-sm font-bold">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white">HukukBilgini Hesap Merkezi</h3>
+                </div>
+                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Sekme Seçimi (Giriş Yap / Kayıt Ol) -->
+            <div class="flex rounded-xl bg-slate-100 dark:bg-slate-900 p-1 border border-slate-200 dark:border-hb-border">
+                <button onclick="switchAuthTab('login')" id="auth-tab-login" class="flex-1 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white shadow transition-all">Giriş Yap</button>
+                <button onclick="switchAuthTab('register')" id="auth-tab-register" class="flex-1 py-2 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Kayıt Ol (Hesap Aç)</button>
+            </div>
+
+            <!-- 1. GİRİŞ YAP FORMU -->
+            <div id="form-login" class="space-y-3.5">
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">E-Posta Adresi</label>
+                    <input id="login-email" type="email" value="mehmet@hukukbilgini.com" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3.5 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Şifre</label>
+                    <input id="login-password" type="password" value="123456" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3.5 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+                <button onclick="handleLoginSubmit()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all">
+                    Sisteme Giriş Yap
+                </button>
+            </div>
+
+            <!-- 2. KAYIT OL FORMU -->
+            <div id="form-register" class="hidden space-y-3">
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Ad Soyad (Unvan)</label>
+                    <input id="reg-name" type="text" placeholder="Örn: Av. Zeynep Kaya" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3.5 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">E-Posta Adresi</label>
+                    <input id="reg-email" type="email" placeholder="Örn: zeynep@hukuk.av.tr" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3.5 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Baro / Sicil No</label>
+                        <input id="reg-baro" type="text" placeholder="Örn: Ankara Barosu (61200)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3.5 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Şifre Belirle</label>
+                        <input id="reg-pass" type="password" placeholder="••••••" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3.5 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+                <button onclick="handleRegisterSubmit()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 text-white text-xs font-bold shadow-md transition-all mt-1">
+                    Hesap Oluştur & Kayıt Ol
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ETKİLEŞİMLİ VERİTABANI & MOTOR SCRIPTLERİ -->
     <script>
+        // === HESAP AÇMA VE OTURUM YÖNETİMİ ===
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function switchAuthTab(mode) {
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const tabLogin = document.getElementById('auth-tab-login');
+            const tabReg = document.getElementById('auth-tab-register');
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.className = "flex-1 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white shadow transition-all";
+                tabReg.className = "flex-1 py-2 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all";
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabReg.className = "flex-1 py-2 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow transition-all";
+                tabLogin.className = "flex-1 py-2 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all";
+            }
+        }
+
+        function getCurrentUser() {
+            const stored = localStorage.getItem('hb_current_user');
+            if (stored) {
+                try { return JSON.parse(stored); } catch(e) {}
+            }
+            const defaultUser = { name: "Av. Mehmet Ege Yıldız", email: "mehmet@hukukbilgini.com", baro: "İstanbul Barosu (48210)", plan: "Sinirsiz" };
+            localStorage.setItem('hb_current_user', JSON.stringify(defaultUser));
+            return defaultUser;
+        }
+
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            const nameEl = document.getElementById('sidebar-user-name');
+            const emailEl = document.getElementById('sidebar-user-email');
+            const avatarEl = document.getElementById('sidebar-user-avatar');
+
+            if (nameEl) nameEl.innerText = user.name;
+            if (emailEl) emailEl.innerText = user.baro || user.email;
+            if (avatarEl) {
+                avatarEl.innerText = user.name.replace('Av. ', '').replace('Stj. ', '').substring(0, 2).toUpperCase();
+            }
+        }
+
+        function handleLoginSubmit() {
+            const email = document.getElementById('login-email').value.trim();
+            if (!email) {
+                alert("Lütfen e-posta adresinizi giriniz.");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('hb_users') || '[]');
+            let found = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+            let userObj = found ? { name: found.name, email: found.email, baro: found.baro, plan: found.plan } : { name: "Avukat", email: email, baro: "Baro Kayıtlı", plan: "Pro" };
+            
+            localStorage.setItem('hb_current_user', JSON.stringify(userObj));
+            updateAuthUI();
+            closeAuthModal();
+            alert(`Hoş geldiniz, ${userObj.name}! Oturumunuz başarıyla açıldı.`);
+        }
+
+        function handleRegisterSubmit() {
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const baro = document.getElementById('reg-baro').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+
+            if (!name || !email || !pass) {
+                alert("Lütfen ad soyad, e-posta ve şifre alanlarını doldurunuz.");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('hb_users') || '[]');
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                baro: baro || "Genel Avukat",
+                plan: "Sinirsiz",
+                quota: "∞",
+                maxQuota: "∞",
+                status: "Aktif",
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+
+            users.unshift(newUser);
+            localStorage.setItem('hb_users', JSON.stringify(users));
+
+            const sessionObj = { name: newUser.name, email: newUser.email, baro: newUser.baro, plan: newUser.plan };
+            localStorage.setItem('hb_current_user', JSON.stringify(sessionObj));
+
+            updateAuthUI();
+            closeAuthModal();
+            alert(`Tebrikler ${name}! Hesabınız başarıyla oluşturuldu ve sisteme giriş yapıldı.`);
+        }
+
         // === 1. TEMA YÖNETİMİ (DARK / LIGHT MODE TOGGLE) ===
         function initTheme() {
             const savedTheme = localStorage.getItem('hb_theme');
@@ -1046,7 +1209,7 @@
                             </button>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-700 dark:text-slate-300 font-serif leading-relaxed line-clamp-3 bg-slate-100/60 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-200 dark:border-hb-border/50">
+                    <p class="text-xs text-slate-700 dark:text-slate-300 font-serif leading-relaxed bg-slate-100/60 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-200 dark:border-hb-border/50">
                         "${item.ozet}"
                     </p>
                 </div>
@@ -1074,7 +1237,6 @@
             let deadline = new Date(tebligDate);
             deadline.setDate(deadline.getDate() + daysToAdd);
 
-            // Hafta sonu kontrolü
             let dayOfWeek = deadline.getDay();
             let note = "";
             if (dayOfWeek === 6) {
@@ -1414,7 +1576,6 @@
 
         // === 9. DİLEKÇE LİMİT SİSTEMİ (LİMİTSİZ / SINIRSIZ MOD) ===
         function updateQuotaUI() {
-            // Sınır şimdilik kaldırıldı - limitsiz üretim modu aktif
             const btnEl = document.getElementById('btn-generate');
             if (btnEl) btnEl.disabled = false;
         }
@@ -1461,9 +1622,9 @@
         }
 
         const templates = {
-            'ise_iade': "Mahkeme: İstanbul Nöbetçi İş Mahkemesi\\nDavacı: Ahmet Kaya (T.C: 12345678901)\\nDavalı: Vizyon Yazılım Teknolojileri A.Ş.\\nOlay ve Talepler: Müvekkil 15.01.2021 - 10.09.2026 tarihleri arasında kıdemli yazılımcı olarak çalıştı. İş sözleşmesi performans bahanesiyle haklı neden olmaksızın feshedildi. HMK m. 119 uyarınca feshin geçersizliği, işe iade ve 4 aya kadar boşta geçen süre ücreti talep ediyoruz.",
-            'kira_tahliye': "Mahkeme: Kadıköy Nöbetçi Sulh Hukuk Mahkemesi\\nDavacı: Mehmet Demir (Kiraya Veren, T.C: 98765432100)\\nDavalı: Caner Özcan (Kiracı)\\nOlay ve Talepler: 01.09.2014 başlangıç tarihli kira sözleşmesi kapsamında 10 yılı aşan uzama süresi dolmuştur. TBK m. 347 uyarınca en az 3 ay önceden noter ihtarı gönderilmiştir. Tahliye talep ediyoruz.",
-            'cevap_itiraz': "Mahkeme: Ankara 4. Asliye Ticaret Mahkemesi\\nDosya No: 2026/412 E.\\nDavalı (Müvekkil): Anadolu Lojistik Ltd. Şti.\\nDavacı: Akdeniz Dağıtım A.Ş.\\nSavunma ve İtirazlar: 10 yıllık genel zamanaşımı sebebiyle ilk itirazda bulunuyoruz. Davanın reddi talep edilir."
+            'ise_iade': "Mahkeme: İstanbul Nöbetçi İş Mahkemesi\nDavacı: Ahmet Kaya (T.C: 12345678901)\nDavalı: Vizyon Yazılım Teknolojileri A.Ş.\nOlay ve Talepler: Müvekkil 15.01.2021 - 10.09.2026 tarihleri arasında kıdemli yazılımcı olarak çalıştı. İş sözleşmesi performans bahanesiyle haklı neden olmaksızın feshedildi. HMK m. 119 uyarınca feshin geçersizliği, işe iade ve 4 aya kadar boşta geçen süre ücreti talep ediyoruz.",
+            'kira_tahliye': "Mahkeme: Kadıköy Nöbetçi Sulh Hukuk Mahkemesi\nDavacı: Mehmet Demir (Kiraya Veren, T.C: 98765432100)\nDavalı: Caner Özcan (Kiracı)\nOlay ve Talepler: 01.09.2014 başlangıç tarihli kira sözleşmesi kapsamında 10 yılı aşan uzama süresi dolmuştur. TBK m. 347 uyarınca en az 3 ay önceden noter ihtarı gönderilmiştir. Tahliye talep ediyoruz.",
+            'cevap_itiraz': "Mahkeme: Ankara 4. Asliye Ticaret Mahkemesi\nDosya No: 2026/412 E.\nDavalı (Müvekkil): Anadolu Lojistik Ltd. Şti.\nDavacı: Akdeniz Dağıtım A.Ş.\nSavunma ve İtirazlar: 10 yıllık genel zamanaşımı sebebiyle ilk itirazda bulunuyoruz. Davanın reddi talep edilir."
         };
 
         function setPromptTemplate(key) {
@@ -1479,7 +1640,7 @@
 
             const paper = document.getElementById('dilekce-paper');
             const lines = rawPrompt.split('\n');
-            let mahkeme = "İSTANBUL NÖBETÇİ MAHKEMESİ'NE";
+            let mahkeme = "İSTANBUL NÖBETÇİ İŞ MAHKEMESİ’NE";
             let davaci = "Davacı Adı Soyadı (T.C: ...)";
             let davali = "Davalı Adı / Unvanı";
             let olayTalepler = rawPrompt || "Dava dosyasına sunulan evraklar ve deliller doğrultusunda hak ve alacak taleplerimizdir.";
@@ -1553,7 +1714,7 @@
             alert("Dilekçeniz kusursuz şekilde oluşturuldu!" + dosyaNotu);
         }
 
-        // === DOSYA VE EVRAK YÜKLEME YÖNETİMİ (PDF, UDF, DOCX, RESİM) ===
+        // === DOSYA VE EVRAK YÜKLEME YÖNETİMİ ===
         let attachedFiles = [];
 
         function handleDragOver(e) {
@@ -1630,197 +1791,6 @@
             }).join('');
         }
 
-        // === YARGI HARÇ, MASRAF VE AAÜT HESAPLAMA MOTORU ===
-        function calculateLegalFees() {
-            const deger = parseFloat(document.getElementById('calc-harc-deger').value) || 0;
-            const mahkeme = document.getElementById('calc-harc-mahkeme').value;
-            const taraf = parseInt(document.getElementById('calc-harc-taraf').value) || 2;
-
-            let basvuruHarc = 427.60;
-            let baroPulu = 160.00;
-            let giderAvansi = 850 + (taraf * 450);
-
-            if (mahkeme === 'sulh_hukuk') {
-                basvuruHarc = 195.80;
-            } else if (mahkeme === 'icra_takip') {
-                basvuruHarc = 427.60;
-                giderAvansi = 600.00;
-            }
-
-            let pesinHarc = (deger * 0.06831) / 4;
-            if (mahkeme === 'tuketici') {
-                pesinHarc = 0.00;
-                basvuruHarc = 0.00;
-            }
-
-            const toplamPeşin = basvuruHarc + pesinHarc + giderAvansi + baroPulu;
-
-            let vekalet = 0;
-            if (deger <= 200000) {
-                vekalet = deger * 0.16;
-            } else if (deger <= 400000) {
-                vekalet = (200000 * 0.16) + ((deger - 200000) * 0.15);
-            } else {
-                vekalet = (200000 * 0.16) + (200000 * 0.15) + ((deger - 400000) * 0.14);
-            }
-
-            const maktuTaban = 17900.00;
-            let finalVekalet = Math.max(vekalet, maktuTaban);
-            if (finalVekalet > deger && deger > 0) finalVekalet = deger;
-
-            document.getElementById('out-basvuru-harc').innerText = basvuruHarc.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-            document.getElementById('out-pesin-harc').innerText = pesinHarc.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-            document.getElementById('out-gider-avansi').innerText = giderAvansi.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-            document.getElementById('out-baro-pulu').innerText = baroPulu.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-            document.getElementById('out-toplam-harc').innerText = toplamPeşin.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-
-            document.getElementById('out-vekalet-nisbi').innerText = vekalet.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-            document.getElementById('out-vekalet-maktu').innerText = maktuTaban.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-            document.getElementById('out-vekalet-final').innerText = finalVekalet.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL';
-        }
-
-        // === DURUŞMA & İŞ TAKVİMİ MOTORU (iCAL .ICS DIŞA AKTARMA) ===
-        let calendarEvents = [
-            { id: 1, title: "İstanbul 14. İş Mah. İşe İade Duruşması", date: "2026-11-04", time: "10:30", category: "durusma" },
-            { id: 2, title: "Kadıköy 2. Sulh Hukuk Kira Tahliye İhtar Son Günü", date: "2026-11-12", time: "17:00", category: "ihtar" }
-        ];
-
-        function loadCalendarEvents() {
-            const stored = localStorage.getItem('hb_calendar_events');
-            if (stored) {
-                try { calendarEvents = JSON.parse(stored); } catch(e) {}
-            }
-            renderCalendarEvents();
-        }
-
-        function saveCalendarEvents() {
-            localStorage.setItem('hb_calendar_events', JSON.stringify(calendarEvents));
-            renderCalendarEvents();
-        }
-
-        function addCalendarEvent() {
-            const title = document.getElementById('ev-title').value.trim();
-            const date = document.getElementById('ev-date').value;
-            const time = document.getElementById('ev-time').value || "09:00";
-            const category = document.getElementById('ev-category').value;
-
-            if (!title || !date) {
-                alert("Lütfen duruşma başlığını ve tarihini giriniz.");
-                return;
-            }
-
-            calendarEvents.unshift({
-                id: Date.now(),
-                title: title,
-                date: date,
-                time: time,
-                category: category
-            });
-
-            saveCalendarEvents();
-            document.getElementById('ev-title').value = '';
-            alert("Duruşma / Süre hatırlatıcısı ajandanıza eklendi!");
-        }
-
-        function deleteCalendarEvent(id) {
-            calendarEvents = calendarEvents.filter(e => e.id !== id);
-            saveCalendarEvents();
-        }
-
-        function renderCalendarEvents() {
-            const container = document.getElementById('calendar-events-container');
-            const countEl = document.getElementById('calendar-event-count');
-            countEl.innerText = `${calendarEvents.length} Adet Planlanmış İş / Duruşma`;
-
-            if (calendarEvents.length === 0) {
-                container.innerHTML = `
-                    <div class="p-6 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border text-center text-xs text-slate-400">
-                        Ajandanızda henüz kayıtlı duruşma veya süre bulunmamaktadır.
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = calendarEvents.map(item => `
-                <div class="p-4 rounded-xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border flex items-center justify-between gap-4 hover:border-slate-300 dark:hover:border-slate-700 transition-all shadow-sm dark:shadow-none">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl ${item.category === 'durusma' ? 'bg-rose-500/10 text-rose-500' : 'bg-amber-500/10 text-amber-500'} flex items-center justify-center text-sm font-bold shrink-0">
-                            <i class="fa-solid ${item.category === 'durusma' ? 'fa-gavel' : 'fa-hourglass-end'}"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold text-slate-800 dark:text-slate-100">${item.title}</div>
-                            <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5">
-                                <span><i class="fa-regular fa-calendar mr-1"></i>${item.date}</span>
-                                <span><i class="fa-regular fa-clock mr-1"></i>${item.time}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="exportSingleEventICS('${item.title}', '${item.date}', '${item.time}')" class="px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 text-[11px] font-semibold border border-blue-500/20 transition-all flex items-center gap-1" title="Google / Apple Takvimime Aktar">
-                            <i class="fa-solid fa-calendar-plus"></i>
-                            <span>Takvime Ekle</span>
-                        </button>
-                        <button onclick="deleteCalendarEvent(${item.id})" class="text-slate-400 hover:text-rose-500 p-1.5 transition-colors">
-                            <i class="fa-solid fa-trash-can text-xs"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // iCal (.ics) Standardında Dışa Aktarım (Google Takvim, Outlook ve Apple iCal ile tam uyumlu)
-        function generateICSContent(events) {
-            let ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//HukukBilgini//Hukuk Duruşma Takvimi//TR\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\n";
-            events.forEach(ev => {
-                const dateClean = ev.date.replace(/-/g, '');
-                const timeClean = ev.time.replace(/:/g, '') + "00";
-                const startStr = `${dateClean}T${timeClean}`;
-                
-                ics += "BEGIN:VEVENT\n";
-                ics += `UID:${ev.id || Date.now()}@hukukbilgini.com\n`;
-                ics += `SUMMARY:${ev.title}\n`;
-                ics += `DTSTART:${startStr}\n`;
-                ics += `DTEND:${startStr}\n`;
-                ics += `DESCRIPTION:HukukBilgini platformundan oluşturulmuş resmi duruşma/yasal süre kaydı.\n`;
-                ics += "STATUS:CONFIRMED\n";
-                ics += "BEGIN:VALARM\nTRIGGER:-PT1440M\nACTION:DISPLAY\nDESCRIPTION:Hatırlatıcı (1 Gün Önce)\nEND:VALARM\n";
-                ics += "END:VEVENT\n";
-            });
-            ics += "END:VCALENDAR";
-            return ics;
-        }
-
-        function exportAllCalendarICS() {
-            if (calendarEvents.length === 0) {
-                alert("Takviminizde dışa aktarılacak etkinlik bulunmamaktadır.");
-                return;
-            }
-            const icsData = generateICSContent(calendarEvents);
-            downloadBlobFile(icsData, "HukukBilgini_Takvim.ics", "text/calendar;charset=utf-8");
-        }
-
-        function exportSingleEventICS(title, date, time) {
-            const single = [{ id: Date.now(), title: title, date: date, time: time }];
-            const icsData = generateICSContent(single);
-            downloadBlobFile(icsData, `${title.substring(0, 15)}_Takvim.ics`, "text/calendar;charset=utf-8");
-        }
-
-        function downloadBlobFile(content, filename, type) {
-            const blob = new Blob([content], { type: type });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function copyDilekce() {
-            const text = document.getElementById('dilekce-paper').innerText;
-            navigator.clipboard.writeText(text);
-            alert("Dilekçenin tam metni kopyalandı!");
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             updateQuotaUI();
@@ -1828,6 +1798,7 @@
             updateBookmarkBadge();
             calculateLegalFees();
             loadCalendarEvents();
+            updateAuthUI();
         });
     </script>
 </body>
