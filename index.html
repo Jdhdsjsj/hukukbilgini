@@ -40,20 +40,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0b0f19;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #243049;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3b82f6;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #243049; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
         .a4-page {
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
             background: #ffffff;
@@ -64,7 +54,7 @@
 </head>
 <body class="bg-hb-canvas text-slate-100 font-sans antialiased h-screen flex overflow-hidden">
 
-    <!-- SOL KENAR ÇUBUĞU -->
+    <!-- SOL KENAR ÇUBUĞU (Kullanıcı için sade ve temiz menü) -->
     <aside class="w-64 bg-hb-sidebar border-r border-hb-border flex flex-col justify-between shrink-0 select-none z-30">
         <div class="flex flex-col h-full">
             <!-- Marka ve Logo -->
@@ -108,12 +98,6 @@
                 <button onclick="switchTab('projeler')" id="nav-projeler" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all">
                     <i class="fa-solid fa-briefcase w-4 text-center text-sm"></i>
                     <span>Dava Dosyalarım</span>
-                </button>
-
-                <!-- Gizli PIN Paneli Butonu -->
-                <button onclick="openPinModal()" id="nav-admin" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-amber-400/80 hover:text-amber-300 hover:bg-amber-500/10 border border-amber-500/20 transition-all mt-3">
-                    <i class="fa-solid fa-key w-4 text-center text-sm"></i>
-                    <span>Yönetici Paneli (PIN)</span>
                 </button>
             </div>
 
@@ -165,7 +149,7 @@
                             <span class="text-[10px] text-slate-400">HMK & UYAP Tam Uyumlu</span>
                         </div>
                     </div>
-                    <i class="fa-solid fa-lock text-slate-500 hover:text-amber-400 cursor-pointer text-xs" title="Yönetici Paneli" onclick="openPinModal()"></i>
+                    <i class="fa-solid fa-gear text-slate-500 hover:text-slate-300 cursor-pointer text-xs"></i>
                 </div>
             </div>
         </div>
@@ -203,7 +187,7 @@
                 </button>
                 <button onclick="downloadUDF()" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-md transition-all flex items-center gap-2">
                     <i class="fa-solid fa-file-word"></i>
-                    <span>Word / Metin Formatında İndir</span>
+                    <span>Word Formatında İndir</span>
                 </button>
             </div>
         </header>
@@ -211,10 +195,8 @@
         <!-- ÇALIŞMA ALANLARI / SEKMELER -->
         <div class="flex-1 overflow-hidden p-6 flex flex-col">
             
-            <!-- 1. DİLEKÇE PROMPT STÜDYOSU (BÖLÜNMÜŞ ÇİFT PANEL - SPLIT VIEW) -->
+            <!-- 1. DİLEKÇE PROMPT STÜDYOSU (BÖLÜNMÜŞ ÇİFT PANEL) -->
             <div id="tab-belge" class="flex-1 flex gap-6 h-full min-h-0">
-                
-                <!-- SOL PANEL: PROMPT, BİLGİ GİRİŞİ & DENETİM KURALLARI -->
                 <div class="w-1/2 flex flex-col bg-hb-card rounded-2xl border border-hb-border overflow-hidden">
                     <div class="p-4 border-b border-hb-border flex items-center justify-between bg-hb-sidebar/50">
                         <div class="flex items-center gap-2">
@@ -225,7 +207,6 @@
                     </div>
 
                     <div class="p-4 flex-1 overflow-y-auto space-y-4">
-                        
                         <div>
                             <label class="block text-[11px] font-medium text-slate-400 mb-1.5">Hızlı Başlatıcı Şablonlar</label>
                             <div class="flex flex-wrap gap-2">
@@ -240,7 +221,7 @@
                                 <label class="block text-xs font-semibold text-slate-200">Dilekçe Talimatı ve Somut Olay Ayrıntıları</label>
                                 <span class="text-[10px] text-slate-500">Doğal dilde tam ve net yazınız</span>
                             </div>
-                            <textarea id="dilekce-prompt-input" rows="8" class="w-full bg-slate-900 border border-hb-border rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 leading-relaxed font-sans" placeholder="Mahkeme: İstanbul Nöbetçi İş Mahkemesi&#10;Davacı: Ahmet Kaya (T.C: 12345678901)&#10;Davalı: Vizyon Yazılım Teknolojileri A.Ş.&#10;Olay ve Talepler: Müvekkil 15.01.2021 - 10.09.2026 tarihleri arasında kıdemli yazılımcı olarak çalıştı. İş sözleşmesi performans bahanesiyle haklı neden olmaksızın feshedildi. HMK m. 119 uyarınca feshin geçersizliği, işe iade ve 4 aya kadar boşta geçen süre ücreti talep ediyoruz. Yargıtay 9. HD kararlarına dayanılsın."></textarea>
+                            <textarea id="dilekce-prompt-input" rows="8" class="w-full bg-slate-900 border border-hb-border rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 leading-relaxed font-sans" placeholder="Mahkeme: İstanbul Nöbetçi İş Mahkemesi&#10;Davacı: Ahmet Kaya (T.C: 12345678901)&#10;Davalı: Vizyon Yazılım Teknolojileri A.Ş.&#10;Olay ve Talepler: Müvekkil 15.01.2021 - 10.09.2026 tarihleri arasında kıdemli yazılımcı olarak çalıştı. İş sözleşmesi performans bahanesiyle haklı neden olmaksızın feshedildi. HMK m. 119 uyarınca feshin geçersizliği, işe iade ve 4 aya kadar boşta geçen süre ücreti talep ediyoruz."></textarea>
                         </div>
 
                         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-hb-border space-y-2">
@@ -284,7 +265,6 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="p-4 border-t border-hb-border bg-hb-sidebar/60 flex items-center justify-between">
@@ -304,13 +284,12 @@
                             <h3 class="text-xs font-bold text-white uppercase tracking-wider">Kusursuz Dilekçe Önizlemesi (Resmi Format)</h3>
                         </div>
                         <div class="flex items-center gap-2 text-[11px] text-slate-400">
-                            <span>Yazı Tipi: Times New Roman / 12pt</span>
+                            <span>Times New Roman / 12pt</span>
                         </div>
                     </div>
 
                     <div class="flex-1 overflow-y-auto p-6 bg-slate-950/60 flex justify-center">
                         <div id="dilekce-paper" class="a4-page w-full max-w-[210mm] p-10 font-serif text-[13px] leading-relaxed select-text transition-all">
-                            
                             <div class="text-center font-bold mb-6 tracking-wide leading-tight">
                                 İSTANBUL NÖBETÇİ İŞ MAHKEMESİ’NE<br>
                                 <span class="text-xs font-normal italic">(Dava Şartı Arabuluculuk Son Tutanağı Ektedir)</span>
@@ -323,38 +302,35 @@
                                 <p><strong>DAVALI:</strong> Vizyon Yazılım Teknolojileri Anonim Şirketi</p>
                                 <p class="text-xs pl-4 text-slate-600">Adres: Maslak / İstanbul</p>
                                 <p><strong>DAVA DEĞERİ:</strong> Fazlaya ilişkin haklarımız saklı kalmak kaydıyla şimdilik 10.000 TL</p>
-                                <p><strong>KONU:</strong> 4857 sayılı İş Kanunu’nun 18, 20 ve 21. maddeleri uyarınca işverence yapılan FESHİN GEÇERSİZLİĞİNİN TESPİTİ, davacının İŞE İADESİ, kararın kesinleşmesine kadar çalıştırılmadığı süre için 4 aya kadar doğacak ÜCRET VE DİĞER HAKLARIN ÖDENMESİ ve süresinde işe başlatılmaması halinde 8 aya kadar İŞ GÜVENCESİ TAZMİNATINA hükmedilmesi talebimizdir.</p>
+                                <p><strong>KONU:</strong> 4857 sayılı İş Kanunu’nun 18, 20 ve 21. maddeleri uyarınca işverence yapılan FESHİN GEÇERSİZLİĞİNİN TESPİTİ ve İŞE İADE talebidir.</p>
                             </div>
 
                             <div class="mb-4">
                                 <h4 class="font-bold underline mb-1.5 uppercase">AÇIKLAMALAR</h4>
                                 <p class="indent-6 text-justify mb-2">
-                                    <strong>1. İŞ İLİŞKİSİ VE ÇALIŞMA ŞARTLARI:</strong> Müvekkil davacı, davalı şirkete ait işyerinde 15.01.2021 – 10.09.2026 tarihleri arasında kıdemli yazılım mühendisi olarak kesintisiz ve özveriyle görev yapmıştır.
+                                    <strong>1. İŞ İLİŞKİSİ:</strong> Müvekkil davacı, davalı şirkete ait işyerinde 15.01.2021 – 10.09.2026 tarihleri arasında kıdemli yazılım mühendisi olarak görev yapmıştır.
                                 </p>
                                 <p class="indent-6 text-justify mb-2">
-                                    <strong>2. HAKSIZ VE GEÇERSİZ FESİH:</strong> Davalı işveren, 10.09.2026 tarihli fesih bildirimi ile müvekkilin performans düşüklüğü gerekçesiyle iş sözleşmesini feshettiğini bildirmiştir. Ancak yazılı savunma dahi alınmamıştır.
-                                </p>
-                                <p class="indent-6 text-justify mb-2">
-                                    <strong>3. EMSAL YARGITAY KARARLARI İLE UYUM:</strong> Yargıtay 9. Hukuk Dairesi'nin yerleşik içtihatlarında objektif kriterler ve feshin son çare olması ilkesi şart koşulmuştur.
+                                    <strong>2. HAKSIZ FESİH:</strong> Davalı işveren, performans bahanesiyle iş sözleşmesini tek taraflı feshetmiş, savunma dahi almamıştır.
                                 </p>
                             </div>
 
                             <div class="mb-4">
                                 <h4 class="font-bold underline mb-1.5 uppercase">HUKUKİ SEBEPLER</h4>
-                                <p class="text-justify">4857 sayılı İş Kanunu m. 18, 19, 20, 21; 7036 sayılı Kanun; 6100 sayılı HMK ve ilgili yüksek mahkeme içtihatları.</p>
+                                <p class="text-justify">4857 sayılı İş Kanunu; 7036 sayılı Kanun; 6100 sayılı HMK ve ilgili yüksek mahkeme içtihatları.</p>
                             </div>
 
                             <div class="mb-4">
                                 <h4 class="font-bold underline mb-1.5 uppercase">HUKUKİ DELİLLER</h4>
-                                <p class="text-justify">1. SGK tescil ve hizmet döküm kayıtları, 2. İşyeri şahsi özlük dosyası, 3. Arabuluculuk Son Tutanağı aslı, 4. Tanık beyanları, 5. Bilirkişi incelemesi.</p>
+                                <p class="text-justify">SGK dökümleri, özlük dosyası, arabuluculuk tutanağı, tanık beyanları, bilirkişi.</p>
                             </div>
 
                             <div class="mb-6">
                                 <h4 class="font-bold underline mb-1.5 uppercase">NETİCE-İ TALEP</h4>
                                 <ol class="list-decimal pl-8 space-y-1 text-justify">
-                                    <li>Davamızın <strong>KABULÜ</strong> ile davalı işverence yapılan feshin <strong>GEÇERSİZLİĞİNİN TESPİTİNE</strong> ve müvekkilin <strong>İŞE İADESİNE</strong>,</li>
-                                    <li>4 aya kadar doğacak <strong>ücret ve diğer haklarının davalıdan tahsiline</strong>,</li>
-                                    <li>Yargılama giderleri ve vekalet ücretinin davalı yana tahmiline karar verilmesini saygılarımla bilvekale arz ve talep ederim.</li>
+                                    <li>Feshin <strong>GEÇERSİZLİĞİNE</strong> ve müvekkilin <strong>İŞE İADESİNE</strong>,</li>
+                                    <li>4 aya kadar doğacak <strong>ücret ve diğer haklarının tahsiline</strong>,</li>
+                                    <li>Yargılama giderleri ve vekalet ücretinin davalıya tahmiline karar verilmesini talep ederiz.</li>
                                 </ol>
                             </div>
 
@@ -365,11 +341,9 @@
                                     <div class="text-[10px] text-slate-500 font-normal italic mt-1">(e-İmzalıdır)</div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- 2. SEKME: HUKUK DANIŞMA ASİSTANI -->
@@ -380,13 +354,13 @@
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
                         </div>
                         <div>
-                            <h3 class="text-xs font-bold text-white tracking-wide">Hukuk Danışma Asistanı (Yargıtay & Mevzuat Bilgi Tabanlı)</h3>
+                            <h3 class="text-xs font-bold text-white tracking-wide">Hukuk Danışma Asistanı</h3>
                             <p class="text-[10px] text-slate-400">Somut olayınızı anlatın; mevzuat maddesi, emsal ilam ve dava stratejisiyle yanıtlasın.</p>
                         </div>
                     </div>
                     <button onclick="clearChatHistory()" class="text-[11px] text-slate-400 hover:text-slate-200 px-2.5 py-1 rounded-lg border border-hb-border hover:bg-slate-800 transition-all flex items-center gap-1.5">
                         <i class="fa-solid fa-trash-can text-xs"></i>
-                        <span>Sohbeti Temizle</span>
+                        <span>Temizle</span>
                     </button>
                 </div>
 
@@ -400,7 +374,7 @@
                                 <span>Hukuk Danışma Motoru Aktif</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Mevzuat v2026.1</span>
                             </div>
-                            <p>Merhaba meslektaşım. Uyuşmazlığın vakıalarını, delil durumunu veya merak ettiğiniz hukuki usul sorusunu buraya yazabilirsiniz. Örnek konulardan birini seçerek hemen test edebilirsiniz:</p>
+                            <p>Merhaba meslektaşım. Uyuşmazlığın vakıalarını, delil durumunu veya hukuki usul sorunuzu buraya yazabilirsiniz:</p>
                             
                             <div class="flex flex-wrap gap-2 pt-1">
                                 <button onclick="sendQuickPrompt('İş sözleşmesi haklı sebep olmaksızın feshedilen işçinin kıdem tazminatı ve fazla mesai ispatında delil hiyerarşisi nedir?')" class="px-2.5 py-1.5 rounded-lg bg-hb-card hover:bg-slate-800 border border-hb-border text-[11px] text-slate-300 hover:text-white transition-all text-left">
@@ -409,9 +383,6 @@
                                 <button onclick="sendQuickPrompt('10 yılı dolduran konut kiralarında TBK m. 347 uyarınca tahliye ihtarnamesinin tebliğ süresi ve dava şartları nelerdir?')" class="px-2.5 py-1.5 rounded-lg bg-hb-card hover:bg-slate-800 border border-hb-border text-[11px] text-slate-300 hover:text-white transition-all text-left">
                                     🏠 10 Yıllık Kira Tahliyesi
                                 </button>
-                                <button onclick="sendQuickPrompt('Trafik kazasında vefat eden desteğin yakınları için destekten yoksun kalma tazminatında hatır taşıması indirimi oranı nedir?')" class="px-2.5 py-1.5 rounded-lg bg-hb-card hover:bg-slate-800 border border-hb-border text-[11px] text-slate-300 hover:text-white transition-all text-left">
-                                    🚗 Hatır Taşıması İndirimi
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -419,15 +390,12 @@
 
                 <div class="p-4 border-t border-hb-border bg-hb-sidebar/60">
                     <form onsubmit="handleChatSubmit(event)" class="relative flex items-center">
-                        <textarea id="chat-input" rows="2" class="w-full bg-slate-900 border border-hb-border rounded-xl pl-4 pr-24 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-none font-sans" placeholder="Hukuki uyuşmazlığınızı yazın (Örn: 'Kira tespit davasında geriye dönük fark istenebilir mi?')..."></textarea>
+                        <textarea id="chat-input" rows="2" class="w-full bg-slate-900 border border-hb-border rounded-xl pl-4 pr-24 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-none font-sans" placeholder="Hukuki sorunuzu yazın..."></textarea>
                         <button type="submit" class="absolute right-2.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow transition-all flex items-center gap-1.5">
                             <span>Danış</span>
                             <i class="fa-solid fa-arrow-up text-[10px]"></i>
                         </button>
                     </form>
-                    <div class="text-[10px] text-slate-500 text-center mt-2">
-                        Danışma motoru; yürürlükteki mevzuat ve yüksek mahkeme içtihat kurallarını esas alarak gerekçeli hukuki mütalaa hazırlar.
-                    </div>
                 </div>
             </div>
 
@@ -435,82 +403,64 @@
             <div id="tab-ictihat" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-5 overflow-y-auto">
                 <div>
                     <h2 class="text-xl font-bold text-white tracking-tight">Akıllı İçtihat & Mevzuat Arama Motoru</h2>
-                    <p class="text-xs text-slate-400">Anahtar kelime ya da doğrudan olay örgüsünü girerek Yargıtay, Danıştay ve Kanun metinlerinde arama yapın.</p>
+                    <p class="text-xs text-slate-400">Yargıtay, Danıştay ve Kanun metinlerinde arama yapın.</p>
                 </div>
 
                 <div class="p-5 rounded-2xl bg-hb-card border border-hb-border space-y-4">
                     <div class="flex gap-3">
                         <div class="relative flex-1">
                             <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                            <input id="ictihat-search-query" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold transition-all" placeholder="Uyuşmazlık konusu veya kanun maddesi yazın (Örn: 'kıdem tazminatı', 'arsa payı karşılığı inşaat', 'TBK 347')..." value="arsa payı karşılığı inşaat">
+                            <input id="ictihat-search-query" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold transition-all" placeholder="Uyuşmazlık konusu veya kanun maddesi yazın..." value="arsa payı karşılığı inşaat">
                         </div>
                         <button onclick="executeSearch()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 hover:to-yellow-400 text-slate-950 text-xs font-bold shadow-md transition-all flex items-center gap-2">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <span>Hemen Ara</span>
+                            <span>Ara</span>
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                         <div>
-                            <label class="block text-[11px] text-slate-400 mb-1">Veri Kaynağı</label>
+                            <label class="block text-[11px] text-slate-400 mb-1">Kaynak Türü</label>
                             <select id="filter-kaynak" onchange="executeSearch()" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
                                 <option value="all">Tümü (İçtihat + Kanun)</option>
-                                <option value="ictihat">Sadece Yüksek Mahkeme İlamları</option>
-                                <option value="kanun">Sadece Mevzuat & Kanun Maddeleri</option>
+                                <option value="ictihat">Yüksek Mahkeme Kararları</option>
+                                <option value="kanun">Kanun Maddeleri</option>
                             </select>
                         </div>
-
                         <div>
                             <label class="block text-[11px] text-slate-400 mb-1">Yüksek Mahkeme</label>
                             <select id="filter-merci" onchange="executeSearch()" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
-                                <option value="all">Tüm Yargı Mercileri</option>
+                                <option value="all">Tümü</option>
                                 <option value="yargitay">Yargıtay</option>
                                 <option value="danistay">Danıştay</option>
-                                <option value="aym">Anayasa Mahkemesi (AYM)</option>
                             </select>
                         </div>
-
                         <div>
-                            <label class="block text-[11px] text-slate-400 mb-1">Sıralama Ölçütü</label>
+                            <label class="block text-[11px] text-slate-400 mb-1">Sıralama</label>
                             <select id="filter-sort" onchange="executeSearch()" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
-                                <option value="relevance">En Yüksek Benzerlik Skoru</option>
+                                <option value="relevance">En Yüksek Benzerlik</option>
                                 <option value="date_desc">En Yeni Tarih</option>
-                                <option value="date_asc">En Eski Tarih</option>
                             </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-[11px] text-slate-400 mb-1">Hızlı Seçim</label>
-                            <div class="flex items-center gap-1.5 pt-1">
-                                <button onclick="quickFilterSearch('iş hukuku')" class="px-2 py-1 rounded-md bg-slate-900 border border-hb-border text-[10px] text-slate-400 hover:text-white">İş</button>
-                                <button onclick="quickFilterSearch('kira')" class="px-2 py-1 rounded-md bg-slate-900 border border-hb-border text-[10px] text-slate-400 hover:text-white">Kira</button>
-                                <button onclick="quickFilterSearch('tazminat')" class="px-2 py-1 rounded-md bg-slate-900 border border-hb-border text-[10px] text-slate-400 hover:text-white">Tazminat</button>
-                                <button onclick="quickFilterSearch('ticaret')" class="px-2 py-1 rounded-md bg-slate-900 border border-hb-border text-[10px] text-slate-400 hover:text-white">Ticaret</button>
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-3">
                     <div class="flex items-center justify-between px-1">
-                        <span id="search-result-count" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Bulunan Karar ve Mevzuat (Yükleniyor...)</span>
-                        <div class="text-[11px] text-emerald-400 flex items-center gap-1">
-                            <i class="fa-solid fa-circle-check text-[10px]"></i>
-                            <span>Canlı Veri Arama Aktif</span>
-                        </div>
+                        <span id="search-result-count" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Bulunan Sonuçlar</span>
+                        <span class="text-[11px] text-emerald-400">Canlı Veri Tabanı Aktif</span>
                     </div>
 
-                    <div id="ictihat-results-container" class="space-y-3">
-                    </div>
+                    <div id="ictihat-results-container" class="space-y-3"></div>
                 </div>
             </div>
 
-            <!-- 4. SEKME: DAVA DOSYALARI (ÇALIŞMA ALANLARI) -->
+            <!-- 4. SEKME: DAVA DOSYALARI -->
             <div id="tab-projeler" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-xl font-bold text-white tracking-tight">Dava Dosyalarım</h2>
-                        <p class="text-xs text-slate-400">Dava ve müvekkil bazlı organize edilmiş dosyalar ve taslak havuzu.</p>
+                        <p class="text-xs text-slate-400">Müvekkil ve dava bazlı çalışma alanları.</p>
                     </div>
                     <button onclick="createNewDavaDosyasi()" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-2">
                         <i class="fa-solid fa-folder-plus"></i>
@@ -522,7 +472,7 @@
                     <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border transition-all space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">İş Mahkemesi</span>
-                            <span class="text-[11px] text-slate-500">Son İşlem: Bugün</span>
+                            <span class="text-[11px] text-slate-500">Bugün</span>
                         </div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-100">Yılmaz Ltd. - İşe İade</h3>
@@ -533,178 +483,15 @@
                             <span onclick="setPromptTemplate('ise_iade'); switchTab('belge');" class="text-hb-gold hover:underline cursor-pointer font-medium">Dosyayı Aç →</span>
                         </div>
                     </div>
-
-                    <div class="p-5 rounded-2xl bg-hb-card hover:bg-hb-cardhover border border-hb-border transition-all space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-hb-gold border border-hb-gold/20 font-bold">Sulh Hukuk</span>
-                            <span class="text-[11px] text-slate-500">Son İşlem: Dün</span>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-bold text-slate-100">Kira Tahliye - Kadıköy</h3>
-                            <p class="text-xs text-slate-400 mt-1">İhtarname sureti, kira kontratı, tutanaklar.</p>
-                        </div>
-                        <div class="pt-2 border-t border-hb-border flex items-center justify-between text-xs">
-                            <span class="text-slate-400">Durum: <strong class="text-blue-400">Dava Açıldı</strong></span>
-                            <span onclick="setPromptTemplate('kira_tahliye'); switchTab('belge');" class="text-hb-gold hover:underline cursor-pointer font-medium">Dosyayı Aç →</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. SEKME: GİZLİ YÖNETİCİ PANELİ (PIN İLE KORUNAN VERİ EKLEME MERKEZİ) -->
-            <div id="tab-admin" class="hidden flex-1 flex flex-col max-w-5xl w-full mx-auto space-y-6 overflow-y-auto">
-                <div class="flex items-center justify-between border-b border-hb-border pb-4">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-hb-gold border border-hb-gold/30 text-[10px] font-bold">YÖNETİCİ MODU</span>
-                            <h2 class="text-xl font-bold text-white tracking-tight">HukukBilgini Veri Yönetim Paneli</h2>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-1">Siteye manuel içtihat kararı ve mevzuat maddesi ekleyin veya silin.</p>
-                    </div>
-                    <button onclick="lockAdminPanel()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950/60 hover:text-rose-400 border border-hb-border text-xs text-slate-300 font-semibold transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-lock"></i>
-                        <span>Paneli Kilitle</span>
-                    </button>
-                </div>
-
-                <!-- Veri Ekleme Formu -->
-                <div class="p-6 rounded-2xl bg-hb-card border border-hb-border space-y-4">
-                    <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-plus-circle text-blue-400"></i>
-                        <span>Yeni İçtihat veya Mevzuat Kaydı Ekle</span>
-                    </h3>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Kayıt Türü</label>
-                            <select id="admin-tur" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-hb-gold">
-                                <option value="ictihat">İçtihat / Mahkeme Kararı</option>
-                                <option value="kanun">Kanun / Mevzuat Maddesi</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Merci / Kurum</label>
-                            <input id="admin-daire" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: Yargıtay 9. Hukuk Dairesi">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Esas / Karar No veya Kanun No</label>
-                            <input id="admin-esas" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: 2024/1102 E. , 2024/5400 K.">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Uyuşmazlık Konusu / Başlık</label>
-                            <input id="admin-konu" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: Mobbing Sebebiyle Haklı Fesih ve Manevi Tazminat">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">İlgili Kanun Maddeleri</label>
-                            <input id="admin-madde" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: 4857 Sayılı İş Kanunu m. 24/II-b; TBK m. 417">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Karar Özeti veya Hüküm Fıkrası</label>
-                        <textarea id="admin-ozet" rows="4" class="w-full bg-slate-900 border border-hb-border rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold leading-relaxed" placeholder="Mahkemenin gerekçeli karar özetini veya kanun maddesinin tam metnini buraya yapıştırın..."></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-2">
-                        <span class="text-[11px] text-slate-400">Eklenen veriler anında arama motorunda ve asistanda görünür.</span>
-                        <button onclick="saveManualRecord()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-floppy-disk"></i>
-                            <span>Veritabanına Kaydet</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Mevcut Veri Listesi ve Yönetimi -->
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Veritabanındaki Kayıtlar</h3>
-                        <span id="admin-total-records" class="text-xs text-hb-gold font-semibold">0 Kayıt</span>
-                    </div>
-
-                    <div id="admin-records-list" class="space-y-2">
-                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- PIN GİRİŞ POPUP (MODAL) -->
-    <div id="pin-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-hb-card border border-hb-border rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl space-y-4">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-hb-gold/30 text-hb-gold flex items-center justify-center mx-auto text-xl">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-            <div>
-                <h3 class="text-base font-bold text-white">Yönetici Doğrulaması</h3>
-                <p class="text-xs text-slate-400 mt-1">Veri yönetim paneline erişmek için 4 haneli PIN kodunuzu giriniz.</p>
-            </div>
-
-            <div>
-                <input id="pin-input" type="password" maxlength="6" class="w-44 text-center tracking-[0.5em] text-lg font-bold bg-slate-900 border border-hb-border rounded-xl py-2.5 text-white focus:outline-none focus:border-hb-gold" placeholder="••••">
-            </div>
-
-            <div class="flex gap-2 pt-2">
-                <button onclick="closePinModal()" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 transition-all">İptal</button>
-                <button onclick="verifyPin()" class="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white shadow-md transition-all">Giriş Yap</button>
-            </div>
-            
-            <div class="text-[10px] text-slate-500 pt-1">
-                Varsayılan Güvenlik PIN: <span class="text-slate-400 font-mono font-bold">1234</span>
-            </div>
-        </div>
-    </div>
-
     <!-- ETKİLEŞİMLİ VERİTABANI & MOTOR SCRIPTLERİ -->
     <script>
-        // === YÖNETİCİ PIN SİSTEMİ (VARSAYILAN: 1234) ===
-        const ADMIN_PIN = "1234";
-        let isAdminLoggedIn = false;
-
-        function openPinModal() {
-            if (isAdminLoggedIn) {
-                switchTab('admin');
-                return;
-            }
-            document.getElementById('pin-modal').classList.remove('hidden');
-            const input = document.getElementById('pin-input');
-            input.value = '';
-            input.focus();
-        }
-
-        function closePinModal() {
-            document.getElementById('pin-modal').classList.add('hidden');
-        }
-
-        function verifyPin() {
-            const input = document.getElementById('pin-input').value.trim();
-            if (input === ADMIN_PIN) {
-                isAdminLoggedIn = true;
-                closePinModal();
-                switchTab('admin');
-                renderAdminRecordsList();
-                alert("Yönetici girişi başarılı! Artık dilediğiniz gibi içtihat veya kanun ekleyebilirsiniz.");
-            } else {
-                alert("Hatalı PIN kodu! Lütfen tekrar deneyiniz.");
-                document.getElementById('pin-input').value = '';
-                document.getElementById('pin-input').focus();
-            }
-        }
-
-        function lockAdminPanel() {
-            isAdminLoggedIn = false;
-            switchTab('ictihat');
-            alert("Yönetici paneli kilitlendi.");
-        }
-
-        document.getElementById('pin-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') verifyPin();
-        });
-
-        // === 1. İÇTİHAT VE MEVZUAT VERİTABANI ===
+        // === 1. ORTAK VERİTABANI ERİŞİMİ (localStorage üzerinden admin.html ile senkron) ===
         const defaultLegalDatabase = [
             {
                 id: 1,
@@ -714,7 +501,7 @@
                 esasKarar: "2023/1842 E. , 2023/3910 K.",
                 tarih: "18.11.2023",
                 konu: "Arsa Payı Karşılığı İnşaat Sözleşmesinde Yüklenicinin Temerrüdü ve İfa İmkansızlığı",
-                ozet: "Arsa payı karşılığı inşaat sözleşmelerinde yüklenicinin işi belirlenen sürede tamamlayamaması durumunda arsa sahiplerinin TBK m. 125 uyarınca seçimlik haklarını kullanabileceği, geriye etkili fesih halinde ancak menfi zararın talep edilebileceği, müspet zarar kapsamındaki kira mahrumiyeti talebinin ise reddi gerektiği gözetilmelidir.",
+                ozet: "Arsa payı karşılığı inşaat sözleşmelerinde yüklenicinin işi belirlenen sürede tamamlayamaması durumunda arsa sahiplerinin TBK m. 125 uyarınca seçimlik haklarını kullanabileceği, geriye etkili fesih halinde ancak menfi zararın talep edilebileceği gözetilmelidir.",
                 madde: "TBK m. 123, 125; HMK m. 26",
                 benzerlik: "%98 Eşleşme"
             },
@@ -726,7 +513,7 @@
                 esasKarar: "2023/14298 E. , 2024/2105 K.",
                 tarih: "14.02.2024",
                 konu: "İşçinin Fazla Çalışma Ücreti İspatı ve İmzalı Bordroların Hukuki Niteliği",
-                ozet: "İmzalı ücret bordrolarında fazla çalışma ücreti ödendiği anlaşılıyorsa, işçi tarafından gerçekte daha fazla çalışma yapıldığının ancak yazılı ve kesin delille ispatlanması gerekir. İhtirazi kayıt içermeyen bordroya karşı tanık beyanlarına itibar edilemez. Husumetli işçi tanıklarının anlatımları yan delillerle desteklenmedikçe hükme esas alınamaz.",
+                ozet: "İmzalı ücret bordrolarında fazla çalışma ücreti ödendiği anlaşılıyorsa, işçi tarafından gerçekte daha fazla çalışma yapıldığının ancak yazılı ve kesin delille ispatlanması gerekir. İhtirazi kayıt içermeyen bordroya karşı tanık dinletilemez.",
                 madde: "4857 Sayılı İş Kanunu m. 41; HMK m. 200",
                 benzerlik: "%96 Eşleşme"
             },
@@ -738,141 +525,31 @@
                 esasKarar: "2023/5110 E. , 2023/8924 K.",
                 tarih: "05.10.2023",
                 konu: "Konut Kiralarında 10 Yıllık Uzama Süresi Sonunda Tahliye Şartları",
-                ozet: "TBK'nın 347. maddesi uyarınca, on yıllık uzama süresi sonunda kiraya veren, bu süreyi izleyen her uzama yılının bitiminden en az üç ay önce bildirimde bulunmak koşuluyla, herhangi bir sebep göstermek zorunda olmaksızın kira sözleşmesine son verebilir. Bildirimin kiracıya uzama yılı bitmeden en az 3 ay evvel tebliğ ettirilmiş olması zorunlu dava şartıdır.",
+                ozet: "TBK'nın 347. maddesi uyarınca, on yıllık uzama süresi sonunda kiraya veren, bu süreyi izleyen her uzama yılının bitiminden en az üç ay önce bildirimde bulunmak koşuluyla, herhangi bir sebep göstermek zorunda olmaksızın kira sözleşmesine son verebilir.",
                 madde: "Türk Borçlar Kanunu m. 347",
                 benzerlik: "%95 Eşleşme"
             },
             {
                 id: 4,
-                tur: "ictihat",
-                merci: "yargitay",
-                daire: "Yargıtay 4. Hukuk Dairesi",
-                esasKarar: "2022/9812 E. , 2023/3104 K.",
-                tarih: "22.03.2023",
-                konu: "Trafik Kazası Sonucu Destekten Yoksun Kalma ve Hatır Taşıması İndirimi",
-                ozet: "Kazada vefat eden desteğin araçta ücretsiz ve salt hatır için taşındığı sabit olduğunda, belirlenen maddi ve manevi tazminat tutarından TBK m. 51 ve 52 uyarınca hakkaniyete uygun bir hatır taşıması indirimi (%20 ila %30 oranında) yapılması zorunludur. Aksi yöndeki mahkeme kararı bozmayı gerektirir.",
-                madde: "Türk Borçlar Kanunu m. 51, 52; KTK m. 85",
-                benzerlik: "%92 Eşleşme"
-            },
-            {
-                id: 5,
                 tur: "kanun",
                 merci: "mevzuat",
                 daire: "Mevzuat Bilgi Sistemi - Kanun",
                 esasKarar: "6100 Sayılı Kanun",
                 tarih: "Yürürlükte",
                 konu: "Dava Dilekçesinin Zorunlu Unsurları ve Şekil Şartları",
-                ozet: "Dava dilekçesinde mahkemenin adı, davacı ve davalının adı soyadı, T.C. kimlik numarası, adresi, davanın konusu ve dava değeri, davacının iddiasının dayanağı olan bütün vakıaların sıra numarası altında açık özetleri, iddia edilen her bir vakıanın hangi delillerle ispat edileceği ve açık bir netice-i talep yer almak zorundadır.",
+                ozet: "Dava dilekçesinde mahkemenin adı, davacı ve davalının adı soyadı, T.C. kimlik numarası, adresi, davanın konusu ve dava değeri, vakıaların özeti ve açık bir netice-i talep yer almak zorundadır.",
                 madde: "HMK Madde 119",
                 benzerlik: "%99 Eşleşme"
-            },
-            {
-                id: 6,
-                tur: "kanun",
-                merci: "mevzuat",
-                daire: "Mevzuat Bilgi Sistemi - Kanun",
-                esasKarar: "4857 Sayılı Kanun",
-                tarih: "Yürürlükte",
-                konu: "Feshin Geçersizliği ve İşe İade Davası Açma Süresi",
-                ozet: "İş sözleşmesi feshedilen işçi, fesih bildiriminde sebep gösterilmediği veya gösterilen sebebin geçerli bir sebep olmadığı iddiası ile fesih bildiriminin tebliği tarihinden itibaren bir ay içinde iş mahkemeleri arabuluculuk bürosuna başvurmak zorundadır. Arabuluculuk son tutanak tarihinden itibaren iki hafta içinde iş mahkemesinde dava açılır.",
-                madde: "İş Kanunu Madde 20; 7036 Sayılı Kanun m. 3",
-                benzerlik: "%97 Eşleşme"
             }
         ];
 
         function getStoredDatabase() {
             const stored = localStorage.getItem('hb_custom_legal_db');
             if (stored) {
-                try {
-                    return JSON.parse(stored);
-                } catch(e) {
-                    return defaultLegalDatabase;
-                }
+                try { return JSON.parse(stored); } catch(e) {}
             }
             localStorage.setItem('hb_custom_legal_db', JSON.stringify(defaultLegalDatabase));
             return defaultLegalDatabase;
-        }
-
-        function saveStoredDatabase(db) {
-            localStorage.setItem('hb_custom_legal_db', JSON.stringify(db));
-        }
-
-        // === MANUEL YENİ VERİ EKLEME (YÖNETİCİ İŞLEMİ) ===
-        function saveManualRecord() {
-            const tur = document.getElementById('admin-tur').value;
-            const daire = document.getElementById('admin-daire').value.trim();
-            const esas = document.getElementById('admin-esas').value.trim();
-            const konu = document.getElementById('admin-konu').value.trim();
-            const madde = document.getElementById('admin-madde').value.trim();
-            const ozet = document.getElementById('admin-ozet').value.trim();
-
-            if (!daire || !esas || !konu || !ozet) {
-                alert("Lütfen merci, esas/karar no, konu ve özet alanlarını eksiksiz doldurunuz.");
-                return;
-            }
-
-            let merci = "yargitay";
-            if (daire.toLowerCase().includes("danıştay")) merci = "danistay";
-            if (daire.toLowerCase().includes("anayasa") || daire.toLowerCase().includes("aym")) merci = "aym";
-            if (tur === "kanun") merci = "mevzuat";
-
-            const db = getStoredDatabase();
-            const newRecord = {
-                id: Date.now(),
-                tur: tur,
-                merci: merci,
-                daire: daire,
-                esasKarar: esas,
-                tarih: "Manuel Eklendi",
-                konu: konu,
-                ozet: ozet,
-                madde: madde || "İlgili Mevzuat",
-                benzerlik: "%100 Doğrudan Eşleşme"
-            };
-
-            db.unshift(newRecord);
-            saveStoredDatabase(db);
-
-            document.getElementById('admin-daire').value = '';
-            document.getElementById('admin-esas').value = '';
-            document.getElementById('admin-konu').value = '';
-            document.getElementById('admin-madde').value = '';
-            document.getElementById('admin-ozet').value = '';
-
-            renderAdminRecordsList();
-            executeSearch();
-            alert("Yeni hukuki kayıt başarıyla eklendi! Arama sekmesinde ve asistanda hemen kullanılabilir.");
-        }
-
-        function deleteRecord(id) {
-            if (!confirm("Bu kararı / mevzuatı silmek istediğinize emin misiniz?")) return;
-            let db = getStoredDatabase();
-            db = db.filter(item => item.id !== id);
-            saveStoredDatabase(db);
-            renderAdminRecordsList();
-            executeSearch();
-        }
-
-        function renderAdminRecordsList() {
-            const db = getStoredDatabase();
-            document.getElementById('admin-total-records').innerText = `${db.length} Kayıt Mevcut`;
-            const container = document.getElementById('admin-records-list');
-
-            container.innerHTML = db.map(item => `
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-hb-border flex items-center justify-between text-xs hover:border-slate-700 transition-all">
-                    <div class="space-y-0.5">
-                        <div class="flex items-center gap-2">
-                            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${item.tur === 'ictihat' ? 'bg-blue-500/10 text-blue-400' : 'bg-amber-500/10 text-amber-400'} border border-slate-700">${item.tur.toUpperCase()}</span>
-                            <span class="font-bold text-slate-200">${item.daire} - ${item.esasKarar}</span>
-                        </div>
-                        <div class="text-[11px] text-slate-400 truncate max-w-xl">${item.konu}</div>
-                    </div>
-                    <button onclick="deleteRecord(${item.id})" class="px-2.5 py-1.5 rounded-lg bg-rose-950/40 text-rose-400 hover:bg-rose-900 hover:text-white border border-rose-900/50 text-xs transition-all flex items-center gap-1">
-                        <i class="fa-solid fa-trash-can"></i>
-                        <span>Sil</span>
-                    </button>
-                </div>
-            `).join('');
         }
 
         // === 2. ARAMA MOTORU ===
@@ -901,8 +578,6 @@
 
             if (filterSort === "date_desc") {
                 filtered.sort((a, b) => b.id - a.id);
-            } else if (filterSort === "date_asc") {
-                filtered.sort((a, b) => a.id - b.id);
             }
 
             countEl.innerText = `${filtered.length} Kayıt Bulundu (Sorgu: "${query || 'Tümü'}")`;
@@ -911,8 +586,7 @@
                 container.innerHTML = `
                     <div class="p-8 rounded-2xl bg-hb-card border border-hb-border text-center space-y-2">
                         <i class="fa-solid fa-magnifying-glass text-slate-500 text-2xl"></i>
-                        <div class="text-xs font-semibold text-slate-300">Aramanıza uygun içtihat veya kanun maddesi bulunamadı.</div>
-                        <p class="text-[11px] text-slate-500">Lütfen arama terimlerinizi basitleştirin veya filtreleri 'Tümü' olarak ayarlayın.</p>
+                        <div class="text-xs font-semibold text-slate-300">Aramanıza uygun kayıt bulunamadı.</div>
                     </div>
                 `;
                 return;
@@ -929,34 +603,27 @@
                             </div>
                             <div class="text-[11px] text-hb-gold font-medium">Konu: ${item.konu}</div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="applyToDilekce('${item.esasKarar}', '${item.madde}')" class="px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-medium border border-blue-500/30 transition-all flex items-center gap-1.5">
-                                <i class="fa-solid fa-file-pen text-[11px]"></i>
-                                <span>Dilekçeye Aktar</span>
-                            </button>
-                        </div>
+                        <button onclick="applyToDilekce('${item.esasKarar}', '${item.madde}')" class="px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-medium border border-blue-500/30 transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pen text-[11px]"></i>
+                            <span>Dilekçeye Aktar</span>
+                        </button>
                     </div>
                     <p class="text-xs text-slate-300 font-serif leading-relaxed line-clamp-3 bg-slate-900/40 p-3 rounded-xl border border-hb-border/50">
                         "${item.ozet}"
                     </p>
                     <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-hb-border/40">
                         <span><i class="fa-solid fa-book-bookmark mr-1 text-slate-500"></i> İlgili Mevzuat: <strong>${item.madde}</strong></span>
-                        <span class="text-slate-500 text-[10px]">Doğrulandı: UYAP / Mevzuat Bilgi Sistemi</span>
+                        <span class="text-slate-500 text-[10px]">Doğrulandı</span>
                     </div>
                 </div>
             `).join('');
-        }
-
-        function quickFilterSearch(tag) {
-            document.getElementById('ictihat-search-query').value = tag;
-            executeSearch();
         }
 
         function applyToDilekce(esasKarar, madde) {
             switchTab('belge');
             const promptInput = document.getElementById('dilekce-prompt-input');
             promptInput.value += `\\nDayanak Emsal: ${esasKarar} (${madde})`;
-            alert(`${esasKarar} sayılı karar dilekçe promptuna başarıyla eklendi!`);
+            alert(`${esasKarar} sayılı karar dilekçe promptuna eklendi!`);
         }
 
         // === 3. HUKUK DANIŞMA ASİSTANI ===
@@ -1039,11 +706,9 @@
             if (lower.includes('fazla mesai') || lower.includes('işçi') || lower.includes('kıdem')) {
                 return `
                     <p><strong>Hukuki Değerlendirme (İş Kanunu m. 41 & Yargıtay 9. HD İçtihadı):</strong></p>
-                    <p>Fazla çalışma yaptığını iddia eden işçi bu iddiasını ispatla mükelleftir. İspatta delil hiyerarşisi şu şekildedir:</p>
                     <ul class="list-disc pl-5 space-y-1">
                         <li><strong>Yazılı ve İmzalı Bordrolar:</strong> Ücret bordrosunda fazla mesai tahakkuku var ve ihtirazi kayıtsız imzalanmışsa, tanık dinletilemez.</li>
-                        <li><strong>Tanık Beyanları:</strong> Yazılı kayıt yoksa tanık dinlenebilir; ancak husumetli işçi tanıklarının anlatımları yan delillerle desteklenmelidir.</li>
-                        <li><strong>Elektronik Kayıtlar:</strong> Turnike ve kart basma verileri aksi sabit oluncaya kadar delil mahiyetindedir.</li>
+                        <li><strong>Tanık Beyanları:</strong> Yazılı kayıt yoksa tanık dinlenebilir; ancak husumetli tanık anlatımları yan delille desteklenmelidir.</li>
                     </ul>
                 `;
             } else if (lower.includes('kira') || lower.includes('tahliye') || lower.includes('347')) {
@@ -1051,17 +716,13 @@
                     <p><strong>Hukuki Değerlendirme (TBK m. 347 Kapsamında 10 Yıllık Tahliye):</strong></p>
                     <ul class="list-disc pl-5 space-y-1">
                         <li><strong>Süre Hesabı:</strong> Sözleşme süresi + 10 yıllık uzama süresi = Toplam 11. yılın bitiminde tahliye istenebilir.</li>
-                        <li><strong>3 Ay Önceden Bildirim Şartı:</strong> Uzama yılının bitiminden en az 3 ay önce noter kanalıyla tebligat yapılması zorunludur.</li>
+                        <li><strong>3 Ay Önceden Bildirim:</strong> Uzama yılının bitiminden en az 3 ay önce noter kanalıyla tebligat yapılması zorunludur.</li>
                     </ul>
                 `;
             } else {
                 return `
-                    <p><strong>Hukuki Analiz ve Yol Haritası:</strong></p>
-                    <p>İlettiğiniz uyuşmazlık 6100 sayılı HMK ve TMK m. 6 (İspat Yükü) çerçevesinde değerlendirilmiştir:</p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li>Dava açmadan evvel dava şartı arabuluculuk kapsamında olup olmadığı denetlenmelidir.</li>
-                        <li>Yönetici panelinden (PIN ile) yeni eklediğiniz emsal kararlar da otomatik olarak bu analizlere dahil edilmektedir.</li>
-                    </ul>
+                    <p><strong>Hukuki Analiz ve Değerlendirme:</strong></p>
+                    <p>İlettiğiniz uyuşmazlık 6100 sayılı HMK ve TMK m. 6 (İspat Yükü) çerçevesinde değerlendirilmiştir. Dava açmadan önce zorunlu arabuluculuk şartı ve delil durumunun somutlaştırılması esastır.</p>
                 `;
             }
         }
@@ -1069,14 +730,14 @@
         function clearChatHistory() {
             document.getElementById('chat-messages').innerHTML = `
                 <div class="text-center py-4 text-slate-500 text-xs">
-                    Sohbet geçmişi temizlendi. Yeni hukuki sorunuzu sorabilirsiniz.
+                    Sohbet geçmişi temizlendi.
                 </div>
             `;
         }
 
         // === 4. DAVA DOSYALARI EKLEME ===
         function createNewDavaDosyasi() {
-            const dosyaAdi = prompt("Yeni Dava Dosyası Başlığı (Örn: 'Kaya Ltd. - Ticari Alacak'):");
+            const dosyaAdi = prompt("Yeni Dava Dosyası Başlığı:");
             if (!dosyaAdi) return;
 
             const container = document.getElementById('dava-dosyalari-listesi');
@@ -1096,15 +757,13 @@
                     </div>
                 </div>
             `;
-            alert(`"${dosyaAdi}" dava dosyası başarıyla oluşturuldu!`);
         }
 
         // === 5. GÜNLÜK 5 DİLEKÇE LİMİT SİSTEMİ ===
         const DAILY_MAX_QUOTA = 5;
 
         function getTodayDateString() {
-            const today = new Date();
-            return today.toISOString().split('T')[0];
+            return new Date().toISOString().split('T')[0];
         }
 
         function getRemainingQuota() {
@@ -1138,7 +797,6 @@
             }
 
             document.getElementById('header-quota-count').innerText = remaining;
-
             const quotaInfoEl = document.getElementById('button-quota-info');
             const btnEl = document.getElementById('btn-generate');
 
@@ -1170,17 +828,15 @@
             document.getElementById('tab-ictihat').classList.add('hidden');
             document.getElementById('tab-belge').classList.add('hidden');
             document.getElementById('tab-projeler').classList.add('hidden');
-            document.getElementById('tab-admin').classList.add('hidden');
 
             const titles = {
                 'asistan': '<i class="fa-solid fa-wand-magic-sparkles text-blue-400"></i> Hukuk Danışma Asistanı',
                 'ictihat': '<i class="fa-solid fa-magnifying-glass-arrow-right text-hb-gold"></i> İçtihat & Mevzuat Arama Motoru',
                 'belge': '<i class="fa-solid fa-file-signature text-blue-400"></i> Dilekçe Prompt Stüdyosu (HMK m. 119 Uyumlu)',
-                'projeler': '<i class="fa-solid fa-briefcase text-emerald-400"></i> Dava Dosyalarım',
-                'admin': '<i class="fa-solid fa-key text-amber-400"></i> Yönetici Paneli (Manuel Veri Ekleme)'
+                'projeler': '<i class="fa-solid fa-briefcase text-emerald-400"></i> Dava Dosyalarım'
             };
 
-            const navIds = ['nav-asistan', 'nav-ictihat', 'nav-belge', 'nav-projeler', 'nav-admin'];
+            const navIds = ['nav-asistan', 'nav-ictihat', 'nav-belge', 'nav-projeler'];
             navIds.forEach(id => {
                 const btn = document.getElementById(id);
                 if (btn) btn.className = "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-hb-card transition-all";
@@ -1195,13 +851,12 @@
             }
 
             if (tabKey === 'ictihat') executeSearch();
-            if (tabKey === 'admin') renderAdminRecordsList();
         }
 
         const templates = {
-            'ise_iade': "Mahkeme: İstanbul Nöbetçi İş Mahkemesi\\nDavacı: Ahmet Kaya (T.C: 12345678901)\\nDavalı: Vizyon Yazılım Teknolojileri A.Ş.\\nOlay ve Talepler: Müvekkil 15.01.2021 - 10.09.2026 tarihleri arasında kıdemli yazılımcı olarak çalıştı. İş sözleşmesi performans bahanesiyle haklı neden olmaksızın feshedildi. HMK m. 119 uyarınca feshin geçersizliği, işe iade ve 4 aya kadar boşta geçen süre ücreti talep ediyoruz. Yargıtay 9. HD kararlarına dayanılsın.",
-            'kira_tahliye': "Mahkeme: Kadıköy Nöbetçi Sulh Hukuk Mahkemesi\\nDavacı: Mehmet Demir (Kiraya Veren, T.C: 98765432100)\\nDavalı: Caner Özcan (Kiracı)\\nOlay ve Talepler: 01.09.2014 başlangıç tarihli kira sözleşmesi kapsamında 10 yılı aşan uzama süresi dolmuştur. TBK m. 347 uyarınca en az 3 ay önceden Kadıköy 3. Noterliği kanalıyla ihtarname gönderilmiş, yasal sürede tahliye gerçekleşmemiştir. Kiralanan taşınmazın tahliyesini ve teslimini talep ediyoruz.",
-            'cevap_itiraz': "Mahkeme: Ankara 4. Asliye Ticaret Mahkemesi\\nDosya No: 2026/412 E.\\nDavalı (Müvekkil): Anadolu Lojistik Ltd. Şti.\\nDavacı: Akdeniz Dağıtım A.Ş.\\nSavunma ve İtirazlar: Öncelikle davanın 10 yıllık genel zamanaşımı süresi geçtikten sonra açılması sebebiyle zamanaşımı ilk itirazında bulunuyoruz. Esasa ilişkin olarak iddia edilen fatura bedelleri banka kanalıyla ödenmiş olup borç ifa ile son bulmuştur. Davanın reddi ve kötü niyet tazminatı talebimizdir."
+            'ise_iade': "Mahkeme: İstanbul Nöbetçi İş Mahkemesi\\nDavacı: Ahmet Kaya (T.C: 12345678901)\\nDavalı: Vizyon Yazılım Teknolojileri A.Ş.\\nOlay ve Talepler: Müvekkil 15.01.2021 - 10.09.2026 tarihleri arasında kıdemli yazılımcı olarak çalıştı. İş sözleşmesi performans bahanesiyle haklı neden olmaksızın feshedildi. HMK m. 119 uyarınca feshin geçersizliği, işe iade ve 4 aya kadar boşta geçen süre ücreti talep ediyoruz.",
+            'kira_tahliye': "Mahkeme: Kadıköy Nöbetçi Sulh Hukuk Mahkemesi\\nDavacı: Mehmet Demir (Kiraya Veren, T.C: 98765432100)\\nDavalı: Caner Özcan (Kiracı)\\nOlay ve Talepler: 01.09.2014 başlangıç tarihli kira sözleşmesi kapsamında 10 yılı aşan uzama süresi dolmuştur. TBK m. 347 uyarınca en az 3 ay önceden noter ihtarı gönderilmiştir. Tahliye talep ediyoruz.",
+            'cevap_itiraz': "Mahkeme: Ankara 4. Asliye Ticaret Mahkemesi\\nDosya No: 2026/412 E.\\nDavalı (Müvekkil): Anadolu Lojistik Ltd. Şti.\\nDavacı: Akdeniz Dağıtım A.Ş.\\nSavunma ve İtirazlar: 10 yıllık genel zamanaşımı sebebiyle ilk itirazda bulunuyoruz. Davanın reddi talep edilir."
         };
 
         function setPromptTemplate(key) {
@@ -1216,7 +871,7 @@
 
             const rawPrompt = document.getElementById('dilekce-prompt-input').value.trim();
             if (!rawPrompt) {
-                alert("Lütfen önce sol taraftaki alana somut olay ve dilekçe talimatınızı (prompt) yazınız.");
+                alert("Lütfen önce sol taraftaki alana dilekçe talimatınızı (prompt) yazınız.");
                 return;
             }
 
@@ -1252,14 +907,11 @@
                 <div class="mb-4">
                     <h4 class="font-bold underline mb-1.5 uppercase">OLAYLAR VE HUKUKİ GEREKÇELER</h4>
                     <p class="indent-6 text-justify mb-2 leading-relaxed">
-                        Sayın Mahkemenize intikal eden işbu uyuşmazlıkta; müvekkilimiz tarafından tarafımıza tevdi edilen bilgi, belge ve beyanlar doğrultusunda olaylar şu şekilde gelişmiştir:
+                        Sayın Mahkemenize intikal eden uyuşmazlıkta olaylar şu şekilde gelişmiştir:
                     </p>
                     <div class="p-3 bg-slate-50 border-l-4 border-slate-700 italic text-slate-800 text-xs mb-3">
                         \${rawPrompt.replace(/\\n/g, '<br>')}
                     </div>
-                    <p class="indent-6 text-justify mb-2">
-                        6100 sayılı Hukuk Muhakemeleri Kanunu, Türk Borçlar Kanunu ve Yargıtay'ın yerleşik içtihatları gereğince yukarıda özetlenen hukuki vakıaların sübut bulduğu aşikardır. Karşı tarafın haksız ve hukuka aykırı tutumu nedeniyle işbu davanın ikamesi zorunluluğu hasıl olmuştur.
-                    </p>
                 </div>
 
                 <div class="mb-4">
@@ -1270,7 +922,7 @@
                 <div class="mb-6">
                     <h4 class="font-bold underline mb-1.5 uppercase">SONUÇ VE İSTEM</h4>
                     <p class="indent-6 text-justify mb-2">
-                        Yukarıda arz ve izah edilen ve resen nazara alınacak sebeplerle; davamızın <strong>KABULÜ</strong> ile taleplerimiz doğrultusunda karar verilmesini, yargılama giderleri ile vekalet ücretinin karşı tarafa tahmiline hükmedilmesini bilvekale arz ve talep ederim.
+                        Davamızın <strong>KABULÜ</strong> ile taleplerimiz doğrultusunda karar verilmesini, yargılama giderleri ile vekalet ücretinin karşı tarafa tahmiline hükmedilmesini bilvekale arz ve talep ederim.
                     </p>
                 </div>
 
@@ -1285,7 +937,7 @@
 
             deductQuota();
             const kalan = getRemainingQuota();
-            alert("Dilekçeniz başarıyla oluşturuldu! Kalan günlük dilekçe hakkınız: " + kalan);
+            alert("Dilekçeniz oluşturuldu! Kalan günlük dilekçe hakkınız: " + kalan);
         }
 
         function copyDilekce() {
