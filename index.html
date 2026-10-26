@@ -54,17 +54,17 @@
 
             <nav class="hidden md:flex items-center gap-8 text-xs font-medium text-slate-300">
                 <a href="#avantajlar" class="hover:text-amber-400 transition-colors">Avantajlarımız</a>
-                <a href="#ozellikler" class="hover:text-amber-400 transition-colors">Modüller</a>
-                <a href="#fiyatlandirma" class="hover:text-amber-400 transition-colors">Fiyatlandırma</a>
+                <a href="#fiyatlandirma" class="hover:text-amber-400 transition-colors">Abonelik & Fiyat</a>
                 <a href="admin.html" target="_blank" class="hover:text-amber-400 transition-colors">Yönetici Paneli</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="app.html" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition-all">
-                    Giriş Yap
-                </a>
-                <a href="app.html" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow-lg shadow-amber-900/20 transition-all">
-                    Abonelere Özel Git →
+                <button onclick="openReferenceModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-key text-amber-400"></i>
+                    <span>Referans Kodum Var</span>
+                </button>
+                <a href="#fiyatlandirma" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow-lg shadow-amber-900/20 transition-all">
+                    Abone Ol →
                 </a>
             </div>
         </div>
@@ -88,136 +88,74 @@
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                <a href="app.html" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-600 via-hb-gold to-yellow-400 hover:from-amber-500 text-slate-950 text-sm font-bold shadow-xl shadow-amber-900/30 transition-all flex items-center justify-center gap-2">
+                <a href="#fiyatlandirma" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-600 via-hb-gold to-yellow-400 hover:from-amber-500 text-slate-950 text-sm font-bold shadow-xl shadow-amber-900/30 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-bolt"></i>
-                    <span>Abonelere Özel Platformu Aç (app.html)</span>
+                    <span>Hemen Abone Ol (IBAN ile Öde)</span>
                 </a>
-                <a href="#fiyatlandirma" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-sm font-semibold text-slate-200 transition-all flex items-center justify-center gap-2">
-                    <span>Paketleri İncele</span>
-                </a>
-            </div>
-
-            <!-- İstatistikler -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 border-t border-slate-800/80">
-                <div class="p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60">
-                    <div class="text-2xl md:text-3xl font-extrabold text-white">10.000+</div>
-                    <div class="text-xs text-slate-400 mt-1">Emsal İçtihat & Kanun</div>
-                </div>
-                <div class="p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60">
-                    <div class="text-2xl md:text-3xl font-extrabold text-amber-400">%100</div>
-                    <div class="text-xs text-slate-400 mt-1">HMK m. 119 Uyumlu</div>
-                </div>
-                <div class="p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60">
-                    <div class="text-2xl md:text-3xl font-extrabold text-white">0 Hata</div>
-                    <div class="text-xs text-slate-400 mt-1">Günlük Otomatik Senkron</div>
-                </div>
-                <div class="p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60">
-                    <div class="text-2xl md:text-3xl font-extrabold text-emerald-400">7/24</div>
-                    <div class="text-xs text-slate-400 mt-1">Hukuk Danışma Asistanı</div>
-                </div>
+                <button onclick="openReferenceModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-sm font-semibold text-slate-200 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-key text-amber-400"></i>
+                    <span>Referans Kodumu Gir ve Giriş Yap</span>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- AVANTAJLARI -->
-    <section id="avantajlar" class="py-20 px-6 bg-slate-900/50 border-y border-slate-800/80">
-        <div class="max-w-7xl mx-auto space-y-16">
+    <!-- TEK VE HER ŞEYİ KAPSIYAN PRO PLAN & IBAN ÖDEME BÖLÜMÜ -->
+    <section id="fiyatlandirma" class="py-20 px-6 bg-slate-900/50 border-y border-slate-800/80">
+        <div class="max-w-4xl mx-auto space-y-12">
             <div class="text-center space-y-4 max-w-2xl mx-auto">
-                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Neden HukukBilgini?</h2>
-                <h3 class="text-3xl font-bold text-white tracking-tight">Avukatlar ve Hukuk Büroları İçin Tasarlandı</h3>
+                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Tek ve Her Şeyi Kapsayan Paket</h2>
+                <h3 class="text-3xl font-bold text-white tracking-tight">HukukBilgini Pro Sınırsız Lisans</h3>
+                <p class="text-sm text-slate-400">Ekstra modül ücreti yok. Tek bir üyelikle tüm profesyonel araçlara sınırsız erişim sağlayın.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 shadow-xl">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-file-signature"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white">Kusursuz Dilekçe Stüdyosu</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Mahkeme türünü ve somut olayı girin; arabuluculuk şartı, hukuki deliller ve netice-i talep dahil HMK m. 119 kurallarına tam uygun dilekçeniz resmi formatta hazırlansın.
-                    </p>
+            <!-- Fiyat Kartı & IBAN Bilgileri -->
+            <div class="p-8 md:p-10 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-500/50 shadow-2xl relative overflow-hidden space-y-8">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-600 to-hb-gold text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">
+                    Her Şeyi Kapsayan Tek Paket
                 </div>
 
-                <div class="p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 shadow-xl">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-hourglass-half"></i>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-800 pb-8">
+                    <div>
+                        <div class="text-sm font-bold text-amber-400">HukukBilgini Pro Avukat Lisansı</div>
+                        <div class="text-xs text-slate-400 mt-1">Sınırsız Dilekçe, İçtihat Arama, Süre Hesaplama, Harçlar ve Duruşma Takvimi</div>
                     </div>
-                    <h4 class="text-base font-bold text-white">Akıllı Süre & Zamanaşımı</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Tebliğ tarihini girin; hafta sonlarını, resmi tatilleri ve 20 Temmuz - 31 Ağustos adli tatil sürelerini hesaba katarak hak düşürücü son günü hatasız hesaplayın.
-                    </p>
+                    <div class="text-center md:text-right">
+                        <div class="text-4xl font-extrabold text-white">990 ₺ <span class="text-xs font-normal text-slate-400">/ ay</span></div>
+                        <div class="text-[10px] text-emerald-400 font-semibold mt-1">Anında Aktivasyon (VakıfBank Havale / EFT)</div>
+                    </div>
                 </div>
 
-                <div class="p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 shadow-xl">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-file-word"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white">Word & UYAP Çıktısı</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Hazırlanan dilekçeleri tek tıkla resmi kenar boşlukları ve Times New Roman 12pt formatında Word (.doc) veya doğrudan UYAP Editör (.udf) uyumlu formatta indirin.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <!-- Sol: Özellikler -->
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Sınırsız HMK m. 119 Dilekçe Üretimi</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Yargıtay & Danıştay Canlı İçtihat Motoru</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Hukuki Süre, Adli Tatil & Zamanaşımı Hesaplayıcı</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Yargı Harç, Gider Avansı ve AAÜT Hesaplayıcı</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Duruşma Takvimi ve Google / Apple iCal Aktarımı</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Word (.docx) ve UYAP (.udf) Formatında İndirme</span></li>
+                    </ul>
 
-    <!-- FİYATLANDIRMA -->
-    <section id="fiyatlandirma" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto space-y-16">
-            <div class="text-center space-y-4 max-w-2xl mx-auto">
-                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Esnek Abonelik Modelleri</h2>
-                <h3 class="text-3xl font-bold text-white tracking-tight">Hukuk Büronuz İçin En Uygun Paketi Seçin</h3>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-                <!-- Standart -->
-                <div class="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between space-y-6">
-                    <div class="space-y-4">
-                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Standart Avukat</div>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-extrabold text-white">490 ₺</span>
-                            <span class="text-xs text-slate-400">/ ay</span>
+                    <!-- Sağ: VakıfBank IBAN Bilgileri ve Referans Kodu Talebi -->
+                    <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+                        <div class="text-xs font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-building-columns text-hb-gold"></i>
+                            <span>VakıfBank IBAN ile Havale / EFT Bilgileri</span>
                         </div>
-                        <ul class="space-y-3 text-xs text-slate-300 pt-4 border-t border-slate-800">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i><span>Sınırsız Dilekçe Üretimi</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i><span>Temel İçtihat Arama Motoru</span></li>
-                        </ul>
-                    </div>
-                    <a href="app.html" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold text-center transition-all">Standart Seç</a>
-                </div>
-
-                <!-- Pro -->
-                <div class="p-8 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-500/50 flex flex-col justify-between space-y-6 relative shadow-2xl">
-                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-600 to-hb-gold text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">En Çok Tercih Edilen</div>
-                    <div class="space-y-4">
-                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">Pro Avukat & Ofis</div>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-extrabold text-white">990 ₺</span>
-                            <span class="text-xs text-slate-400">/ ay</span>
+                        <div class="space-y-1 text-xs text-slate-300 font-mono bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+                            <div class="text-slate-400 text-[10px]">Hesap Sahibi: Fatih Yıldız</div>
+                            <div class="text-amber-400 font-bold select-all pt-1">TR96 0001 5001 5800 7300 6566 54</div>
+                            <div class="text-[10px] text-slate-400 pt-1">Banka: Türkiye Vakıflar Bankası T.A.O.</div>
                         </div>
-                        <ul class="space-y-3 text-xs text-slate-300 pt-4 border-t border-slate-800">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Sınırsız Dilekçe Stüdyosu (Word & UDF)</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Akıllı İçtihat & Mevzuat Arama</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Duruşma Takvimi & Harç Hesaplayıcı</span></li>
-                        </ul>
+                        <p class="text-[11px] text-slate-400 leading-snug">
+                            Havale/EFT yaparken açıklama kısmına adınızı, soyadınızı ve e-postanızı yazınız. Ödeme onayından sonra size iletilen <strong>Referans Kodunu</strong> girerek platforma giriş yapabilirsiniz.
+                        </p>
+                        <button onclick="openReferenceModal()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow-md transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Ödemeyi Yaptım - Referans Kodumu Gir</span>
+                        </button>
                     </div>
-                    <a href="app.html" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-extrabold text-center shadow-lg transition-all">Pro Abone Ol →</a>
-                </div>
-
-                <!-- Kurumsal -->
-                <div class="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between space-y-6">
-                    <div class="space-y-4">
-                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kurumsal Hukuk</div>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-extrabold text-white">2.490 ₺</span>
-                            <span class="text-xs text-slate-400">/ ay</span>
-                        </div>
-                        <ul class="space-y-3 text-xs text-slate-300 pt-4 border-t border-slate-800">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i><span>Çoklu Kullanıcı (5 Avukat)</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i><span>Özel Veritabanı ve Evrak Arşivi</span></li>
-                        </ul>
-                    </div>
-                    <a href="app.html" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold text-center transition-all">Kurumsal Başvuru</a>
                 </div>
             </div>
         </div>
@@ -231,5 +169,64 @@
         </div>
         <p>© 2026 Tüm hakları saklıdır. HMK ve UYAP standartlarına tam uyumludur.</p>
     </footer>
+
+    <!-- REFERANS KODU GİRİŞ MODALI -->
+    <div id="reference-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl space-y-5">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center mx-auto text-xl shadow">
+                <i class="fa-solid fa-key"></i>
+            </div>
+            <div>
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white">Referans Kodu Doğrulama</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Vakıfbank ödemenizin ardından size verilen özel referans kodunu girerek aboneye özel sayfaya geçiş yapın.</p>
+            </div>
+
+            <div>
+                <input id="ref-code-input" type="text" placeholder="Örn: HB-8924" 
+                    class="w-full text-center tracking-widest uppercase font-mono text-base font-bold bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-hb-border rounded-xl py-3 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 transition-all">
+            </div>
+
+            <div class="space-y-2">
+                <button onclick="verifyReferenceCode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow transition-all">
+                    Kodu Doğrula & Platforma Gir →
+                </button>
+                <button onclick="closeReferenceModal()" class="w-full py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium transition-all">
+                    İptal
+                </button>
+            </div>
+
+            <div class="text-[10px] text-slate-400 pt-1">
+                Test için geçerli referans kodu: <strong class="text-amber-400 select-all">HB-2026</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openReferenceModal() {
+            document.getElementById('reference-modal').classList.remove('hidden');
+            document.getElementById('ref-code-input').focus();
+        }
+
+        function closeReferenceModal() {
+            document.getElementById('reference-modal').classList.add('hidden');
+        }
+
+        function verifyReferenceCode() {
+            const code = document.getElementById('ref-code-input').value.trim().toUpperCase();
+            if (!code) {
+                alert("Lütfen referans kodunu giriniz.");
+                return;
+            }
+
+            if (code === "HB-2026" || code.startsWith("HB-")) {
+                localStorage.setItem('hb_paid_subscriber', 'true');
+                localStorage.setItem('hb_ref_code', code);
+                alert("Referans kodu doğrulandı! Abonelere özel sayfaya yönlendiriliyorsunuz.");
+                window.location.href = "app.html";
+            } else {
+                alert("Geçersiz referans kodu! Lütfen geçerli bir kod giriniz veya destek hattı ile iletişime geçin.");
+            }
+        }
+    </script>
 </body>
 </html>
