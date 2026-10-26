@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HukukBilgini - Yönetici Konsolu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        hb: {
+                            sidebar: '#0b0f19',
+                            canvas: '#0f172a',
+                            card: '#161f32',
+                            cardhover: '#1e2942',
+                            border: '#243049',
+                            gold: '#cda85b',
+                            blue: '#2563eb'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #243049; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-hb-canvas text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- 1. GÜVENLİK PIN GİRİŞ EKRANI -->
+    <div id="login-overlay" class="fixed inset-0 z-50 bg-hb-canvas flex items-center justify-center p-4">
+        <div class="bg-hb-card border border-hb-border rounded-3xl max-w-sm w-full p-8 text-center shadow-2xl space-y-5">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center mx-auto text-2xl shadow-lg">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-white tracking-wide">Yönetici Doğrulaması</h2>
+                <p class="text-xs text-slate-400 mt-1">HukukBilgini veritabanı yönetim konsolu.</p>
+            </div>
+
+            <div>
+                <input id="admin-pin-input" type="password" maxlength="6" autofocus
+                    class="w-48 text-center tracking-[0.5em] text-xl font-bold bg-slate-900 border border-hb-border rounded-xl py-3 text-white focus:outline-none focus:border-hb-gold transition-all"
+                    placeholder="••••">
+            </div>
+
+            <button onclick="checkAdminPin()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white shadow-lg transition-all">
+                Konsola Giriş Yap
+            </button>
+
+            <div class="text-[11px] text-slate-500 pt-2 flex items-center justify-between">
+                <a href="index.html" class="text-blue-400 hover:underline">← Ana Sayfaya Dön</a>
+                <span>Varsayılan PIN: <strong>1234</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. ANA YÖNETİCİ KONSOLU -->
+    <div id="admin-content" class="hidden flex-1 flex flex-col">
+        <!-- Konsol Başlık Çubuğu -->
+        <header class="h-16 border-b border-hb-border bg-hb-sidebar/80 px-8 flex items-center justify-between sticky top-0 z-20 backdrop-blur">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center font-bold text-xs">
+                    HB
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm text-white">HukukBilgini</span>
+                    <span class="px-2 py-0.5 rounded bg-amber-500/10 text-hb-gold border border-hb-gold/30 text-[10px] font-bold">Admin Console</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="index.html" target="_blank" class="text-xs text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                    <span>Canlı Siteyi Gör</span>
+                </a>
+                <button onclick="logoutAdmin()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950/60 hover:text-rose-400 border border-hb-border text-xs text-slate-300 font-medium transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                    <span>Çıkış Yap</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- İçerik Alanı -->
+        <main class="flex-1 max-w-6xl w-full mx-auto p-8 space-y-8">
+            
+            <!-- İstatistik Kartları -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-5 rounded-2xl bg-hb-card border border-hb-border flex items-center justify-between">
+                    <div>
+                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Toplam Kayıt</div>
+                        <div id="stat-total" class="text-2xl font-bold text-white mt-1">0</div>
+                    </div>
+                    <i class="fa-solid fa-database text-blue-400 text-xl"></i>
+                </div>
+                <div class="p-5 rounded-2xl bg-hb-card border border-hb-border flex items-center justify-between">
+                    <div>
+                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">İçtihatlar</div>
+                        <div id="stat-ictihat" class="text-2xl font-bold text-emerald-400 mt-1">0</div>
+                    </div>
+                    <i class="fa-solid fa-scale-balanced text-emerald-400 text-xl"></i>
+                </div>
+                <div class="p-5 rounded-2xl bg-hb-card border border-hb-border flex items-center justify-between">
+                    <div>
+                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Mevzuat / Kanun</div>
+                        <div id="stat-kanun" class="text-2xl font-bold text-amber-400 mt-1">0</div>
+                    </div>
+                    <i class="fa-solid fa-book text-amber-400 text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Kayıt Ekleme Formu -->
+            <div class="p-6 rounded-2xl bg-hb-card border border-hb-border space-y-5">
+                <div class="flex items-center justify-between border-b border-hb-border/70 pb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-circle-plus text-blue-400"></i>
+                        <span>Yeni İçtihat veya Kanun Maddesi Ekle</span>
+                    </h3>
+                    <span class="text-[11px] text-emerald-400">Eklenenler anında ana sitede yayına girer</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Kayıt Türü</label>
+                        <select id="rec-tur" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-hb-gold">
+                            <option value="ictihat">İçtihat / Mahkeme Kararı</option>
+                            <option value="kanun">Kanun / Mevzuat Maddesi</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Merci / Kurum</label>
+                        <input id="rec-daire" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: Yargıtay 9. Hukuk Dairesi">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Esas/Karar No veya Kanun No</label>
+                        <input id="rec-esas" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: 2024/1102 E. , 2024/5400 K.">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Uyuşmazlık Konusu / Başlık</label>
+                        <input id="rec-konu" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: Haksız Fesih ve Kıdem Tazminatı İspatı">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">İlgili Kanun Maddeleri</label>
+                        <input id="rec-madde" type="text" class="w-full bg-slate-900 border border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold" placeholder="Örn: 4857 Sayılı Kanun m. 20; TBK m. 117">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Karar Özeti veya Hüküm Fıkrası Metni</label>
+                    <textarea id="rec-ozet" rows="4" class="w-full bg-slate-900 border border-hb-border rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-hb-gold leading-relaxed" placeholder="Mahkemenin gerekçeli karar özetini veya yasal metni buraya yapıştırın..."></textarea>
+                </div>
+
+                <div class="flex justify-end pt-1">
+                    <button onclick="addLegalRecord()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Site Veritabanına Ekle</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kayıt Listesi & Yönetimi -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">Veritabanındaki Kayıtlar</h3>
+                    <button onclick="resetToDefaults()" class="text-[11px] text-slate-500 hover:text-slate-300 underline">Varsayılan Verileri Sıfırla</button>
+                </div>
+
+                <div id="records-table" class="space-y-2.5">
+                    <!-- Javascript ile doldurulacaktır -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scriptler -->
+    <script>
+        const ADMIN_PIN = "1234";
+
+        function checkAdminPin() {
+            const input = document.getElementById('admin-pin-input').value.trim();
+            if (input === ADMIN_PIN) {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('admin-content').classList.remove('hidden');
+                renderAdminDashboard();
+            } else {
+                alert("Hatalı PIN kodu! Lütfen tekrar deneyin.");
+                document.getElementById('admin-pin-input').value = '';
+                document.getElementById('admin-pin-input').focus();
+            }
+        }
+
+        document.getElementById('admin-pin-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkAdminPin();
+        });
+
+        function logoutAdmin() {
+            document.getElementById('admin-pin-input').value = '';
+            document.getElementById('admin-content').classList.add('hidden');
+            document.getElementById('login-overlay').classList.remove('hidden');
+        }
+
+        const defaultLegalDatabase = [
+            {
+                id: 1,
+                tur: "ictihat",
+                merci: "yargitay",
+                daire: "Yargıtay 6. Hukuk Dairesi",
+                esasKarar: "2023/1842 E. , 2023/3910 K.",
+                tarih: "18.11.2023",
+                konu: "Arsa Payı Karşılığı İnşaat Sözleşmesinde Yüklenicinin Temerrüdü ve İfa İmkansızlığı",
+                ozet: "Arsa payı karşılığı inşaat sözleşmelerinde yüklenicinin işi belirlenen sürede tamamlayamaması durumunda arsa sahiplerinin TBK m. 125 uyarınca seçimlik haklarını kullanabileceği, geriye etkili fesih halinde ancak menfi zararın talep edilebileceği gözetilmelidir.",
+                madde: "TBK m. 123, 125; HMK m. 26",
+                benzerlik: "%98 Eşleşme"
+            },
+            {
+                id: 2,
+                tur: "ictihat",
+                merci: "yargitay",
+                daire: "Yargıtay 9. Hukuk Dairesi",
+                esasKarar: "2023/14298 E. , 2024/2105 K.",
+                tarih: "14.02.2024",
+                konu: "İşçinin Fazla Çalışma Ücreti İspatı ve İmzalı Bordroların Hukuki Niteliği",
+                ozet: "İmzalı ücret bordrolarında fazla çalışma ücreti ödendiği anlaşılıyorsa, işçi tarafından gerçekte daha fazla çalışma yapıldığının ancak yazılı ve kesin delille ispatlanması gerekir. İhtirazi kayıt içermeyen bordroya karşı tanık dinletilemez.",
+                madde: "4857 Sayılı İş Kanunu m. 41; HMK m. 200",
+                benzerlik: "%96 Eşleşme"
+            },
+            {
+                id: 3,
+                tur: "ictihat",
+                merci: "yargitay",
+                daire: "Yargıtay 3. Hukuk Dairesi",
+                esasKarar: "2023/5110 E. , 2023/8924 K.",
+                tarih: "05.10.2023",
+                konu: "Konut Kiralarında 10 Yıllık Uzama Süresi Sonunda Tahliye Şartları",
+                ozet: "TBK'nın 347. maddesi uyarınca, on yıllık uzama süresi sonunda kiraya veren, bu süreyi izleyen her uzama yılının bitiminden en az üç ay önce bildirimde bulunmak koşuluyla, herhangi bir sebep göstermek zorunda olmaksızın sözleşmeye son verebilir.",
+                madde: "Türk Borçlar Kanunu m. 347",
+                benzerlik: "%95 Eşleşme"
+            },
+            {
+                id: 4,
+                tur: "kanun",
+                merci: "mevzuat",
+                daire: "Mevzuat Bilgi Sistemi - Kanun",
+                esasKarar: "6100 Sayılı Kanun",
+                tarih: "Yürürlükte",
+                konu: "Dava Dilekçesinin Zorunlu Unsurları ve Şekil Şartları",
+                ozet: "Dava dilekçesinde mahkemenin adı, davacı ve davalının adı soyadı, T.C. kimlik numarası, adresi, davanın konusu, deliller ve açık bir netice-i talep yer almak zorundadır.",
+                madde: "HMK Madde 119",
+                benzerlik: "%99 Eşleşme"
+            }
+        ];
+
+        function getDB() {
+            const stored = localStorage.getItem('hb_custom_legal_db');
+            if (stored) {
+                try { return JSON.parse(stored); } catch(e) {}
+            }
+            localStorage.setItem('hb_custom_legal_db', JSON.stringify(defaultLegalDatabase));
+            return defaultLegalDatabase;
+        }
+
+        function saveDB(data) {
+            localStorage.setItem('hb_custom_legal_db', JSON.stringify(data));
+        }
+
+        function addLegalRecord() {
+            const tur = document.getElementById('rec-tur').value;
+            const daire = document.getElementById('rec-daire').value.trim();
+            const esas = document.getElementById('rec-esas').value.trim();
+            const konu = document.getElementById('rec-konu').value.trim();
+            const madde = document.getElementById('rec-madde').value.trim();
+            const ozet = document.getElementById('rec-ozet').value.trim();
+
+            if (!daire || !esas || !konu || !ozet) {
+                alert("Lütfen merci, esas no, konu ve özet alanlarını eksiksiz doldurunuz.");
+                return;
+            }
+
+            let merci = "yargitay";
+            if (daire.toLowerCase().includes("danıştay")) merci = "danistay";
+            if (daire.toLowerCase().includes("aym") || daire.toLowerCase().includes("anayasa")) merci = "aym";
+            if (tur === "kanun") merci = "mevzuat";
+
+            const db = getDB();
+            const newRecord = {
+                id: Date.now(),
+                tur: tur,
+                merci: merci,
+                daire: daire,
+                esasKarar: esas,
+                tarih: "Admin Ekledi",
+                konu: konu,
+                ozet: ozet,
+                madde: madde || "İlgili Mevzuat",
+                benzerlik: "%100 Eşleşme"
+            };
+
+            db.unshift(newRecord);
+            saveDB(db);
+
+            document.getElementById('rec-daire').value = '';
+            document.getElementById('rec-esas').value = '';
+            document.getElementById('rec-konu').value = '';
+            document.getElementById('rec-madde').value = '';
+            document.getElementById('rec-ozet').value = '';
+
+            renderAdminDashboard();
+            alert("Kayıt başarıyla eklendi! Ana sitedeki arama motorunda ve asistanda anında aktifleşti.");
+        }
+
+        function deleteRecord(id) {
+            if (!confirm("Bu kaydı silmek istediğinize emin misiniz?")) return;
+            let db = getDB();
+            db = db.filter(item => item.id !== id);
+            saveDB(db);
+            renderAdminDashboard();
+        }
+
+        function resetToDefaults() {
+            if (!confirm("Tüm eklemeleri sıfırlayıp varsayılan verilere dönmek istiyor musunuz?")) return;
+            localStorage.setItem('hb_custom_legal_db', JSON.stringify(defaultLegalDatabase));
+            renderAdminDashboard();
+        }
+
+        function renderAdminDashboard() {
+            const db = getDB();
+            document.getElementById('stat-total').innerText = db.length;
+            document.getElementById('stat-ictihat').innerText = db.filter(x => x.tur === 'ictihat').length;
+            document.getElementById('stat-kanun').innerText = db.filter(x => x.tur === 'kanun').length;
+
+            const container = document.getElementById('records-table');
+            container.innerHTML = db.map(item => `
+                <div class="p-4 rounded-xl bg-hb-card border border-hb-border flex items-start justify-between gap-4 hover:border-slate-700 transition-all">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${item.tur === 'ictihat' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${item.tur.toUpperCase()}</span>
+                            <span class="font-bold text-xs text-slate-100">${item.daire} - ${item.esasKarar}</span>
+                            <span class="text-[10px] text-slate-500">• ${item.tarih}</span>
+                        </div>
+                        <div class="text-xs font-semibold text-hb-gold">${item.konu}</div>
+                        <p class="text-xs text-slate-400 line-clamp-2">${item.ozet}</p>
+                        <div class="text-[10px] text-slate-500 pt-1">İlgili Madde: <strong class="text-slate-300">${item.madde}</strong></div>
+                    </div>
+                    <button onclick="deleteRecord(${item.id})" class="px-3 py-1.5 rounded-lg bg-rose-950/40 text-rose-400 hover:bg-rose-900 hover:text-white border border-rose-900/50 text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Sil</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
