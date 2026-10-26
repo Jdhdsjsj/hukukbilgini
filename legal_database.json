@@ -1,1 +1,26 @@
-
+[
+  {
+    "id": 101,
+    "tur": "kanun",
+    "merci": "mevzuat",
+    "daire": "Mevzuat Bilgi Sistemi - Kanun",
+    "esasKarar": "6100 Sayılı HMK",
+    "tarih": "Yürürlükte",
+    "konu": "Dava Dilekçesinin Zorunlu Unsurları ve Şekil Şartları",
+    "ozet": "Dava dilekçesinde mahkemenin adı, davacı ve davalının bilgileri, dava konusu, vakıaların sıra numarası altında açık özetleri, deliller ve netice-i talep yer almak zorundadır.",
+    "madde": "HMK Madde 119",
+    "benzerlik": "%100 Doğrulanmış Mevzuat"
+  },
+  {
+    "id": 201,
+    "tur": "ictihat",
+    "merci": "yargitay",
+    "daire": "Yargıtay 9. Hukuk Dairesi",
+    "esasKarar": "2023/14298 E. , 2024/2105 K.",
+    "tarih": "14.02.2024",
+    "konu": "İşçinin Fazla Çalışma Ücreti İspatında Bordro ve Delil Hiyerarşisi",
+    "ozet": "İmzalı ücret bordrolarında fazla mesai ödendiği görünüyorsa işçi daha fazla çalıştığını ancak yazılı delille ispatlayabilir. Bordroya karşı tanık dinletilemez.",
+    "madde": "4857 Sayılı Kanun m. 41; HMK m. 200",
+    "benzerlik": "%99 Emsal Uyumluluk"
+  }
+]
