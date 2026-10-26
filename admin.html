@@ -42,7 +42,7 @@
             </div>
             <div>
                 <h2 class="text-lg font-bold text-white tracking-wide">Yönetici Doğrulaması</h2>
-                <p class="text-xs text-slate-400 mt-1">HukukBilgini Veri & Sistem Yönetim Konsolu</p>
+                <p class="text-xs text-slate-400 mt-1">HukukBilgini Veri & Kullanıcı Yönetim Konsolu</p>
             </div>
 
             <div>
@@ -78,21 +78,17 @@
 
             <div class="flex items-center gap-4">
                 <!-- Tema Değiştirici -->
-                <button onclick="toggleTheme()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-hb-border text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs transition-all">
+                <button onclick="toggleTheme()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-hb-border text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs transition-all" title="Açık/Koyu Tema">
                     <i id="theme-icon" class="fa-solid fa-sun text-amber-400"></i>
                 </button>
 
-                <!-- Günlük Limit Sıfırlama Butonu -->
-                <button onclick="resetUserQuota()" class="px-3 py-1.5 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 text-xs font-semibold transition-all flex items-center gap-1.5" title="Kullanıcının 5 dilekçe limitini hemen 5'e sıfırlar">
-                    <i class="fa-solid fa-arrows-rotate"></i>
-                    <span>Dilekçe Kotasını Yenile (5/5)</span>
-                </button>
-
+                <!-- Canlı Site Bağlantısı -->
                 <a href="index.html" target="_blank" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors">
                     <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                    <span>Canlı Site</span>
+                    <span>Canlı Siteyi Gör</span>
                 </a>
 
+                <!-- Çıkış Butonu -->
                 <button onclick="logoutAdmin()" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-950/60 hover:text-rose-400 border border-slate-200 dark:border-hb-border text-xs text-slate-700 dark:text-slate-300 font-medium transition-all flex items-center gap-1.5">
                     <i class="fa-solid fa-right-from-bracket text-xs"></i>
                     <span>Çıkış</span>
@@ -103,110 +99,259 @@
         <!-- İçerik Alanı -->
         <main class="flex-1 max-w-6xl w-full mx-auto p-8 space-y-8">
             
-            <!-- İstatistik Kartları -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border flex items-center justify-between shadow-sm dark:shadow-none">
+            <!-- İstatistik Kartları (5'li Izgara) -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="p-4 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border shadow-sm dark:shadow-none flex items-center justify-between">
                     <div>
-                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Toplam Kayıt</div>
-                        <div id="stat-total" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Toplam Kayıt</div>
+                        <div id="stat-total" class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">0</div>
                     </div>
-                    <i class="fa-solid fa-database text-blue-500 text-xl"></i>
+                    <i class="fa-solid fa-database text-blue-500 text-lg"></i>
                 </div>
-                <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border flex items-center justify-between shadow-sm dark:shadow-none">
+                <div class="p-4 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border shadow-sm dark:shadow-none flex items-center justify-between">
                     <div>
-                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">İçtihatlar</div>
-                        <div id="stat-ictihat" class="text-2xl font-bold text-emerald-500 mt-1">0</div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">İçtihatlar</div>
+                        <div id="stat-ictihat" class="text-xl font-bold text-emerald-500 mt-0.5">0</div>
                     </div>
-                    <i class="fa-solid fa-scale-balanced text-emerald-500 text-xl"></i>
+                    <i class="fa-solid fa-scale-balanced text-emerald-500 text-lg"></i>
                 </div>
-                <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border flex items-center justify-between shadow-sm dark:shadow-none">
+                <div class="p-4 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border shadow-sm dark:shadow-none flex items-center justify-between">
                     <div>
-                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Mevzuat / Kanun</div>
-                        <div id="stat-kanun" class="text-2xl font-bold text-amber-500 mt-1">0</div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Mevzuat / Kanun</div>
+                        <div id="stat-kanun" class="text-xl font-bold text-amber-500 mt-0.5">0</div>
                     </div>
-                    <i class="fa-solid fa-book text-amber-500 text-xl"></i>
+                    <i class="fa-solid fa-book text-amber-500 text-lg"></i>
                 </div>
-                <div class="p-5 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border flex items-center justify-between shadow-sm dark:shadow-none">
+                <div class="p-4 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border shadow-sm dark:shadow-none flex items-center justify-between">
                     <div>
-                        <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Kaydedilen Kararlar</div>
-                        <div id="stat-bookmarks" class="text-2xl font-bold text-purple-500 mt-1">0</div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Kayıtlı Kullanıcı</div>
+                        <div id="stat-users" class="text-xl font-bold text-indigo-500 mt-0.5">0</div>
                     </div>
-                    <i class="fa-solid fa-bookmark text-purple-500 text-xl"></i>
+                    <i class="fa-solid fa-users text-indigo-500 text-lg"></i>
+                </div>
+                <div class="p-4 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border shadow-sm dark:shadow-none flex items-center justify-between col-span-2 md:col-span-1">
+                    <div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Kaydedilen İlamlar</div>
+                        <div id="stat-bookmarks" class="text-xl font-bold text-purple-500 mt-0.5">0</div>
+                    </div>
+                    <i class="fa-solid fa-bookmark text-purple-500 text-lg"></i>
                 </div>
             </div>
 
-            <!-- Kayıt Ekleme Formu -->
-            <div class="p-6 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-5 shadow-sm dark:shadow-none">
-                <div class="flex items-center justify-between border-b border-slate-200 dark:border-hb-border/70 pb-3">
-                    <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <i class="fa-solid fa-circle-plus text-blue-500"></i>
-                        <span>Yeni İçtihat veya Kanun Maddesi Ekle</span>
-                    </h3>
-                    <span class="text-[11px] text-emerald-500 font-medium">Eklenenler anında ana sitede yayına girer</span>
+            <!-- Yönetim Sekmeleri (Navigasyon) -->
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-hb-border pb-3">
+                <div class="flex gap-2">
+                    <button onclick="switchAdminTab('users')" id="tab-btn-users" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Kullanıcı Listesi & Yönetimi</span>
+                        <span id="tab-user-count" class="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">0</span>
+                    </button>
+                    <button onclick="switchAdminTab('database')" id="tab-btn-database" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-hb-card transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span>İçtihat & Mevzuat Veritabanı</span>
+                    </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Kayıt Türü</label>
-                        <select id="rec-tur" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-hb-gold">
-                            <option value="ictihat">İçtihat / Mahkeme Kararı</option>
-                            <option value="kanun">Kanun / Mevzuat Maddesi</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Merci / Kurum</label>
-                        <input id="rec-daire" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: Yargıtay 9. Hukuk Dairesi">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Esas/Karar No veya Kanun No</label>
-                        <input id="rec-esas" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: 2024/1102 E. , 2024/5400 K.">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Uyuşmazlık Konusu / Başlık</label>
-                        <input id="rec-konu" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: Haksız Fesih ve Kıdem Tazminatı İspatı">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">İlgili Kanun Maddeleri</label>
-                        <input id="rec-madde" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: 4857 Sayılı Kanun m. 20; TBK m. 117">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Karar Özeti veya Hüküm Fıkrası Metni</label>
-                    <textarea id="rec-ozet" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl p-3 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold leading-relaxed" placeholder="Mahkemenin gerekçeli karar özetini veya yasal metni buraya yapıştırın..."></textarea>
-                </div>
-
-                <div class="flex justify-end pt-1">
-                    <button onclick="addLegalRecord()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                        <span>Site Veritabanına Ekle</span>
+                <div id="user-actions-header" class="flex items-center gap-2">
+                    <button onclick="openAddUserModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-plus text-xs"></i>
+                        <span>Yeni Kullanıcı Ekle</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Kayıt Listesi & Yönetimi -->
-            <div class="space-y-4">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Veritabanındaki Kayıtlar</h3>
-                    <div class="flex items-center gap-3">
-                        <button onclick="exportDatabaseJSON()" class="text-xs text-blue-500 hover:underline flex items-center gap-1">
-                            <i class="fa-solid fa-download"></i>
-                            <span>legal_database.json Olarak İndir</span>
+            <!-- 1. BÖLÜM: KULLANICI LİSTESİ VE YÖNETİMİ -->
+            <div id="section-users" class="space-y-4">
+                
+                <!-- Arama ve Filtreleme Çubuğu -->
+                <div class="p-4 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border shadow-sm dark:shadow-none flex flex-col md:flex-row gap-3 items-center justify-between">
+                    <div class="relative w-full md:w-80">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input id="user-search-query" type="text" oninput="renderUsersTable()" placeholder="Kullanıcı adı, e-posta veya baro sicil ara..." 
+                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+                    </div>
+
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <select id="user-filter-plan" onchange="renderUsersTable()" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-700 dark:text-slate-300 focus:outline-none">
+                            <option value="all">Tüm Paketler</option>
+                            <option value="Sinirsiz">Sınırsız / Limitsiz</option>
+                            <option value="Pro">Pro Avukat</option>
+                            <option value="Ucretsiz">Standart / Ücretsiz</option>
+                        </select>
+
+                        <select id="user-filter-status" onchange="renderUsersTable()" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-700 dark:text-slate-300 focus:outline-none">
+                            <option value="all">Tüm Durumlar</option>
+                            <option value="Aktif">Aktif Kullanıcılar</option>
+                            <option value="Askida">Askıya Alınanlar</option>
+                        </select>
+
+                        <button onclick="resetUsersToDefault()" class="text-[11px] text-slate-500 hover:text-rose-500 underline shrink-0" title="Örnek kullanıcı listesini sıfırlar">
+                            Örnek Listeyi Yenile
                         </button>
-                        <span class="text-slate-400">•</span>
-                        <button onclick="resetToDefaults()" class="text-[11px] text-slate-500 hover:text-rose-500 underline">Varsayılan Verileri Sıfırla</button>
                     </div>
                 </div>
 
-                <div id="records-table" class="space-y-2.5">
-                    <!-- Javascript ile doldurulacaktır -->
+                <!-- Kullanıcılar Tablosu -->
+                <div class="bg-white dark:bg-hb-card rounded-2xl border border-slate-200 dark:border-hb-border overflow-hidden shadow-sm dark:shadow-none">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 dark:bg-slate-900/80 border-b border-slate-200 dark:border-hb-border text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-3.5 pl-5">Kullanıcı / Avukat</th>
+                                    <th class="p-3.5">Baro / Unvan</th>
+                                    <th class="p-3.5">Erişim Paketi</th>
+                                    <th class="p-3.5">Durum</th>
+                                    <th class="p-3.5">Kayıt Tarihi</th>
+                                    <th class="p-3.5 text-right pr-5">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-700 dark:text-slate-300 font-sans">
+                                <!-- Javascript ile doldurulacaktır -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="users-empty-state" class="hidden p-8 text-center text-xs text-slate-400">
+                        Aramanıza uygun kullanıcı bulunamadı.
+                    </div>
                 </div>
+
+            </div>
+
+            <!-- 2. BÖLÜM: İÇTİHAT VE MEVZUAT VERİTABANI YÖNETİMİ -->
+            <div id="section-database" class="hidden space-y-8">
+                
+                <!-- Kayıt Ekleme Formu -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border space-y-5 shadow-sm dark:shadow-none">
+                    <div class="flex items-center justify-between border-b border-slate-200 dark:border-hb-border/70 pb-3">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-circle-plus text-blue-500"></i>
+                            <span>Yeni İçtihat veya Kanun Maddesi Ekle</span>
+                        </h3>
+                        <span class="text-[11px] text-emerald-500 font-medium">Eklenenler anında ana sitede yayına girer</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Kayıt Türü</label>
+                            <select id="rec-tur" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-hb-gold">
+                                <option value="ictihat">İçtihat / Mahkeme Kararı</option>
+                                <option value="kanun">Kanun / Mevzuat Maddesi</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Merci / Kurum</label>
+                            <input id="rec-daire" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: Yargıtay 9. Hukuk Dairesi">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Esas/Karar No veya Kanun No</label>
+                            <input id="rec-esas" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: 2024/1102 E. , 2024/5400 K.">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Uyuşmazlık Konusu / Başlık</label>
+                            <input id="rec-konu" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: Haksız Fesih ve Kıdem Tazminatı İspatı">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">İlgili Kanun Maddeleri</label>
+                            <input id="rec-madde" type="text" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold" placeholder="Örn: 4857 Sayılı Kanun m. 20; TBK m. 117">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Karar Özeti veya Hüküm Fıkrası Metni</label>
+                        <textarea id="rec-ozet" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl p-3 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-hb-gold leading-relaxed" placeholder="Mahkemenin gerekçeli karar özetini veya yasal metni buraya yapıştırın..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end pt-1">
+                        <button onclick="addLegalRecord()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>Site Veritabanına Ekle</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kayıt Listesi & Yönetimi -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Veritabanındaki Kayıtlar</h3>
+                        <div class="flex items-center gap-3">
+                            <button onclick="exportDatabaseJSON()" class="text-xs text-blue-500 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-download"></i>
+                                <span>legal_database.json Olarak İndir</span>
+                            </button>
+                            <span class="text-slate-400">•</span>
+                            <button onclick="resetToDefaults()" class="text-[11px] text-slate-500 hover:text-rose-500 underline">Varsayılan Verileri Sıfırla</button>
+                        </div>
+                    </div>
+
+                    <div id="records-table" class="space-y-2.5">
+                        <!-- Javascript ile doldurulacaktır -->
+                    </div>
+                </div>
+
             </div>
 
         </main>
+    </div>
+
+    <!-- 3. YENİ KULLANICI EKLEME / DÜZENLEME MODALI -->
+    <div id="user-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border rounded-3xl max-w-md w-full p-6 text-left shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-hb-border pb-3">
+                <h3 id="user-modal-title" class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-indigo-500"></i>
+                    <span>Yeni Kullanıcı Ekle</span>
+                </h3>
+                <button onclick="closeUserModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Ad Soyad</label>
+                    <input id="modal-user-name" type="text" placeholder="Örn: Av. Selin Kara" 
+                        class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">E-Posta Adresi</label>
+                    <input id="modal-user-email" type="email" placeholder="Örn: selin.kara@hukuk.av.tr" 
+                        class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Baro / Kurum</label>
+                        <input id="modal-user-baro" type="text" placeholder="Örn: İstanbul Barosu (54210)" 
+                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Erişim Paketi</label>
+                        <select id="modal-user-plan" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500">
+                            <option value="Sinirsiz">Sınırsız / Limitsiz</option>
+                            <option value="Pro">Pro Avukat</option>
+                            <option value="Ucretsiz">Standart / Ücretsiz</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Hesap Durumu</label>
+                    <select id="modal-user-status" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-hb-border rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option value="Aktif">Aktif</option>
+                        <option value="Askida">Askıda / Pasif</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-hb-border">
+                <button onclick="closeUserModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-medium text-slate-700 dark:text-slate-300 transition-all">İptal</button>
+                <button onclick="saveUserFromModal()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white shadow-md transition-all">Kaydet</button>
+            </div>
+        </div>
     </div>
 
     <!-- Scriptler -->
@@ -219,6 +364,7 @@
                 document.getElementById('login-overlay').classList.add('hidden');
                 document.getElementById('admin-content').classList.remove('hidden');
                 renderAdminDashboard();
+                renderUsersTable();
             } else {
                 alert("Hatalı PIN kodu! Lütfen tekrar deneyin.");
                 document.getElementById('admin-pin-input').value = '';
@@ -236,6 +382,31 @@
             document.getElementById('login-overlay').classList.remove('hidden');
         }
 
+        // Tab değiştirici (Kullanıcılar <-> Veritabanı)
+        function switchAdminTab(tabKey) {
+            const secUsers = document.getElementById('section-users');
+            const secDb = document.getElementById('section-database');
+            const btnUsers = document.getElementById('tab-btn-users');
+            const btnDb = document.getElementById('tab-btn-database');
+            const userHeaderAction = document.getElementById('user-actions-header');
+
+            if (tabKey === 'users') {
+                secUsers.classList.remove('hidden');
+                secDb.classList.add('hidden');
+                btnUsers.className = "px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition-all flex items-center gap-2";
+                btnDb.className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-hb-card transition-all flex items-center gap-2";
+                userHeaderAction.classList.remove('hidden');
+                renderUsersTable();
+            } else {
+                secUsers.classList.add('hidden');
+                secDb.classList.remove('hidden');
+                btnDb.className = "px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition-all flex items-center gap-2";
+                btnUsers.className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-hb-card transition-all flex items-center gap-2";
+                userHeaderAction.classList.add('hidden');
+                renderAdminDashboard();
+            }
+        }
+
         // Tema yönetimi
         function initTheme() {
             const savedTheme = localStorage.getItem('hb_theme');
@@ -243,10 +414,10 @@
             const icon = document.getElementById('theme-icon');
             if (savedTheme === 'light') {
                 html.classList.remove('dark');
-                icon.className = 'fa-solid fa-moon text-slate-700';
+                if (icon) icon.className = 'fa-solid fa-moon text-slate-700';
             } else {
                 html.classList.add('dark');
-                icon.className = 'fa-solid fa-sun text-amber-400';
+                if (icon) icon.className = 'fa-solid fa-sun text-amber-400';
             }
         }
 
@@ -256,21 +427,215 @@
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 localStorage.setItem('hb_theme', 'light');
-                icon.className = 'fa-solid fa-moon text-slate-700';
+                if (icon) icon.className = 'fa-solid fa-moon text-slate-700';
             } else {
                 html.classList.add('dark');
                 localStorage.setItem('hb_theme', 'dark');
-                icon.className = 'fa-solid fa-sun text-amber-400';
+                if (icon) icon.className = 'fa-solid fa-sun text-amber-400';
             }
         }
 
-        // Kota Sıfırlama
-        function resetUserQuota() {
-            localStorage.setItem('hb_remaining_quota', 5);
-            alert("Kullanıcının günlük dilekçe hakkı başarıyla 5/5 olarak sıfırlandı!");
+        // === KULLANICI YÖNETİMİ MOTORU (localStorage: 'hb_users') ===
+        const defaultUsers = [
+            { id: 1, name: "Av. Mehmet Ege Yıldız", email: "mehmet@hukukbilgini.com", baro: "İstanbul Barosu (Sicil: 48210)", plan: "Sinirsiz", status: "Aktif", createdAt: "2026-10-15" },
+            { id: 2, name: "Av. Selin Demir", email: "selin.demir@av.tr", baro: "Ankara Barosu (Sicil: 39120)", plan: "Pro", status: "Aktif", createdAt: "2026-10-20" },
+            { id: 3, name: "Av. Caner Bozkurt", email: "caner.bozkurt@hukuk.com", baro: "İzmir Barosu (Sicil: 27415)", plan: "Ucretsiz", status: "Aktif", createdAt: "2026-10-22" },
+            { id: 4, name: "Stj. Av. Ayşe Yılmaz", email: "ayse.yilmaz@staj.av.tr", baro: "Bursa Barosu (Stj. 1420)", plan: "Ucretsiz", status: "Aktif", createdAt: "2026-10-24" },
+            { id: 5, name: "Av. Murat Aksoy", email: "aksoy.murat@law.com", baro: "Antalya Barosu (Sicil: 18902)", plan: "Pro", status: "Askida", createdAt: "2026-10-18" }
+        ];
+
+        function getUsers() {
+            const stored = localStorage.getItem('hb_users');
+            if (stored) {
+                try { return JSON.parse(stored); } catch(e) {}
+            }
+            localStorage.setItem('hb_users', JSON.stringify(defaultUsers));
+            return defaultUsers;
         }
 
-        // Ortak Veritabanı
+        function saveUsers(users) {
+            localStorage.setItem('hb_users', JSON.stringify(users));
+            renderUsersTable();
+        }
+
+        function resetUsersToDefault() {
+            if (!confirm("Kullanıcı listesini varsayılan test verilerine döndürmek istiyor musunuz?")) return;
+            localStorage.setItem('hb_users', JSON.stringify(defaultUsers));
+            renderUsersTable();
+        }
+
+        function renderUsersTable() {
+            const users = getUsers();
+            const query = (document.getElementById('user-search-query') ? document.getElementById('user-search-query').value.trim().toLowerCase() : "");
+            const planFilter = (document.getElementById('user-filter-plan') ? document.getElementById('user-filter-plan').value : "all");
+            const statusFilter = (document.getElementById('user-filter-status') ? document.getElementById('user-filter-status').value : "all");
+
+            const statUsersEl = document.getElementById('stat-users');
+            const tabUserCount = document.getElementById('tab-user-count');
+            if (statUsersEl) statUsersEl.innerText = users.length;
+            if (tabUserCount) tabUserCount.innerText = users.length;
+
+            let filtered = users.filter(u => {
+                const matchQuery = !query || 
+                    u.name.toLowerCase().includes(query) || 
+                    u.email.toLowerCase().includes(query) || 
+                    u.baro.toLowerCase().includes(query);
+
+                const matchPlan = (planFilter === "all") || (u.plan === planFilter);
+                const matchStatus = (statusFilter === "all") || (u.status === statusFilter);
+
+                return matchQuery && matchPlan && matchStatus;
+            });
+
+            const tbody = document.getElementById('users-table-body');
+            const emptyState = document.getElementById('users-empty-state');
+            if (!tbody) return;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            tbody.innerHTML = filtered.map(u => {
+                let planBadge = 'bg-blue-500/10 text-blue-500 border border-blue-500/20';
+                let planName = 'Sınırsız / Limitsiz';
+                if (u.plan === 'Pro') {
+                    planBadge = 'bg-indigo-500/10 text-indigo-500 border border-indigo-500/20';
+                    planName = 'Pro Avukat';
+                } else if (u.plan === 'Ucretsiz') {
+                    planBadge = 'bg-slate-500/10 text-slate-500 border border-slate-500/20';
+                    planName = 'Standart / Ücretsiz';
+                }
+
+                const isActive = u.status === 'Aktif';
+                const statusBadge = isActive 
+                    ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' 
+                    : 'bg-rose-500/10 text-rose-500 border border-rose-500/20';
+
+                return `
+                    <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-900/40 transition-colors">
+                        <td class="p-3.5 pl-5">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-bold text-xs shrink-0">
+                                    ${u.name.replace('Av. ', '').replace('Stj. ', '').substring(0, 2).toUpperCase()}
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-900 dark:text-white">${u.name}</div>
+                                    <div class="text-[11px] text-slate-400 font-mono">${u.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3.5 text-slate-600 dark:text-slate-300">
+                            ${u.baro}
+                        </td>
+                        <td class="p-3.5">
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${planBadge}">
+                                ${planName}
+                            </span>
+                        </td>
+                        <td class="p-3.5">
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${statusBadge}">
+                                <i class="fa-solid ${isActive ? 'fa-circle-check' : 'fa-circle-pause'} mr-1"></i>${u.status}
+                            </span>
+                        </td>
+                        <td class="p-3.5 text-[11px] text-slate-400">
+                            ${u.createdAt}
+                        </td>
+                        <td class="p-3.5 text-right pr-5">
+                            <div class="flex items-center justify-end gap-1.5">
+                                <button onclick="toggleUserStatus(${u.id})" class="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-[11px] text-slate-600 dark:text-slate-300 transition-all" title="${isActive ? 'Hesabı Askıya Al' : 'Hesabı Aktifleştir'}">
+                                    <i class="fa-solid ${isActive ? 'fa-ban text-amber-500' : 'fa-check text-emerald-500'}"></i>
+                                </button>
+                                <button onclick="changeUserPlanPrompt(${u.id})" class="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-[11px] text-indigo-500 transition-all" title="Paketi Değiştir">
+                                    <i class="fa-solid fa-crown"></i>
+                                </button>
+                                <button onclick="deleteUser(${u.id})" class="px-2 py-1 rounded-lg border border-rose-500/20 hover:bg-rose-500/10 text-[11px] text-rose-500 transition-all" title="Kullanıcıyı Sil">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function toggleUserStatus(id) {
+            let users = getUsers();
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+            user.status = user.status === 'Aktif' ? 'Askida' : 'Aktif';
+            saveUsers(users);
+        }
+
+        function changeUserPlanPrompt(id) {
+            let users = getUsers();
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+            const newPlan = prompt(`${user.name} için yeni paket giriniz:\n(Sinirsiz, Pro, Ucretsiz)`, user.plan);
+            if (!newPlan) return;
+            if (['Sinirsiz', 'Pro', 'Ucretsiz'].includes(newPlan)) {
+                user.plan = newPlan;
+                saveUsers(users);
+                alert("Kullanıcı paketi güncellendi!");
+            } else {
+                alert("Geçersiz paket adı! Lütfen: Sinirsiz, Pro veya Ucretsiz yazınız.");
+            }
+        }
+
+        function deleteUser(id) {
+            let users = getUsers();
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+            if (!confirm(`${user.name} isimli kullanıcıyı silmek istediğinize emin misiniz?`)) return;
+            users = users.filter(u => u.id !== id);
+            saveUsers(users);
+        }
+
+        function openAddUserModal() {
+            document.getElementById('modal-user-name').value = '';
+            document.getElementById('modal-user-email').value = '';
+            document.getElementById('modal-user-baro').value = '';
+            document.getElementById('modal-user-plan').value = 'Sinirsiz';
+            document.getElementById('modal-user-status').value = 'Aktif';
+            document.getElementById('user-modal').classList.remove('hidden');
+        }
+
+        function closeUserModal() {
+            document.getElementById('user-modal').classList.add('hidden');
+        }
+
+        function saveUserFromModal() {
+            const name = document.getElementById('modal-user-name').value.trim();
+            const email = document.getElementById('modal-user-email').value.trim();
+            const baro = document.getElementById('modal-user-baro').value.trim();
+            const plan = document.getElementById('modal-user-plan').value;
+            const status = document.getElementById('modal-user-status').value;
+
+            if (!name || !email) {
+                alert("Lütfen en az Ad Soyad ve E-Posta adresini giriniz.");
+                return;
+            }
+
+            const users = getUsers();
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                baro: baro || "Genel Kullanıcı",
+                plan: plan,
+                status: status,
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+
+            users.unshift(newUser);
+            saveUsers(users);
+            closeUserModal();
+            alert("Yeni kullanıcı başarıyla eklendi!");
+        }
+
+        // === İÇTİHAT VE MEVZUAT VERİTABANI MOTORU ===
         const defaultLegalDatabase = [
             {
                 id: 1,
@@ -413,6 +778,7 @@
             document.getElementById('stat-bookmarks').innerText = bookmarks.length;
 
             const container = document.getElementById('records-table');
+            if (!container) return;
             container.innerHTML = db.map(item => `
                 <div class="p-4 rounded-xl bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border flex items-start justify-between gap-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all shadow-sm dark:shadow-none">
                     <div class="space-y-1">
