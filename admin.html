@@ -153,6 +153,10 @@
                 </div>
 
                 <div id="user-actions-header" class="flex items-center gap-2">
+                    <button onclick="renewAllUsersQuota()" class="px-3.5 py-2 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5" title="Listedeki tüm kullanıcıların dilekçe kotasını 5/5 olarak yeniler">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span>Tüm Kotaları Yenile</span>
+                    </button>
                     <button onclick="openAddUserModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md transition-all flex items-center gap-1.5">
                         <i class="fa-solid fa-user-plus text-xs"></i>
                         <span>Yeni Kullanıcı Ekle</span>
@@ -200,6 +204,7 @@
                                     <th class="p-3.5 pl-5">Kullanıcı / Avukat</th>
                                     <th class="p-3.5">Baro / Unvan</th>
                                     <th class="p-3.5">Erişim Paketi</th>
+                                    <th class="p-3.5">Günlük Kota</th>
                                     <th class="p-3.5">Durum</th>
                                     <th class="p-3.5">Kayıt Tarihi</th>
                                     <th class="p-3.5 text-right pr-5">İşlemler</th>
@@ -437,11 +442,11 @@
 
         // === KULLANICI YÖNETİMİ MOTORU (localStorage: 'hb_users') ===
         const defaultUsers = [
-            { id: 1, name: "Av. Mehmet Ege Yıldız", email: "mehmet@hukukbilgini.com", baro: "İstanbul Barosu (Sicil: 48210)", plan: "Sinirsiz", status: "Aktif", createdAt: "2026-10-15" },
-            { id: 2, name: "Av. Selin Demir", email: "selin.demir@av.tr", baro: "Ankara Barosu (Sicil: 39120)", plan: "Pro", status: "Aktif", createdAt: "2026-10-20" },
-            { id: 3, name: "Av. Caner Bozkurt", email: "caner.bozkurt@hukuk.com", baro: "İzmir Barosu (Sicil: 27415)", plan: "Ucretsiz", status: "Aktif", createdAt: "2026-10-22" },
-            { id: 4, name: "Stj. Av. Ayşe Yılmaz", email: "ayse.yilmaz@staj.av.tr", baro: "Bursa Barosu (Stj. 1420)", plan: "Ucretsiz", status: "Aktif", createdAt: "2026-10-24" },
-            { id: 5, name: "Av. Murat Aksoy", email: "aksoy.murat@law.com", baro: "Antalya Barosu (Sicil: 18902)", plan: "Pro", status: "Askida", createdAt: "2026-10-18" }
+            { id: 1, name: "Av. Mehmet Ege Yıldız", email: "mehmet@hukukbilgini.com", baro: "İstanbul Barosu (Sicil: 48210)", plan: "Sinirsiz", quota: "∞", maxQuota: "∞", status: "Aktif", createdAt: "2026-10-15" },
+            { id: 2, name: "Av. Selin Demir", email: "selin.demir@av.tr", baro: "Ankara Barosu (Sicil: 39120)", plan: "Pro", quota: 5, maxQuota: 5, status: "Aktif", createdAt: "2026-10-20" },
+            { id: 3, name: "Av. Caner Bozkurt", email: "caner.bozkurt@hukuk.com", baro: "İzmir Barosu (Sicil: 27415)", plan: "Ucretsiz", quota: 2, maxQuota: 5, status: "Aktif", createdAt: "2026-10-22" },
+            { id: 4, name: "Stj. Av. Ayşe Yılmaz", email: "ayse.yilmaz@staj.av.tr", baro: "Bursa Barosu (Stj. 1420)", plan: "Ucretsiz", quota: 0, maxQuota: 5, status: "Aktif", createdAt: "2026-10-24" },
+            { id: 5, name: "Av. Murat Aksoy", email: "aksoy.murat@law.com", baro: "Antalya Barosu (Sicil: 18902)", plan: "Pro", quota: 4, maxQuota: 5, status: "Askida", createdAt: "2026-10-18" }
         ];
 
         function getUsers() {
@@ -514,6 +519,19 @@
                     ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' 
                     : 'bg-rose-500/10 text-rose-500 border border-rose-500/20';
 
+                let quotaBadge = '';
+                if (u.plan === 'Sinirsiz' || u.quota === '∞') {
+                    quotaBadge = '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center gap-1 w-fit"><i class="fa-solid fa-infinity"></i> Sınırsız</span>';
+                } else {
+                    const qVal = parseInt(u.quota, 10);
+                    const maxQ = parseInt(u.maxQuota, 10) || 5;
+                    let colorCls = 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+                    if (qVal <= 0) colorCls = 'bg-rose-500/10 text-rose-500 border-rose-500/20';
+                    else if (qVal <= 2) colorCls = 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+
+                    quotaBadge = `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold border ${colorCls} flex items-center gap-1 w-fit cursor-pointer hover:opacity-80" onclick="editUserQuotaPrompt(${u.id})" title="Tıkla ve kotayı düzenle">${qVal} / ${maxQ} Kalan</span>`;
+                }
+
                 return `
                     <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-900/40 transition-colors">
                         <td class="p-3.5 pl-5">
@@ -536,6 +554,9 @@
                             </span>
                         </td>
                         <td class="p-3.5">
+                            ${quotaBadge}
+                        </td>
+                        <td class="p-3.5">
                             <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${statusBadge}">
                                 <i class="fa-solid ${isActive ? 'fa-circle-check' : 'fa-circle-pause'} mr-1"></i>${u.status}
                             </span>
@@ -545,6 +566,11 @@
                         </td>
                         <td class="p-3.5 text-right pr-5">
                             <div class="flex items-center justify-end gap-1.5">
+                                <!-- Kotayı Yenile Butonu -->
+                                <button onclick="renewUserQuota(${u.id})" class="px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 text-[11px] font-semibold transition-all flex items-center gap-1 shadow-sm" title="Bu kullanıcının dilekçe kotasını hemen 5/5 olarak yenile">
+                                    <i class="fa-solid fa-arrows-rotate text-[10px]"></i>
+                                    <span class="hidden lg:inline">Kotayı Yenile</span>
+                                </button>
                                 <button onclick="toggleUserStatus(${u.id})" class="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-[11px] text-slate-600 dark:text-slate-300 transition-all" title="${isActive ? 'Hesabı Askıya Al' : 'Hesabı Aktifleştir'}">
                                     <i class="fa-solid ${isActive ? 'fa-ban text-amber-500' : 'fa-check text-emerald-500'}"></i>
                                 </button>
@@ -559,6 +585,60 @@
                     </tr>
                 `;
             }).join('');
+        }
+
+        // Kullanıcının kotasını tek tıkla yenile (5/5)
+        function renewUserQuota(id) {
+            let users = getUsers();
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+
+            if (user.plan === 'Sinirsiz') {
+                user.quota = '∞';
+                user.maxQuota = '∞';
+                alert(`${user.name} kullanıcısı zaten Sınırsız Pakete sahiptir.`);
+            } else {
+                user.quota = user.maxQuota || 5;
+                saveUsers(users);
+                alert(`${user.name} kullanıcısının dilekçe kotası başarıyla ${user.quota}/${user.quota} olarak yenilendi!`);
+            }
+            saveUsers(users);
+        }
+
+        // Listedeki tüm kullanıcıların kotalarını toplu yenile
+        function renewAllUsersQuota() {
+            let users = getUsers();
+            if (users.length === 0) return;
+            users.forEach(u => {
+                if (u.plan !== 'Sinirsiz') {
+                    u.quota = u.maxQuota || 5;
+                }
+            });
+            saveUsers(users);
+            // Ayrıca ana sitedeki oturum kotasını da sıfırla
+            localStorage.setItem('hb_remaining_quota', 5);
+            alert("Listedeki tüm kullanıcıların dilekçe kotaları başarıyla 5/5 olarak yenilendi!");
+        }
+
+        // Belirli bir kullanıcıya özel kota tanımlama
+        function editUserQuotaPrompt(id) {
+            let users = getUsers();
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+            if (user.plan === 'Sinirsiz') {
+                alert("Bu kullanıcı Sınırsız pakettedir.");
+                return;
+            }
+            const val = prompt(`${user.name} için yeni kalan kota miktarı giriniz:`, user.quota);
+            if (val === null) return;
+            const parsed = parseInt(val, 10);
+            if (!isNaN(parsed) && parsed >= 0) {
+                user.quota = parsed;
+                saveUsers(users);
+                alert(`${user.name} için kota ${parsed} olarak güncellendi.`);
+            } else {
+                alert("Geçersiz sayı girdiniz!");
+            }
         }
 
         function toggleUserStatus(id) {
@@ -625,6 +705,8 @@
                 email: email,
                 baro: baro || "Genel Kullanıcı",
                 plan: plan,
+                quota: plan === 'Sinirsiz' ? '∞' : 5,
+                maxQuota: plan === 'Sinirsiz' ? '∞' : 5,
                 status: status,
                 createdAt: new Date().toISOString().split('T')[0]
             };
