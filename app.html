@@ -405,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU -->
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (İLK AÇILIŞTA TAMAMEN BOŞ BAŞLAR) -->
             <div id="tab-dilekce" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -432,39 +432,39 @@
 
                         <div>
                             <label class="block text-xs text-gray-300 font-medium mb-1.5">Hedef Mahkeme / Merci</label>
-                            <input type="text" id="dilekceMahkeme" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" value="İSTANBUL NÖBETÇİ İŞ MAHKEMESİ HÂKİMLİĞİ'NE">
+                            <input type="text" id="dilekceMahkeme" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Örn: İSTANBUL NÖBETÇİ İŞ MAHKEMESİ HÂKİMLİĞİ'NE">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1.5">Davacı / Talep Eden</label>
-                                <input type="text" id="dilekceDavaci" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" value="Ahmet YILMAZ (T.C. 12345678901)">
+                                <input type="text" id="dilekceDavaci" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Ad Soyad / T.C.">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1.5">Vekili</label>
-                                <input type="text" id="dilekceVekil" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" value="Av. Mehmet Ege - Baro Sicil: 88412">
+                                <input type="text" id="dilekceVekil" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Av. Ad Soyad">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-xs text-gray-300 font-medium mb-1.5">Davalı / Karşı Taraf</label>
-                            <input type="text" id="dilekceDavali" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" value="XYZ Lojistik ve Ticaret A.Ş.">
+                            <input type="text" id="dilekceDavali" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Karşı taraf kurum/şahıs">
                         </div>
 
                         <div>
                             <label class="block text-xs text-gray-300 font-medium mb-1.5">Dava Konusu</label>
-                            <input type="text" id="dilekceKonu" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" value="Geçersiz Fesih Nedeniyle İşe İade ve Boşta Geçen Süre Tazminatı Talebidir.">
+                            <input type="text" id="dilekceKonu" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Uyuşmazlık konusu...">
                         </div>
 
                         <div>
                             <label class="block text-xs text-gray-300 font-medium mb-1.5">Maddi Vakıalar ve Olayın Özeti</label>
-                            <textarea id="dilekceOlay" rows="5" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed" placeholder="Müvekkilin işe başlama tarihi, fesih sebebi ve haklı fesih nedenlerinin bulunmadığını özetleyiniz...">Müvekkil davalı şirkette 01.03.2020 tarihinden bu yana Operasyon Uzmanı olarak çalışmıştır. 15.10.2026 tarihinde şirketçe performans düşüklüğü bahane gösterilerek savunması dahi alınmadan iş akdi haksız ve geçersiz olarak feshedilmiştir. Arabuluculuk görüşmelerinde anlaşma sağlanamamış olup işbu davanın açılması zorunlu hale gelmiştir.</textarea>
+                            <textarea id="dilekceOlay" rows="5" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed" placeholder="Müvekkilin işe başlama tarihi, fesih sebebi ve haklı fesih nedenlerinin bulunmadığını özetleyiniz..."></textarea>
                         </div>
 
                         <div class="flex items-center justify-between pt-2">
                             <span class="text-[11px] text-gray-400"><i class="fa-solid fa-sparkles text-amber-400 mr-1"></i> Kanun maddeleri entegre edilecek</span>
                             <button onclick="generateAiDilekce()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">
-                                Taslağı Güncelle
+                                Taslağı Oluştur
                             </button>
                         </div>
                     </div>
@@ -486,37 +486,12 @@
                                 </div>
                             </div>
 
-                            <textarea id="dilekceOutput" rows="18" class="w-full bg-[#0d1321] text-gray-200 text-xs font-mono p-4 rounded-xl border border-gray-800 focus:outline-none focus:border-amber-500 leading-relaxed shadow-inner">İSTANBUL NÖBETÇİ İŞ MAHKEMESİ HÂKİMLİĞİ'NE
-
-DAVACI       : Ahmet YILMAZ (T.C. Kimlik No: 12345678901)
-VEKİLİ       : Av. Mehmet Ege - HukukBilgini Bürosu
-DAVALI       : XYZ Lojistik ve Ticaret A.Ş.
-KONU         : İş akdinin geçersiz nedenle feshinin tespiti ile MÜVEKKİLİN İŞE İADESİNE, 4857 Sayılı Kanun'un 21. maddesi uyarınca boşta geçen süre ve işe başlatmama tazminatına hükmedilmesi talebidir.
-ARABULUCULUK : İstanbul Arabuluculuk Bürosu, Son Tutanağın Düzenlenme Tarihi: 24.10.2026 (Anlaşamama)
-
-AÇIKLAMALAR :
-1. Müvekkil, davalı şirkette 01.03.2020 tarihinden bu yana Operasyon Uzmanı olarak aralıksız ve kesintisiz şekilde görev yapmıştır.
-2. Davalı işverenlik tarafından 15.10.2026 tarihinde müvekkilin sözleşmesi geçerli veya haklı bir neden gösterilmeksizin, soyut "performans yetersizliği" gerekçesiyle feshedilmiştir.
-3. 4857 sayılı İş Kanunu'nun 19. maddesi emredici hükmü gereğince, verim düşüklüğü gerekçesiyle yapılacak fesihlerde işçinin yazılı savunmasının alınması şarttır. Davalı tarafça hiçbir savunma alınmaksızın doğrudan fesih yoluna gidilmiştir.
-4. Emsal Yargıtay 9. HD 2023/14520 E. sayılı içtihadında da teyit edildiği üzere savunması alınmadan ve feshe son çare olarak başvurulmadan tesis edilen işlem mutlak surette geçersizdir.
-
-HUKUKİ SEBEPLER : 4857 sayılı İş Kanunu md. 18, 19, 20, 21, 6100 sayılı HMK ve ilgili mevzuat.
-HUKUKİ DELİLLER  : SGK Tescil Kayıtları, İşyeri Özlük Dosyası, Arabuluculuk Son Tutanağı, Emsal İçtihatlar, Tanık Beyanları, Bilirkişi İncelemesi ve her türlü kanuni delil.
-
-SONUÇ VE İSTEM  : Yukarıda arz ve izah olunan nedenlerle;
-1- Davalı işverence yapılan feshin GEÇERSİZLİĞİNE ve müvekkilin İŞE İADESİNE,
-2- Müvekkilin yasal sürede başvurmasına rağmen işe başlatılmaması halinde ödenmesi gereken tazminat miktarının davacının 8 aylık ücreti tutarında BELİRLENMESİNE,
-3- Kararın kesinleşmesine kadar çalıştırılmadığı süre için 4 aya kadar doğmuş bulunan ücret ve diğer haklarının davalıdan tahsiline,
-4- Yargılama giderleri ile vekalet ücretinin davalı yana yükletilmesine karar verilmesini vekaleten saygılarımla arz ve talep ederim.
-
-Davacı Vekili
-Av. Mehmet Ege Yıldız
-e-İmzalıdır</textarea>
+                            <textarea id="dilekceOutput" rows="18" class="w-full bg-[#0d1321] text-gray-200 text-xs font-mono p-4 rounded-xl border border-gray-800 focus:outline-none focus:border-amber-500 leading-relaxed shadow-inner" placeholder="Sol taraftaki bilgileri doldurup 'Otomatik Dilekçe Üret' butonuna tıkladığınızda veya soldan hızlı taslak seçtiğinizde dilekçeniz burada metin olarak belirecektir..."></textarea>
                         </div>
 
                         <div class="p-3 bg-darkBg border border-gray-800 rounded-xl text-xs text-gray-400 flex items-center justify-between">
                             <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> HMK ve Avukatlık Kanunu formatına %100 uygundur.</span>
-                            <span class="text-gray-500">Kelime Sayısı: <span id="wordCount" class="text-white">218</span></span>
+                            <span class="text-gray-500">Kelime Sayısı: <span id="wordCount" class="text-white">0</span></span>
                         </div>
                     </div>
                 </div>
@@ -784,7 +759,7 @@ e-İmzalıdır</textarea>
                 </div>
             </div>
 
-            <!-- TAB 6: HUKUK DANIŞMA ASİSTANI -->
+            <!-- TAB 6: HUKUK DANIŞMA ASİSTANI (SADECE BU SEKMEDE) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
                     <div>
@@ -1014,7 +989,7 @@ e-İmzalıdır</textarea>
             const modalTitle = document.getElementById('modalTitle');
             if (modalTitle) modalTitle.innerText = title;
             const modal = document.getElementById('kararModal');
-            if (modal) modal.classList.remove('hidden');
+            if (modal) modal.classList.add('hidden');
         }
 
         function closeKararModal() {
@@ -1023,12 +998,12 @@ e-İmzalıdır</textarea>
         }
 
         function generateAiDilekce() {
-            const mahkeme = document.getElementById('dilekceMahkeme').value;
-            const davaci = document.getElementById('dilekceDavaci').value;
-            const vekil = document.getElementById('dilekceVekil').value;
-            const davali = document.getElementById('dilekceDavali').value;
-            const konu = document.getElementById('dilekceKonu').value;
-            const olay = document.getElementById('dilekceOlay').value;
+            const mahkeme = document.getElementById('dilekceMahkeme').value.trim() || "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE";
+            const davaci = document.getElementById('dilekceDavaci').value.trim() || "Ad Soyad / T.C.";
+            const vekil = document.getElementById('dilekceVekil').value.trim() || "Av. Vekil Adı";
+            const davali = document.getElementById('dilekceDavali').value.trim() || "Karşı Taraf";
+            const konu = document.getElementById('dilekceKonu').value.trim() || "Dava Konusu Taleptir.";
+            const olay = document.getElementById('dilekceOlay').value.trim() || "Olayın detayları buraya yazılacaktır.";
 
             const dilekceText = `${mahkeme.toUpperCase()}
 
@@ -1036,17 +1011,16 @@ DAVACI       : ${davaci}
 VEKİLİ       : ${vekil}
 DAVALI       : ${davali}
 KONU         : ${konu}
-HARCA ESAS   : 150.000,00 TL
+HARCA ESAS   : 100.000,00 TL
 
 AÇIKLAMALAR :
 1. ${olay}
-2. 4857 sayılı İş Kanunu ve ilgili mevzuat uyarınca iş akdinin feshi usul ve yasaya aykırı olup, işverence objektif ve geçerli bir sebep ortaya konulamamıştır.
-3. Yargıtay Hukuk Genel Kurulu ve ilgili Dairelerin yerleşik içtihatları doğrultusunda feshin son çare olması (ultima ratio) ilkesine açıkça aykırı hareket edilmiştir.
+2. İlgili yasal mevzuat ve yargı içtihatları çerçevesinde haklı taleplerimizin kabulü zaruri hale gelmiştir.
 
-HUKUKİ SEBEPLER : 4857 Sayılı Kanun, 6100 Sayılı HMK ve yerleşik yargı içtihatları.
-HUKUKİ DELİLLER  : SGK dökümleri, işyeri şahsi sicil dosyası, tanık, bilirkişi ve her türlü yasal delil.
+HUKUKİ SEBEPLER : İlgili Kanunlar, HMK ve sair mevzuat.
+HUKUKİ DELİLLER  : Her türlü yasal delil.
 
-SONUÇ VE İSTEM  : Yukarıda açıklanan nedenlerle feshin GEÇERSİZLİĞİNE, müvekkilin İŞE İADESİNE, işe başlatılmama halinde 8 aylık ücret tutarında tazminat ile 4 aya kadar boşta geçen süre ücretinin davalıdan tahsiline karar verilmesini vekaleten arz ve talep ederim.
+SONUÇ VE İSTEM  : Yukarıda arz edilen nedenlerle haklı talebimizin kabulüne karar verilmesini vekaleten arz ve talep ederim.
 
 Davacı Vekili
 ${vekil}
@@ -1055,15 +1029,17 @@ e-İmzalıdır`;
             document.getElementById('dilekceOutput').value = dilekceText;
             const wordCount = dilekceText.split(/\s+/).filter(w => w.length > 0).length;
             document.getElementById('wordCount').innerText = wordCount;
-            alert('Dilekçe taslağı başarıyla oluşturuldu ve editöre aktarıldı!');
+            alert('Dilekçe taslağı başarıyla oluşturuldu!');
         }
 
         function copyDilekceText() {
             const text = document.getElementById('dilekceOutput').value;
+            if (!text.trim()) {
+                alert('Kopyalanacak dilekçe metni bulunmuyor.');
+                return;
+            }
             navigator.clipboard.writeText(text).then(() => {
                 alert('Dilekçe panoya kopyalandı!');
-            }).catch(() => {
-                alert('Kopyalama tamamlandı.');
             });
         }
 
@@ -1247,6 +1223,10 @@ e-İmzalıdır`;
 
             if (activeTab === 'tab-dilekce') {
                 exportContent = document.getElementById('dilekceOutput').value;
+                if (!exportContent.trim()) {
+                    alert('İndirilecek dilekçe taslağı boş! Lütfen önce taslak oluşturun.');
+                    return;
+                }
                 filename = "Dava_Dilekcesi";
             } else if (activeTab === 'tab-harc') {
                 exportContent = "HUKUKBİLGİNİ HARÇ VE VEKALET HESAPLAMA RAPORU\n\n" +
