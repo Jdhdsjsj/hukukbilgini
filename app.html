@@ -52,7 +52,7 @@
         <div class="hidden md:flex items-center text-sm text-gray-400 space-x-2">
             <span>Çalışma Alanı</span>
             <i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>
-            <span id="currentBreadcrumb" class="text-amber-400 font-medium">İçtihat & Mevzuat Arama Motoru</span>
+            <span id="currentBreadcrumb" class="text-amber-400 font-medium">Dilekçe Stüdyosu</span>
         </div>
 
         <!-- Right Action Buttons -->
@@ -97,7 +97,7 @@
                 <div class="space-y-1">
                     <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Menü</p>
                     
-                    <a href="javascript:void(0)" onclick="switchTab('dilekce')" id="menu-dilekce" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
+                    <a href="javascript:void(0)" onclick="switchTab('dilekce')" id="menu-dilekce" class="sidebar-link active flex items-center bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
                         <i class="fa-solid fa-file-lines w-5 text-gray-400"></i>
                         <span>Dilekçe Stüdyosu</span>
                     </a>
@@ -109,7 +109,7 @@
                         <i class="fa-solid fa-calendar-days w-5 text-gray-400"></i>
                         <span>Duruşma & İş Takvimi</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link active flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 transition">
+                    <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 transition">
                         <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-amber-400"></i>
                         <span>İçtihat & Mevzuat Arama</span>
                     </a>
@@ -163,7 +163,7 @@
         <main class="flex-1 overflow-y-auto bg-darkBg p-6 lg:p-8">
             
             <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA -->
-            <div id="tab-ictihat" class="tab-content active space-y-6 max-w-7xl mx-auto">
+            <div id="tab-ictihat" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
                         <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
@@ -405,8 +405,8 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (BAŞLANGIÇTA TAMAMEN BOŞ) -->
-            <div id="tab-dilekce" class="tab-content space-y-6 max-w-7xl mx-auto">
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (İLK AÇILIŞTA AKTİF VE BOŞ) -->
+            <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
                         <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
@@ -933,7 +933,7 @@
             }
 
             const breadcrumbMap = {
-                'dilekce': 'Dilekçe Prompt Stüdyosu',
+                'dilekce': 'Dilekçe Stüdyosu',
                 'harc': 'Harç & Vekalet Ücreti Hesaplama',
                 'takvim': 'Duruşma & İş Takvimi',
                 'ictihat': 'İçtihat & Mevzuat Arama Motoru',
@@ -1203,7 +1203,7 @@ e-İmzalıdır`;
                     </div>
                     <h3 class="text-sm font-bold text-white">${mahkeme}</h3>
                     <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${esas || '2026/Yeni'}</strong></p>
-                    <p class="text-xs text-gray-300"><strong>Durum:</strong> Tensip Zaptı Hazırlandı.</p>
+                    <p class="text-xs text-gray-300"><strong>Davacı:</strong> Ahmet Yılmaz<br><strong>Davalı:</strong> XYZ Lojistik A.Ş.</p>
                 </div>
                 <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
                     <span class="text-gray-500">Kayıt: 27.10.2026</span>
