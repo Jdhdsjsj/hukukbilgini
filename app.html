@@ -405,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (İLK AÇILIŞTA TAMAMEN BOŞ BAŞLAR) -->
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (BAŞLANGIÇTA TAMAMEN BOŞ) -->
             <div id="tab-dilekce" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -989,7 +989,7 @@
             const modalTitle = document.getElementById('modalTitle');
             if (modalTitle) modalTitle.innerText = title;
             const modal = document.getElementById('kararModal');
-            if (modal) modal.classList.add('hidden');
+            if (modal) modal.classList.remove('hidden');
         }
 
         function closeKararModal() {
