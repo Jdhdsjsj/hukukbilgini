@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu | Profesyonel Hukuk Teknolojileri</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -29,8 +29,8 @@
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content { display: none !important; }
+        .tab-content.active { display: block !important; }
     </style>
 </head>
 <body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex flex-col">
@@ -44,7 +44,7 @@
             </div>
             <div>
                 <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v2.7</span>
+                <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
             </div>
         </div>
 
@@ -97,8 +97,8 @@
                 <div class="space-y-1">
                     <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Menü</p>
                     
-                    <a href="javascript:void(0)" onclick="switchTab('dilekce')" id="menu-dilekce" class="sidebar-link active flex items-center bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
-                        <i class="fa-solid fa-file-lines w-5 text-gray-400"></i>
+                    <a href="javascript:void(0)" onclick="switchTab('dilekce')" id="menu-dilekce" class="sidebar-link active flex items-center bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium space-x-3 px-3 py-2.5 rounded-xl text-sm transition">
+                        <i class="fa-solid fa-file-lines w-5 text-amber-400"></i>
                         <span>Dilekçe Stüdyosu</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('harc')" id="menu-harc" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
@@ -109,8 +109,8 @@
                         <i class="fa-solid fa-calendar-days w-5 text-gray-400"></i>
                         <span>Duruşma & İş Takvimi</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800/60 transition">
-                        <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-amber-400"></i>
+                    <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
+                        <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-gray-400"></i>
                         <span>İçtihat & Mevzuat Arama</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('kaydedilenler')" id="menu-kaydedilenler" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition justify-between">
@@ -119,10 +119,6 @@
                             <span>Kaydedilen Kararlar</span>
                         </div>
                         <span id="savedCountBadge" class="bg-gray-800 text-amber-400 text-xs px-2 py-0.5 rounded-full font-bold">2</span>
-                    </a>
-                    <a href="javascript:void(0)" onclick="switchTab('asistan')" id="menu-asistan" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
-                        <i class="fa-solid fa-robot w-5 text-gray-400"></i>
-                        <span>Hukuk Danışma Asistanı</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('dosyalar')" id="menu-dosyalar" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition justify-between">
                         <div class="flex items-center space-x-3">
@@ -154,7 +150,7 @@
 
             <!-- Footer Sidebar info -->
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v2.7 Clean Edition</span>
+                <span>v2.8 Pro Sürüm</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -751,7 +747,7 @@
                                 </button>
                             </div>
                             <h3 class="text-sm font-bold text-white">Adil Yargılanma ve Makul Süre İhlali Kararı</h3>
-                            <p class="text-xs text-gray-300 mt-1.5 leading-relaxed">Uzayan mahkeme süreçlerinin mülkiyet ve adil yargılanma hakkını zedelediği yönündeki AYM bireysel başvuru kararı.</p>
+                            <p class="text-xs text-gray-300 mt-1.5 leading-relaxed">Uzayan mahkeme süreçlerinin mülkiyet ve adil yargılanma haklarını zedelediği yönündeki AYM bireysel başvuru kararı.</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-gray-800/80 text-[11px] text-gray-400">
                             <span>Başvuru: 2021/38902</span>
@@ -761,44 +757,7 @@
                 </div>
             </div>
 
-            <!-- TAB 6: HUKUK DANIŞMA ASİSTANI (YALNIZCA BU SEKMEDE YER ALIR) -->
-            <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
-                <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
-                    <div>
-                        <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
-                            <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı</span>
-                        </h1>
-                        <p class="text-xs text-gray-400">Yargı kararlarına, TBK, HMK, TTK ve TCK kanunlarına göre anında hukuki mütalaa ve analiz sağlar.</p>
-                    </div>
-                    <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
-                        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                        <span>Mevzuat Modeli v4 Hazır</span>
-                    </span>
-                </div>
-
-                <div id="chatHistoryBox" class="flex-1 bg-cardBg border border-gray-800 rounded-2xl p-5 overflow-y-auto space-y-4 shadow-inner">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-robot text-xs"></i>
-                        </div>
-                        <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-1.5">
-                            <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                            <p>Ben HukukBilgini yapay zeka asistanıyım. Herhangi bir uyuşmazlık, zamanaşımı hesabı, dava stratejisi veya emsal karar gereksinimi hakkında bana soru sorabilirsin.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
-                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
-                    <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                        <span>Gönder</span>
-                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- TAB 7: DAVA DOSYALARIM -->
+            <!-- TAB 6: DAVA DOSYALARIM -->
             <div id="tab-dosyalar" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -940,7 +899,6 @@
                 'takvim': 'Duruşma & İş Takvimi',
                 'ictihat': 'İçtihat & Mevzuat Arama Motoru',
                 'kaydedilenler': 'Kaydedilen Kararlar',
-                'asistan': 'Hukuk Danışma Asistanı',
                 'dosyalar': 'Dava Dosyalarım'
             };
             const bcElem = document.getElementById('currentBreadcrumb');
@@ -1150,45 +1108,6 @@ e-İmzalıdır`;
             badge.innerText = Math.max(0, count - 1);
         }
 
-        function sendAssistantMessage() {
-            const input = document.getElementById('assistantInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            const chatBox = document.getElementById('chatHistoryBox');
-
-            const userMsg = document.createElement('div');
-            userMsg.className = "flex items-start justify-end space-x-3";
-            userMsg.innerHTML = `
-                <div class="bg-indigo-600 text-white p-3.5 rounded-2xl text-xs max-w-2xl leading-relaxed">
-                    <p>${message}</p>
-                </div>
-                <div class="w-8 h-8 rounded-lg bg-gray-800 text-gray-300 border border-gray-700 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-user text-xs"></i>
-                </div>
-            `;
-            chatBox.appendChild(userMsg);
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = "flex items-start space-x-3";
-                botMsg.innerHTML = `
-                    <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-robot text-xs"></i>
-                    </div>
-                    <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-2">
-                        <p class="font-semibold text-indigo-300">Hukuki Değerlendirme & Emsal Analiz:</p>
-                        <p>Sorunuz doğrultusunda ilgili yasal düzenlemeler (TBK ve HMK) ve Yargıtay'ın yerleşik içtihatları incelenmiştir. Konuyla ilgili Yargıtay Hukuk Genel Kurulu kararlarına göre hak düşürücü süreler ve ispat külfeti titizlikle gözetilmelidir.</p>
-                        <p class="text-gray-400 text-[11px]">Dilekçenize eklemek isterseniz 'Dilekçe Prompt Stüdyosu' sekmesine bu gerekçeleri otomatik aktarabilirsiniz.</p>
-                    </div>
-                `;
-                chatBox.appendChild(botMsg);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
-        }
-
         function openNewCaseModal() {
             const mahkeme = prompt("Mahkeme Adı:", "İstanbul 1. Asliye Hukuk Mahkemesi");
             if (!mahkeme) return;
@@ -1263,21 +1182,8 @@ e-İmzalıdır`;
         }
 
         window.onload = function() {
-            verifySystemIntegrity();
             runHarcCalculations();
         };
-
-        // Ekstra Sistem Tanılama ve Güvenlik Modülü v2.7 Clean Edition
-        console.info("%c[HukukBilgini v2.7] Temiz sürüm yüklendi.", "color: #10b981; font-weight: bold;");
-        
-        function verifySystemIntegrity() {
-            const activeTab = document.querySelector('.tab-content.active');
-            if (!activeTab) {
-                switchTab('dilekce');
-            }
-        }
-        
-        setInterval(verifySystemIntegrity, 30000);
     </script>
 </body>
 </html>
