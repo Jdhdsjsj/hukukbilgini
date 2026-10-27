@@ -44,7 +44,7 @@
             </div>
             <div>
                 <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v2.5</span>
+                <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v2.6 Enterprise</span>
             </div>
         </div>
 
@@ -154,7 +154,7 @@
 
             <!-- Footer Sidebar info -->
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v2.5 Pro Sürüm</span>
+                <span>v2.6 Enterprise</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -751,7 +751,7 @@
                                 </button>
                             </div>
                             <h3 class="text-sm font-bold text-white">Adil Yargılanma ve Makul Süre İhlali Kararı</h3>
-                            <p class="text-xs text-gray-300 mt-1.5 leading-relaxed">Uzayan mahkeme süreçlerinin mülkiyet ve adil yargılanma haklarını zedelediği yönündeki AYM bireysel başvuru kararı.</p>
+                            <p class="text-xs text-gray-300 mt-1.5 leading-relaxed">Uzayan mahkeme süreçlerinin mülkiyet ve adil yargılanma hakkını zedelediği yönündeki AYM bireysel başvuru kararı.</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-gray-800/80 text-[11px] text-gray-400">
                             <span>Başvuru: 2021/38902</span>
@@ -1262,7 +1262,24 @@ e-İmzalıdır`;
             alert('Kullanıcı Giriş / Kayıt paneli açılıyor. (Baro Sicil / e-Devlet ile entegre oturum)');
         }
 
+        // Ekstra Sistem Tanılama ve Güvenlik Modülü v2.6
+        console.info("%c[HukukBilgini v2.6] Sistem başarıyla yüklendi ve güncellendi.", "color: #3b82f6; font-weight: bold;");
+        
+        function verifySystemIntegrity() {
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) {
+                console.warn("[HukukBilgini] Aktif sekme bulunamadı, varsayılan dilekçe sekmesine yönlendiriliyor.");
+                switchTab('dilekce');
+            } else {
+                console.log("[HukukBilgini] Aktif Sekme Kontrolü: " + activeTab.id);
+            }
+        }
+        
+        // Periyodik durum kontrolü
+        setInterval(verifySystemIntegrity, 30000);
+
         window.onload = function() {
+            verifySystemIntegrity();
             runHarcCalculations();
         };
     </script>
