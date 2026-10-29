@@ -13,12 +13,11 @@
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#0b0f19',
-                        sidebarBg: '#0f172a',
-                        cardBg: '#1e293b',
-                        cardHover: '#273548',
+                        darkBg: '#070913',
+                        sidebarBg: '#0d1322',
+                        cardBg: '#131c31',
+                        cardHover: '#1a2642',
                         accentGold: '#f59e0b',
-                        accentHover: '#d97706',
                         brandBlue: '#3b82f6'
                     }
                 }
@@ -27,20 +26,21 @@
     </script>
     <style>
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar-track { background: #070913; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
         .admin-tab { display: none !important; }
-        .admin-tab.active { display: block !important; }
-        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .admin-tab.active { display: block !important; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .glass-card { background: linear-gradient(135deg, rgba(19, 28, 49, 0.9) 0%, rgba(13, 19, 34, 0.9) 100%); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.07); }
     </style>
 </head>
 <body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex flex-col selection:bg-amber-500 selection:text-gray-950">
 
     <!-- PİN GİRİŞ MODALI -->
-    <div id="pinModal" class="fixed inset-0 bg-[#0b0f19]/95 backdrop-blur-xl z-50 flex items-center justify-center p-4">
-        <div class="glass-panel w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-6 text-center border border-amber-500/20">
-            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/30 mx-auto flex items-center justify-center text-amber-400 text-3xl shadow-inner">
+    <div id="pinModal" class="fixed inset-0 bg-[#070913]/95 backdrop-blur-2xl z-50 flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-6 text-center border border-amber-500/20">
+            <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-amber-500/5 border border-amber-500/30 mx-auto flex items-center justify-center text-amber-400 text-3xl shadow-inner">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
             <div>
@@ -48,7 +48,7 @@
                 <p class="text-xs text-gray-400 mt-1.5">Enterprise konsola erişmek için lütfen 4 haneli PIN kodunu girin.</p>
             </div>
             <div class="space-y-4">
-                <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" class="w-48 mx-auto tracking-[1em] text-center bg-darkBg/90 border border-gray-700 rounded-2xl px-4 py-3.5 text-xl text-amber-400 focus:outline-none focus:border-amber-500 font-mono shadow-inner transition">
+                <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" class="w-48 mx-auto tracking-[1em] text-center bg-darkBg border border-gray-700/80 rounded-2xl px-4 py-3.5 text-xl text-amber-400 focus:outline-none focus:border-amber-500 font-mono shadow-inner transition">
                 <button onclick="verifyAdminPin()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-950 font-bold py-3.5 rounded-2xl text-sm transition shadow-lg shadow-amber-500/20">
                     Güvenli Giriş Yap
                 </button>
@@ -64,29 +64,29 @@
     </div>
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="h-20 bg-sidebarBg/80 backdrop-blur-md border-b border-gray-800/80 flex items-center justify-between px-8 z-20 shrink-0 sticky top-0">
-        <div class="flex items-center space-x-3.5 cursor-pointer" onclick="switchAdminTab('genel')">
-            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl shadow-md">
+    <header class="h-20 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-8 z-20 shrink-0 sticky top-0 shadow-md">
+        <div class="flex items-center space-x-4 cursor-pointer" onclick="switchAdminTab('genel')">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-amber-500/5 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl shadow-inner">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
             <div>
-                <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 via-amber-200 to-yellow-500 bg-clip-text text-transparent">HukukBilgini Yönetim</span>
-                <span class="block text-[10px] font-semibold text-gray-400 tracking-wider">Enterprise Admin Konsolu</span>
+                <span class="text-lg font-extrabold tracking-wide bg-gradient-to-r from-amber-400 via-amber-200 to-yellow-500 bg-clip-text text-transparent">HukukBilgini Yönetim</span>
+                <span class="block text-[11px] font-bold text-gray-400 tracking-wider">Enterprise Admin Konsolu</span>
             </div>
         </div>
 
-        <div class="hidden md:flex items-center text-xs text-gray-400 space-x-2 bg-darkBg/60 px-4 py-2 rounded-xl border border-gray-800">
+        <div class="hidden md:flex items-center text-xs text-gray-400 space-x-2 bg-darkBg px-4 py-2 rounded-xl border border-gray-800">
             <span>Yönetim Paneli</span>
             <i class="fa-solid fa-chevron-right text-[10px] text-gray-600"></i>
             <span id="adminBreadcrumb" class="text-amber-400 font-semibold">Genel Bakış & İstatistikler</span>
         </div>
 
         <div class="flex items-center space-x-3">
-            <a href="app.html" class="flex items-center space-x-2 bg-darkBg hover:bg-gray-800 text-xs px-3.5 py-2 rounded-xl border border-gray-700/80 text-gray-300 transition shadow-sm">
+            <a href="app.html" class="flex items-center space-x-2 bg-darkBg hover:bg-cardBg text-xs px-4 py-2.5 rounded-xl border border-gray-800 text-gray-300 transition shadow-sm">
                 <i class="fa-solid fa-arrow-left text-amber-400"></i>
                 <span class="hidden sm:inline">Platforma Dön</span>
             </a>
-            <div class="flex items-center space-x-2.5 bg-darkBg/90 text-xs px-4 py-2 rounded-xl border border-amber-500/30 text-amber-300 font-medium shadow-inner">
+            <div class="flex items-center space-x-2.5 bg-darkBg text-xs px-4 py-2.5 rounded-xl border border-amber-500/30 text-amber-300 font-medium shadow-inner">
                 <div class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></div>
                 <span>Av. Mehmet Ege Yıldız (Admin)</span>
             </div>
@@ -97,36 +97,36 @@
     <div class="flex flex-1 overflow-hidden">
         
         <!-- SIDEBAR -->
-        <aside class="w-72 bg-sidebarBg/60 backdrop-blur-md border-r border-gray-800/80 flex flex-col justify-between shrink-0 select-none p-4">
+        <aside class="w-72 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between shrink-0 select-none p-5 shadow-lg">
             <div class="space-y-6 overflow-y-auto">
-                <div class="space-y-1.5">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-3">Yönetim Menüsü</p>
+                <div class="space-y-2">
+                    <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest px-3 mb-3">Yönetim Menüsü</p>
                     
-                    <a href="javascript:void(0)" onclick="switchAdminTab('genel')" id="menu-genel" class="admin-link active flex items-center bg-amber-500/10 text-amber-400 border border-amber-500/25 font-semibold space-x-3 px-3.5 py-3 rounded-2xl text-xs transition shadow-sm">
+                    <a href="javascript:void(0)" onclick="switchAdminTab('genel')" id="menu-genel" class="admin-link active flex items-center bg-amber-500/10 text-amber-400 border border-amber-500/25 font-bold space-x-3.5 px-4 py-3.5 rounded-2xl text-xs transition shadow-sm">
                         <i class="fa-solid fa-chart-pie w-5 text-amber-400 text-sm"></i>
                         <span>Genel Bakış & Sistem</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchAdminTab('kullanicilar')" id="menu-kullanicilar" class="admin-link flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-xs text-gray-300 hover:bg-gray-800/60 hover:text-white transition font-medium">
+                    <a href="javascript:void(0)" onclick="switchAdminTab('kullanicilar')" id="menu-kullanicilar" class="admin-link flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl text-xs text-gray-300 hover:bg-cardBg hover:text-white transition font-medium">
                         <i class="fa-solid fa-users-gear w-5 text-gray-400 text-sm"></i>
                         <span>Kullanıcı & Abonelik Yönetimi</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchAdminTab('veritabani')" id="menu-veritabani" class="admin-link flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-xs text-gray-300 hover:bg-gray-800/60 hover:text-white transition font-medium">
+                    <a href="javascript:void(0)" onclick="switchAdminTab('veritabani')" id="menu-veritabani" class="admin-link flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl text-xs text-gray-300 hover:bg-cardBg hover:text-white transition font-medium">
                         <i class="fa-solid fa-database w-5 text-gray-400 text-sm"></i>
                         <span>İçtihat & Mevzuat Veritabanı</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchAdminTab('loglar')" id="menu-loglar" class="admin-link flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-xs text-gray-300 hover:bg-gray-800/60 hover:text-white transition font-medium">
+                    <a href="javascript:void(0)" onclick="switchAdminTab('loglar')" id="menu-loglar" class="admin-link flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl text-xs text-gray-300 hover:bg-cardBg hover:text-white transition font-medium">
                         <i class="fa-solid fa-rectangle-list w-5 text-gray-400 text-sm"></i>
                         <span>Sistem Logları & Raporlar</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchAdminTab('ayarlar')" id="menu-ayarlar" class="admin-link flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-xs text-gray-300 hover:bg-gray-800/60 hover:text-white transition font-medium">
+                    <a href="javascript:void(0)" onclick="switchAdminTab('ayarlar')" id="menu-ayarlar" class="admin-link flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl text-xs text-gray-300 hover:bg-cardBg hover:text-white transition font-medium">
                         <i class="fa-solid fa-gears w-5 text-gray-400 text-sm"></i>
                         <span>Platform Ayarları</span>
                     </a>
                 </div>
             </div>
 
-            <div class="p-3.5 border border-gray-800/80 rounded-2xl bg-darkBg/40 text-xs text-gray-400 flex items-center justify-between">
-                <span class="font-medium">Enterprise Admin</span>
+            <div class="p-4 border border-gray-800 rounded-2xl bg-darkBg text-xs text-gray-400 flex items-center justify-between">
+                <span class="font-bold">Enterprise Admin</span>
                 <span class="flex items-center text-emerald-400 font-semibold"><i class="fa-solid fa-circle text-[6px] mr-1.5 animate-pulse"></i> Güvenli</span>
             </div>
         </aside>
@@ -136,7 +136,7 @@
             
             <!-- TAB 1: GENEL BAKIŞ -->
             <div id="admin-genel" class="admin-tab active space-y-8 max-w-7xl mx-auto" style="display: block;">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800/80 pb-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
                     <div>
                         <h1 class="text-2xl font-extrabold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-chart-pie text-amber-400"></i>
@@ -147,10 +147,10 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="glass-panel rounded-3xl p-6 space-y-3 shadow-xl hover:border-amber-500/30 transition">
+                    <div class="glass-card rounded-3xl p-6 space-y-3 shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Toplam İçtihat & Karar</span>
-                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                            <span class="text-[11px] text-gray-400 font-extrabold uppercase tracking-wider">Toplam İçtihat & Karar</span>
+                            <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
                                 <i class="fa-solid fa-scale-balanced text-sm"></i>
                             </div>
                         </div>
@@ -158,11 +158,10 @@
                         <span class="text-[11px] text-emerald-400 font-semibold inline-flex items-center"><i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> %12 bu hafta artış</span>
                     </div>
 
-                    <!-- Toplam Kullanıcı Sayısı -->
-                    <div class="glass-panel rounded-3xl p-6 space-y-3 shadow-xl hover:border-blue-500/30 transition">
+                    <div class="glass-card rounded-3xl p-6 space-y-3 shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] text-gray-400 font-bold uppercase tracking-wider">TOPLAM KULLANICI</span>
-                            <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                            <span class="text-[11px] text-gray-400 font-extrabold uppercase tracking-wider">TOPLAM KULLANICI</span>
+                            <div class="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
                                 <i class="fa-solid fa-users text-sm"></i>
                             </div>
                         </div>
@@ -170,11 +169,10 @@
                         <span class="text-[11px] text-emerald-400 font-semibold inline-flex items-center"><i class="fa-solid fa-circle text-[6px] mr-1.5 animate-pulse"></i> Aktif Senkron</span>
                     </div>
 
-                    <!-- Üretilen Dilekçe Sayısı -->
-                    <div class="glass-panel rounded-3xl p-6 space-y-3 shadow-xl hover:border-indigo-500/30 transition">
+                    <div class="glass-card rounded-3xl p-6 space-y-3 shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] text-gray-400 font-bold uppercase tracking-wider">ÜRETİLEN DİLEKÇE (BUGÜN)</span>
-                            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+                            <span class="text-[11px] text-gray-400 font-extrabold uppercase tracking-wider">ÜRETİLEN DİLEKÇE</span>
+                            <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
                                 <i class="fa-solid fa-file-signature text-sm"></i>
                             </div>
                         </div>
@@ -182,10 +180,10 @@
                         <span class="text-[11px] text-gray-400 font-medium">Gerçek Zamanlı Takip</span>
                     </div>
 
-                    <div class="glass-panel rounded-3xl p-6 space-y-3 shadow-xl hover:border-emerald-500/30 transition">
+                    <div class="glass-card rounded-3xl p-6 space-y-3 shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Sistem Performansı</span>
-                            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                            <span class="text-[11px] text-gray-400 font-extrabold uppercase tracking-wider">Sistem Performansı</span>
+                            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
                                 <i class="fa-solid fa-server text-sm"></i>
                             </div>
                         </div>
@@ -194,28 +192,28 @@
                     </div>
                 </div>
 
-                <div class="glass-panel rounded-3xl p-8 shadow-2xl space-y-5">
-                    <h2 class="text-sm font-extrabold text-white border-b border-gray-700/60 pb-4 flex items-center space-x-2.5">
+                <div class="glass-card rounded-3xl p-8 shadow-2xl space-y-5">
+                    <h2 class="text-sm font-extrabold text-white border-b border-gray-800 pb-4 flex items-center space-x-2.5">
                         <i class="fa-solid fa-bolt text-amber-400"></i>
                         <span>Hızlı Yönetici İşlemleri</span>
                     </h2>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                        <button onclick="alert('Veritabanı indeksleri başarıyla güncellendi.')" class="bg-darkBg/80 hover:bg-cardHover border border-gray-700/80 rounded-2xl p-5 text-left transition space-y-2 group shadow-md">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-110 transition">
+                        <button onclick="alert('Veritabanı indeksleri başarıyla güncellendi.')" class="bg-darkBg hover:bg-cardHover border border-gray-800 rounded-2xl p-5 text-left transition space-y-2.5 group shadow-md">
+                            <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-110 transition">
                                 <i class="fa-solid fa-rotate text-sm"></i>
                             </div>
                             <span class="block text-xs font-bold text-white">Veritabanı İndekslerini Yenile</span>
                             <span class="block text-[11px] text-gray-400 leading-relaxed">Yargıtay ve Danıştay kararlarını senkronize et</span>
                         </button>
-                        <button onclick="alert('Tüm kullanıcı oturum önbellekleri temizlendi.')" class="bg-darkBg/80 hover:bg-cardHover border border-gray-700/80 rounded-2xl p-5 text-left transition space-y-2 group shadow-md">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-110 transition">
+                        <button onclick="alert('Tüm kullanıcı oturum önbellekleri temizlendi.')" class="bg-darkBg hover:bg-cardHover border border-gray-800 rounded-2xl p-5 text-left transition space-y-2.5 group shadow-md">
+                            <div class="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-110 transition">
                                 <i class="fa-solid fa-broom text-sm"></i>
                             </div>
                             <span class="block text-xs font-bold text-white">Önbelleği Temizle</span>
                             <span class="block text-[11px] text-gray-400 leading-relaxed">Geçici oturum verilerini ve önbelleği boşalt</span>
                         </button>
-                        <button onclick="alert('Sistem güvenlik duvarı kuralları güncellendi.')" class="bg-darkBg/80 hover:bg-cardHover border border-gray-700/80 rounded-2xl p-5 text-left transition space-y-2 group shadow-md">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition">
+                        <button onclick="alert('Sistem güvenlik duvarı kuralları güncellendi.')" class="bg-darkBg hover:bg-cardHover border border-gray-800 rounded-2xl p-5 text-left transition space-y-2.5 group shadow-md">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition">
                                 <i class="fa-solid fa-shield-cat text-sm"></i>
                             </div>
                             <span class="block text-xs font-bold text-white">Güvenlik Duvarını Güncelle</span>
@@ -227,7 +225,7 @@
 
             <!-- TAB 2: KULLANICI YÖNETİMİ -->
             <div id="admin-kullanicilar" class="admin-tab space-y-8 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800/80 pb-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
                     <div>
                         <h1 class="text-2xl font-extrabold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-users-gear text-blue-400"></i>
@@ -241,10 +239,10 @@
                     </button>
                 </div>
 
-                <div class="glass-panel rounded-3xl p-8 shadow-2xl space-y-4">
+                <div class="glass-card rounded-3xl p-8 shadow-2xl space-y-4">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs text-gray-300">
-                            <thead class="border-b border-gray-700/80 text-gray-400 uppercase tracking-wider">
+                            <thead class="border-b border-gray-800 text-gray-400 uppercase tracking-wider">
                                 <tr>
                                     <th class="pb-4 px-4 font-bold">Kullanıcı / Avukat</th>
                                     <th class="pb-4 px-4 font-bold">E-posta</th>
@@ -253,21 +251,21 @@
                                     <th class="pb-4 px-4 font-bold text-right">İşlemler</th>
                                 </tr>
                             </thead>
-                            <tbody id="adminUserTableBody" class="divide-y divide-gray-800/60">
+                            <tbody id="adminUserTableBody" class="divide-y divide-gray-800">
                                 <tr data-user-id="1" class="hover:bg-white/[0.02] transition">
                                     <td class="py-4 px-4 font-bold text-white flex items-center space-x-3">
-                                        <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+                                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
                                             <i class="fa-solid fa-user-tie text-xs"></i>
                                         </div>
                                         <span>Av. Mehmet Ege Yıldız</span>
                                     </td>
-                                    <td class="py-4 px-4 text-gray-300">mehmet@mehmetegeyildiz.com</td>
+                                    <td class="py-4 px-4 text-gray-300 font-mono">mehmet@mehmetegeyildiz.com</td>
                                     <td class="py-4 px-4">
                                         <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full font-bold text-[11px]">Pro Enterprise (Admin)</span>
                                         <span class="block text-[10px] text-gray-400 mt-1">Kota: <strong class="text-white user-quota font-mono">Sınırsız</strong></span>
                                     </td>
                                     <td class="py-4 px-4 text-gray-400 font-mono">01.09.2026</td>
-                                    <td class="py-4 px-4 text-right space-x-3">
+                                    <td class="py-4 px-4 text-right space-x-2">
                                         <button onclick="setCustomQuota(this)" class="text-amber-400 hover:text-amber-300 font-semibold bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/20 transition">Kota Belirle</button>
                                         <button onclick="renewUserQuota(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20 transition">Yenile</button>
                                         <button onclick="deleteUserRow(this)" class="text-rose-400 hover:text-rose-300 font-semibold bg-rose-500/10 px-3 py-1.5 rounded-xl border border-rose-500/20 transition">Sil</button>
@@ -281,7 +279,7 @@
 
             <!-- TAB 3: İÇTİHAT & MEVZUAT -->
             <div id="admin-veritabani" class="admin-tab space-y-8 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800/80 pb-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
                     <div>
                         <h1 class="text-2xl font-extrabold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-database text-amber-400"></i>
@@ -295,18 +293,18 @@
                     </button>
                 </div>
 
-                <div class="glass-panel rounded-3xl p-8 shadow-2xl space-y-6">
+                <div class="glass-card rounded-3xl p-8 shadow-2xl space-y-6">
                     <div class="flex items-center justify-between">
                         <h3 class="text-sm font-extrabold text-white">Son İndekslenen Kararlar</h3>
-                        <span class="text-xs bg-gray-800/80 border border-gray-700 px-3 py-1 rounded-xl font-mono text-gray-300">Toplam Havuz: 4.8M+</span>
+                        <span class="text-xs bg-darkBg border border-gray-800 px-3.5 py-1.5 rounded-xl font-mono text-gray-300">Toplam Havuz: 4.8M+</span>
                     </div>
                     <div class="space-y-3">
-                        <div class="bg-darkBg/80 p-5 rounded-2xl border border-gray-800/80 flex items-center justify-between text-xs hover:border-gray-700 transition">
+                        <div class="bg-darkBg p-5 rounded-2xl border border-gray-800 flex items-center justify-between text-xs hover:border-gray-700 transition">
                             <div class="space-y-1">
                                 <strong class="text-white block font-bold">Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812</strong>
                                 <span class="text-gray-400">Kıdem tazminatı matrahına prim ve ek menfaatlerin dahil edilmesi.</span>
                             </div>
-                            <span class="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl shrink-0"><i class="fa-solid fa-check mr-1.5"></i> İndekslendi</span>
+                            <span class="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-2 rounded-xl shrink-0"><i class="fa-solid fa-check mr-1.5"></i> İndekslendi</span>
                         </div>
                     </div>
                 </div>
@@ -314,7 +312,7 @@
 
             <!-- TAB 4: SİSTEM LOGLARI -->
             <div id="admin-loglar" class="admin-tab space-y-8 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800/80 pb-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
                     <div>
                         <h1 class="text-2xl font-extrabold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-rectangle-list text-purple-400"></i>
@@ -322,21 +320,21 @@
                         </h1>
                         <p class="text-xs text-gray-400 mt-1">Platformdaki API çağrıları, dilekçe üretim raporları ve sistem etkinlikleri.</p>
                     </div>
-                    <button onclick="alert('Log dosyası indirildi.')" class="bg-darkBg hover:bg-gray-800 text-gray-300 text-xs font-semibold px-4 py-3 rounded-2xl border border-gray-700/80 transition shadow-sm">
+                    <button onclick="alert('Log dosyası indirildi.')" class="bg-darkBg hover:bg-cardBg text-gray-300 text-xs font-semibold px-4 py-3 rounded-2xl border border-gray-800 transition shadow-sm">
                         Logları Dışa Aktar (.txt)
                     </button>
                 </div>
 
-                <div class="glass-panel rounded-3xl p-6 shadow-2xl space-y-3 font-mono text-[11px] text-gray-300">
-                    <div class="p-3 bg-darkBg/90 rounded-xl border border-gray-800/80 text-emerald-400 flex items-center space-x-2"><i class="fa-solid fa-circle text-[6px]"></i><span>[2026-10-29 19:00:02] INFO: Av. Mehmet Ege Yıldız yönetici paneline giriş yaptı.</span></div>
-                    <div class="p-3 bg-darkBg/90 rounded-xl border border-gray-800/80 text-blue-400 flex items-center space-x-2"><i class="fa-solid fa-circle text-[6px]"></i><span>[2026-10-29 18:45:12] SUCCESS: İçtihat arama motoru sorgusu tamamlandı (4 sonuç döndü).</span></div>
-                    <div class="p-3 bg-darkBg/90 rounded-xl border border-gray-800/80 text-amber-400 flex items-center space-x-2"><i class="fa-solid fa-circle text-[6px]"></i><span>[2026-10-29 18:30:00] NOTICE: Yeni PDF evrak program içinde taranarak indekslendi.</span></div>
+                <div class="glass-card rounded-3xl p-6 shadow-2xl space-y-3 font-mono text-[11px] text-gray-300">
+                    <div class="p-3.5 bg-darkBg rounded-xl border border-gray-800 text-emerald-400 flex items-center space-x-2.5"><i class="fa-solid fa-circle text-[6px]"></i><span>[2026-10-29 19:00:02] INFO: Av. Mehmet Ege Yıldız yönetici paneline giriş yaptı.</span></div>
+                    <div class="p-3.5 bg-darkBg rounded-xl border border-gray-800 text-blue-400 flex items-center space-x-2.5"><i class="fa-solid fa-circle text-[6px]"></i><span>[2026-10-29 18:45:12] SUCCESS: İçtihat arama motoru sorgusu tamamlandı (4 sonuç döndü).</span></div>
+                    <div class="p-3.5 bg-darkBg rounded-xl border border-gray-800 text-amber-400 flex items-center space-x-2.5"><i class="fa-solid fa-circle text-[6px]"></i><span>[2026-10-29 18:30:00] NOTICE: Yeni PDF evrak program içinde taranarak indekslendi.</span></div>
                 </div>
             </div>
 
             <!-- TAB 5: PLATFORM AYARLARI -->
             <div id="admin-ayarlar" class="admin-tab space-y-8 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800/80 pb-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
                     <div>
                         <h1 class="text-2xl font-extrabold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-gears text-gray-400"></i>
@@ -349,16 +347,16 @@
                     </button>
                 </div>
 
-                <div class="glass-panel rounded-3xl p-8 shadow-2xl space-y-6">
+                <div class="glass-card rounded-3xl p-8 shadow-2xl space-y-6">
                     <div class="space-y-2">
                         <label class="block text-xs font-extrabold text-gray-300 uppercase tracking-wider">Platform Adı</label>
-                        <input type="text" value="HukukBilgini - Hukuk & İçtihat Platformu" class="w-full bg-darkBg/90 border border-gray-700/80 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-500 font-medium">
+                        <input type="text" value="HukukBilgini - Hukuk & İçtihat Platformu" class="w-full bg-darkBg border border-gray-800 rounded-2xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-amber-500 font-medium">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-xs font-extrabold text-gray-300 uppercase tracking-wider">Varsayılan Versiyon</label>
-                        <input type="text" value="v3.0 Pro Enterprise" class="w-full bg-darkBg/90 border border-gray-700/80 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-500 font-medium">
+                        <input type="text" value="v3.0 Pro Enterprise" class="w-full bg-darkBg border border-gray-800 rounded-2xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-amber-500 font-medium">
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-700/60">
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-800">
                         <div>
                             <span class="text-sm font-bold text-white block">Bakım Modu</span>
                             <span class="text-xs text-gray-400">Etkinleştirildiğinde kullanıcılar bakım ekranı görür (Admin hariç).</span>
@@ -394,7 +392,7 @@
                 el.style.display = 'none';
             });
             document.querySelectorAll('.admin-link').forEach(el => {
-                el.classList.remove('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/25', 'font-semibold');
+                el.classList.remove('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/25', 'font-bold');
                 el.classList.add('text-gray-300', 'font-medium');
             });
             
@@ -406,7 +404,7 @@
             
             const targetMenu = document.getElementById('menu-' + tabId);
             if (targetMenu) {
-                targetMenu.classList.add('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/25', 'font-semibold');
+                targetMenu.classList.add('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/25', 'font-bold');
                 targetMenu.classList.remove('text-gray-300', 'font-medium');
             }
 
@@ -504,18 +502,18 @@
             newRow.setAttribute('data-user-id', newId);
             newRow.innerHTML = `
                 <td class="py-4 px-4 font-bold text-white flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+                    <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-user text-xs"></i>
                     </div>
                     <span>${name}</span>
                 </td>
-                <td class="py-4 px-4 text-gray-300">${email}</td>
+                <td class="py-4 px-4 text-gray-300 font-mono">${email}</td>
                 <td class="py-4 px-4">
                     <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full font-bold text-[11px]">Standart Avukat</span>
                     <span class="block text-[10px] text-gray-400 mt-1">Kota: <strong class="text-white user-quota font-mono">50 Adet</strong></span>
                 </td>
                 <td class="py-4 px-4 text-gray-400 font-mono">${new Date().toLocaleDateString('tr-TR')}</td>
-                <td class="py-4 px-4 text-right space-x-3">
+                <td class="py-4 px-4 text-right space-x-2">
                     <button onclick="setCustomQuota(this)" class="text-amber-400 hover:text-amber-300 font-semibold bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/20 transition">Kota Belirle</button>
                     <button onclick="renewUserQuota(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20 transition">Yenile</button>
                     <button onclick="deleteUserRow(this)" class="text-rose-400 hover:text-rose-300 font-semibold bg-rose-500/10 px-3 py-1.5 rounded-xl border border-rose-500/20 transition">Sil</button>
