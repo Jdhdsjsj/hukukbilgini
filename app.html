@@ -36,9 +36,13 @@
 <body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="h-16 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-6 z-20 shrink-0">
-        <!-- Logo & Brand -->
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dilekce')">
+    <header class="h-16 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-4 sm:px-6 z-20 shrink-0">
+        <!-- Logo & Brand & Mobil Menü Butonu -->
+        <div class="flex items-center space-x-3">
+            <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-300 hover:text-white p-1.5 rounded-lg bg-gray-800">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dilekce')">
             <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xl">
                 <i class="fa-solid fa-scale-balanced"></i>
             </div>
@@ -46,6 +50,7 @@
                 <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
                 <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
             </div>
+        </div>
         </div>
 
         <!-- Breadcrumb / Status -->
@@ -56,7 +61,7 @@
         </div>
 
         <!-- Right Action Buttons -->
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2 sm:space-x-3">
             <button class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
                 <i class="fa-solid fa-bolt text-amber-400"></i>
                 <span>Dilekçe Üretimi: <strong class="text-white">Sınırsız</strong></span>
@@ -65,24 +70,24 @@
                 <i class="fa-solid fa-copy"></i>
                 <span>Kopyala</span>
             </button>
-            <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
-                <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-2 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
+                <div class="flex items-center space-x-1.5">
                     <i class="fa-solid fa-user-tie text-amber-400"></i>
-                    <span>Av. Mehmet Ege Yıldız</span>
+                    <span class="hidden sm:inline">Av. Mehmet Ege Yıldız</span>
                 </div>
-                <button onclick="alert('Oturum kapatıldı. Güvenli çıkış yapıldı.'); location.reload();" class="text-gray-400 hover:text-rose-400 pl-2 border-l border-gray-700 transition" title="Çıkış Yap">
+                <button onclick="alert('Oturum kapatıldı. Güvenli çıkış yapıldı.'); location.reload();" class="text-gray-400 hover:text-rose-400 pl-1.5 border-l border-gray-700 transition" title="Çıkış Yap">
                     <i class="fa-solid fa-right-from-bracket text-xs"></i>
                 </button>
             </div>
-            <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
+            <button class="hidden sm:flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
                 <i class="fa-solid fa-file-word"></i>
                 <span>Word (.docx)</span>
             </button>
-            <button class="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-emerald-600/20 transition" onclick="exportFile('udf')">
+            <button class="hidden sm:flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-emerald-600/20 transition" onclick="exportFile('udf')">
                 <i class="fa-solid fa-file-shield"></i>
                 <span>UYAP (.udf)</span>
             </button>
-            <button class="flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-rose-600/20 transition" onclick="exportFile('pdf')">
+            <button class="hidden sm:flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-rose-600/20 transition" onclick="exportFile('pdf')">
                 <i class="fa-solid fa-file-pdf"></i>
                 <span>PDF (.pdf)</span>
             </button>
@@ -90,10 +95,10 @@
     </header>
 
     <!-- MAIN APP WRAPPER -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden relative">
         
         <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-64 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between shrink-0 select-none">
+        <aside class="hidden md:flex w-64 bg-sidebarBg border-r border-gray-800 flex-col justify-between shrink-0 select-none absolute md:relative inset-y-0 left-0 z-30 transition">
             <div class="p-4 space-y-6 overflow-y-auto">
                 
                 <!-- Quick Prompt Button -->
@@ -144,33 +149,26 @@
         </aside>
 
         <!-- CONTENT AREA -->
-        <main class="flex-1 overflow-y-auto bg-darkBg p-6 lg:p-8">
+        <main class="flex-1 overflow-y-auto bg-darkBg p-4 sm:p-6 lg:p-8">
             
             <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA -->
             <div id="tab-ictihat" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-scale-balanced text-amber-400"></i>
                             <span>Akıllı İçtihat & Mevzuat Arama Motoru</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
                     </div>
-                    <div class="flex items-center space-x-3">
-                        <!-- Dashboard PDF ve Word İçtihat / Karar Ekleme Tuşları -->
-                        <button onclick="document.getElementById('pdfWordUploadInput').click()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-gray-950 font-semibold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center space-x-2">
-                            <i class="fa-solid fa-file-arrow-up"></i>
-                            <span>PDF / Word İçtihat Ekle</span>
-                        </button>
-                        <input type="file" id="pdfWordUploadInput" class="hidden" multiple accept=".pdf,.docx,.doc" onchange="handleExternalKararUpload(this)">
-                        
-                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-2 rounded-lg">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">
                             <i class="fa-solid fa-database text-amber-400 mr-1"></i> Toplam 4.8M+ Karar
                         </span>
                     </div>
                 </div>
 
-                <div class="bg-cardBg border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
+                <div class="bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-6">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                             <i class="fa-solid fa-magnifying-glass text-lg"></i>
@@ -241,11 +239,11 @@
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto" style="display: block;">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-file-signature text-blue-400"></i>
                             <span>Dilekçe Yazımı</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Talebinizi yazın ve belgelerinizi ekleyin; asistan anında analiz yaparak dilekçenizi oluştursun.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Talebinizi yazın ve belgelerinizi ekleyin; asistan anında analiz yaparak dilekçenizi oluştursun.</p>
                     </div>
                     <div class="flex items-center space-x-2">
                         <button onclick="generateAiDilekce()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg transition">
@@ -257,49 +255,47 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <!-- Sol: Tek Kutu ve Genişletilmiş Sürükle-Bırak Dosya Alanı -->
-                    <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-5">
-                        <h2 class="text-sm font-bold text-white uppercase tracking-wider text-amber-400 border-b border-gray-700/60 pb-2 flex items-center justify-between">
+                    <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-5 space-y-5">
+                        <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider text-amber-400 border-b border-gray-700/60 pb-2 flex items-center justify-between">
                             <span>Nasıl Yardımcı Olabilirim, Talebiniz Nedir ?</span>
                         </h2>
 
                         <!-- Tek Büyük Talep ve Olay Kutusu -->
                         <div>
-                            <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de 3 yıldır çalışırken 15.10.2026 tarihinde hiçbir haklı gerekçe gösterilmeden işten çıkarıldı. İşe iade ve tazminat davası açmak istiyoruz..."></textarea>
+                            <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de 3 yıldır çalışırken 15.10.2026 tarihinde hiçbir haklı gerekçe gösterilmeden işten çıkarıldı..."></textarea>
                         </div>
 
                         <!-- Genişletilmiş Dosya Yükleme Alanı (Maks 50 MB, Sürükle Bırak) -->
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
-                                <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme (Çoklu / Sürükle-Bırak)</label>
+                                <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme</label>
                                 <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-database mr-1"></i> Maks. 50 MB</span>
                             </div>
                             <div id="dropZoneBox" 
-                                 class="flex flex-col items-center justify-center w-full bg-darkBg border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-2xl p-6 cursor-pointer transition text-center space-y-2" 
+                                 class="flex flex-col items-center justify-center w-full bg-darkBg border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-2xl p-5 cursor-pointer transition text-center space-y-2" 
                                  onclick="document.getElementById('dilekceFileInput').click()"
                                  ondragover="handleDragOver(event)"
                                  ondragleave="handleDragLeave(event)"
                                  ondrop="handleFileDrop(event)">
-                                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center justify-center text-xl">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center justify-center text-lg">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                 </div>
                                 <div>
                                     <span id="fileUploadLabel" class="text-xs text-gray-200 font-medium block">Dosyaları buraya sürükleyip bırakın veya tıklayın</span>
-                                    <span class="text-[10px] text-gray-400 block mt-0.5">PDF, UDF, DOCX, XLS, JPG, PNG, ZIP (Maks. 50 MB)</span>
+                                    <span class="text-[10px] text-gray-400 block mt-0.5">PDF, UDF, DOCX, JPG, PNG (Maks. 50 MB)</span>
                                 </div>
                             </div>
                             <input type="file" id="dilekceFileInput" class="hidden" multiple accept=".pdf,.udf,.docx,.doc,.xls,.xlsx,.jpg,.jpeg,.png,.zip,.rar" onchange="handleFileSelection(this)">
                             <div id="selectedFilesList" class="space-y-1.5 pt-2 max-h-40 overflow-y-auto"></div>
                         </div>
 
-                        <!-- Dosya İnceleme & Çıkarımlar Paneli (Program İçi İnceleme) -->
+                        <!-- Dosya İnceleme & Çıkarımlar Paneli -->
                         <div id="fileAnalysisContainer" class="hidden bg-darkBg border border-blue-500/30 rounded-xl p-4 space-y-2 shadow-inner">
                             <div class="flex items-center justify-between text-xs font-semibold text-blue-400 border-b border-gray-800 pb-2">
-                                <span class="flex items-center"><i class="fa-solid fa-microchip mr-1.5"></i> Yüklenen Dosya İncelemesi & Çıkarımlar</span>
+                                <span class="flex items-center"><i class="fa-solid fa-microchip mr-1.5"></i> Yüklenen Dosya İncelemesi</span>
                                 <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-check mr-1"></i> Analiz Edildi</span>
                             </div>
-                            <div id="analysisResultsList" class="text-[11px] text-gray-300 space-y-1">
-                                <!-- Dinamik çıkarımlar -->
-                            </div>
+                            <div id="analysisResultsList" class="text-[11px] text-gray-300 space-y-1"></div>
                         </div>
 
                         <div class="flex items-center justify-between pt-2">
@@ -311,16 +307,16 @@
                     </div>
 
                     <!-- Sağ: Canlı Önizleme ve Düzenlenebilir Editör -->
-                    <div class="lg:col-span-7 bg-cardBg border border-gray-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+                    <div class="lg:col-span-7 bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-4">
                         <div>
-                            <div class="flex items-center justify-between border-b border-gray-700/60 pb-3 mb-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-700/60 pb-3 mb-3 gap-2">
                                 <div class="flex items-center space-x-2">
                                     <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
                                     <span class="text-xs font-semibold text-gray-200">Canlı Önizleme & Düzenlenebilir Editör</span>
                                 </div>
                                 <div class="flex items-center space-x-2">
                                     <button onclick="copyDilekceText()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg text-gray-300 border border-gray-700 transition">
-                                        <i class="fa-regular fa-copy mr-1"></i> Metni Kopyala
+                                        <i class="fa-regular fa-copy mr-1"></i> Kopyala
                                     </button>
                                     <button onclick="exportFile('docx')" class="text-xs bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-white font-medium transition">
                                         <i class="fa-regular fa-file-word mr-1"></i> İndir
@@ -331,7 +327,7 @@
                             <textarea id="dilekceOutput" rows="20" class="w-full bg-[#0d1321] text-gray-200 text-xs font-mono p-4 rounded-xl border border-gray-800 focus:outline-none focus:border-amber-500 leading-relaxed shadow-inner" placeholder="Talebinizi yukarıya yazıp 'Dilekçe Üret' butonuna tıkladığınızda eksiksiz dava dilekçeniz burada görünecektir..."></textarea>
                         </div>
 
-                        <div class="p-3 bg-darkBg border border-gray-800 rounded-xl text-xs text-gray-400 flex items-center justify-between">
+                        <div class="p-3 bg-darkBg border border-gray-800 rounded-xl text-xs text-gray-400 flex flex-col sm:flex-row items-center justify-between gap-2">
                             <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> HMK ve Avukatlık Kanunu formatına uygundur.</span>
                             <span class="text-gray-500">Kelime Sayısı: <span id="wordCount" class="text-white">0</span></span>
                         </div>
@@ -343,11 +339,11 @@
             <div id="tab-kaydedilenler" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-bookmark text-amber-400"></i>
                             <span>Kaydedilen Emsal Kararlar</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">İşaretleyip kaydettiğiniz emsal içtihatlar.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">İşaretleyip kaydettiğiniz emsal içtihatlar.</p>
                     </div>
                     <button onclick="clearAllBookmarks()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-lg border border-gray-700 transition">
                         Tümünü Temizle
@@ -367,36 +363,37 @@
 
             <!-- TAB 4: HUKUK DANIŞMA ASİSTANI -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
-                <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
+                <div class="border-b border-gray-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                        <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
+                        <h1 class="text-lg sm:text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
                             <span>Hukuk Danışma Asistanı</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Verilen hukuk kaynaklarında ve güncel mevzuatta tarama yaparak kapsamlı ve doyurucu mütalaa sunar.</p>
+                        <p class="text-xs text-gray-400">Verilen hukuk kaynaklarında ve güncel mevzuatta tarama yaparak kapsamlı mütalaa sunar.</p>
                     </div>
-                    <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
+                    <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5 w-fit">
                         <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
                         <span>Web / Kaynak Tarama Aktif</span>
                     </span>
                 </div>
 
-                <div id="chatHistoryBox" class="flex-1 bg-cardBg border border-gray-800 rounded-2xl p-5 overflow-y-auto space-y-4 shadow-inner">
+                <div id="chatHistoryBox" class="flex-1 bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-5 overflow-y-auto space-y-4 shadow-inner">
                     <div class="flex items-start space-x-3">
                         <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-robot text-xs"></i>
                         </div>
                         <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-1.5">
                             <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                            <p>Hukuk Danışma Asistanı; sorduğunuz hukuki soru veya uyuşmazlık konusunda, belirttiğiniz harici kaynakları ve emsal içtihat havuzunu derinlemesine tarayarak eksiksiz, doyurucu ve gerekçeli mütalaa sunmak üzere hazırdır. Sorunuzu yazabilirsiniz.</p>
+                            <p>Hukuk Danışma Asistanı; sorduğunuz hukuki soru veya uyuşmazlık konusunda, belirttiğiniz harici kaynakları ve emsal içtihat havuzunu derinlemesine tarayarak eksiksiz mütalaa sunmak üzere hazırdır. Sorunuzu yazabilirsiniz.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
-                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
-                    <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                        <span>Kaynakları Tara & Cevapla</span>
+                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre...'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                    <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 sm:px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5 shrink-0">
+                        <span class="hidden sm:inline">Kaynakları Tara & Cevapla</span>
+                        <span class="sm:hidden">Gönder</span>
                         <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
                     </button>
                 </div>
@@ -406,11 +403,11 @@
             <div id="tab-dosyalar" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-folder-open text-rose-400"></i>
                             <span>Dava Dosyalarım</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Takip ettiğiniz tüm dava dosyaları, safahat bilgileri ve evraklar.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Takip ettiğiniz tüm dava dosyaları, safahat bilgileri ve evraklar.</p>
                     </div>
                     <button onclick="openNewCaseModal()" class="bg-rose-600 hover:bg-rose-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow-md">
                         <i class="fa-solid fa-plus"></i>
@@ -502,6 +499,17 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('aside');
+            if (sidebar) {
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('absolute');
+                sidebar.classList.toggle('z-30');
+                sidebar.classList.toggle('inset-y-0');
+                sidebar.classList.toggle('left-0');
+            }
+        }
+
         function switchTab(tabId) {
             console.log("Switching to tab:", tabId);
             const tabs = document.querySelectorAll('.tab-content');
@@ -534,6 +542,13 @@
             const bcElem = document.getElementById('currentBreadcrumb');
             if (bcElem) {
                 bcElem.innerText = breadcrumbMap[tabId] || 'Çalışma Alanı';
+            }
+            // Mobilde sekme değişince sidebar'ı kapat
+            if (window.innerWidth < 768) {
+                const sidebar = document.querySelector('aside');
+                if (sidebar && !sidebar.classList.contains('hidden')) {
+                    toggleMobileSidebar();
+                }
             }
         }
 
@@ -1023,35 +1038,6 @@ e-İmzalıdır`;
             switchTab('dilekce');
             performSearch();
         };
-    
-        function handleExternalKararUpload(input) {
-            if (input.files && input.files.length > 0) {
-                let addedCount = 0;
-                for (let i = 0; i < input.files.length; i++) {
-                    const file = input.files[i];
-                    const fileName = file.name;
-                    ictihatDatabase.unshift({
-                        id: ictihatDatabase.length + 1,
-                        court: "Yüklenen Özel Karar / Mevzuat",
-                        courtCode: "yargitay",
-                        deptCode: "all",
-                        esasNo: "2026/Özel",
-                        kararNo: "K. 2026/" + Math.floor(Math.random() * 1000),
-                        tarih: new Date().toLocaleDateString('tr-TR'),
-                        title: fileName,
-                        snippet: "Kullanıcı tarafından panele PDF/Word formatında eklenen özel içtihat veya karar metnidir.",
-                        summary: "Harici kaynak olarak yüklenen " + fileName + " dosyası sistem veritabanına başarıyla indekslendi ve arama motoruna eklendi.",
-                        kanunMaddesi: "İlgili Yasal Düzenlemeler",
-                        tags: ["# Özel Karar", "# Yüklenen Belge"],
-                        categoryKey: fileName.toLowerCase() + " özel karar mevzuat"
-                    });
-                    addedCount++;
-                }
-                alert(addedCount + " adet PDF/Word formatındaki içtihat/karar başarıyla sisteme eklendi ve arama havuzuna dahil edildi!");
-                input.value = '';
-                performSearch();
-            }
-        }
     </script>
 </body>
 </html>
