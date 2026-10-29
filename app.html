@@ -71,11 +71,15 @@
             </button>
             <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
                 <i class="fa-solid fa-file-word"></i>
-                <span>Word (.docx) İndir</span>
+                <span>Word (.docx)</span>
             </button>
             <button class="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-emerald-600/20 transition" onclick="exportFile('udf')">
                 <i class="fa-solid fa-file-shield"></i>
-                <span>UYAP Editör (.udf)</span>
+                <span>UYAP (.udf)</span>
+            </button>
+            <button class="flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-rose-600/20 transition" onclick="exportFile('pdf')">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>PDF (.pdf)</span>
             </button>
         </div>
     </header>
@@ -90,7 +94,7 @@
                 <!-- Quick Prompt Button -->
                 <button onclick="switchTab('dilekce')" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium text-xs py-2.5 px-3 rounded-xl shadow-md flex items-center justify-center space-x-2 transition">
                     <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i>
-                    <span>Dilekçe Stüdyosu</span>
+                    <span>Dilekçe Prompt Stüdyosu</span>
                 </button>
 
                 <!-- Navigation Menu -->
@@ -240,7 +244,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Sol: Tek Kutu ve Genişletilmiş Sürükle-Bırak Dosya Alanı (Max 50 MB) -->
+                    <!-- Sol: Tek Kutu ve Genişletilmiş Sürükle-Bırak Dosya Alanı -->
                     <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-5">
                         <h2 class="text-sm font-bold text-white uppercase tracking-wider text-amber-400 border-b border-gray-700/60 pb-2 flex items-center justify-between">
                             <span>Nasıl Yardımcı Olabilirim, Talebiniz Nedir ?</span>
@@ -386,7 +390,7 @@
                 </div>
             </div>
 
-            <!-- TAB 5: DAVA DOSYALARIM (Tek Tek Silme Özellikli - Onaysız) -->
+            <!-- TAB 5: DAVA DOSYALARIM (Tek Tek Silme Özellikli) -->
             <div id="tab-dosyalar" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -673,7 +677,11 @@
             
             let dosyaAnalizRaporu = "";
             if (uploadedFilesData.length > 0) {
-                dosyaAnalizRaporu = `\n[PROGRAM İÇİ DOSYA İNCELEME VE ÇIKARIMLAR]\n• İncelenen Ek Belgeler: ${uploadedFilesData.join(', ')}\n• Tespitler: Yüklenen evraklar program içinde taranmış, müvekkil haklılığını destekleyen maddi vakıalar, delil uyumu ve hukuki gerekçeler tespit edilmiştir.\n`;
+                dosyaAnalizRaporu = `
+[PROGRAM İÇİ DOSYA İNCELEME VE ÇIKARIMLAR]
+• İncelenen Ek Belgeler: ${uploadedFilesData.join(', ')}
+• Tespitler: Yüklenen evraklar program içinde taranmış, müvekkil haklılığını destekleyen maddi vakıalar, delil uyumu ve hukuki gerekçeler tespit edilmiştir.
+`;
             }
 
             const dilekceText = `İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE
@@ -708,6 +716,18 @@ e-İmzalıdır`;
             navigator.clipboard.writeText(text).then(() => { alert('Panoya kopyalandı!'); });
         }
 
+        function loadQuickTemplate(type) {
+            switchTab('dilekce');
+            if(type === 'ise_iade') {
+                document.getElementById('dilekceTalepKutusu').value = "İş akdinin haksız feshi nedeniyle 4857 sayılı Kanun md. 20 uyarınca işe iade ve tazminat talebidir.";
+            } else if(type === 'tahliye') {
+                document.getElementById('dilekceTalepKutusu').value = "Yazılı tahliye taahhütnamesine dayalı taşınmazın tahliyesi ve icra takibine itirazın kaldırılması talebidir.";
+            } else if(type === 'ihtiyati_haciz') {
+                document.getElementById('dilekceTalepKutusu').value = "Kambiyo senedine dayalı vadesinde ödenmeyen alacak için ihtiyati haciz kararı verilmesi talebidir.";
+            }
+            generateAiDilekce();
+        }
+
         function clearAllBookmarks() {
             document.getElementById('savedCardsList').innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı karar kalmadı.</div>';
             document.getElementById('savedCountBadge').innerText = '0';
@@ -719,7 +739,6 @@ e-İmzalıdır`;
             document.getElementById('savedCountBadge').innerText = Math.max(0, count - 1);
         }
 
-        // Dava Dosyalarım - Tek tek silme fonksiyonu (Onaysız, Direkt siler)
         function deleteSingleCase(btn) {
             const card = btn.closest('.case-card');
             if (card) {
@@ -832,15 +851,21 @@ e-İmzalıdır`;
                 exportContent = "HukukBilgini Platform İnceleme Metni - " + new Date().toLocaleDateString('tr-TR');
             }
 
+            let ext = 'docx';
+            if (format === 'udf') ext = 'udf';
+            else if (format === 'pdf') ext = 'pdf';
+
             const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${filename}.${format === 'udf' ? 'udf' : 'docx'}`;
+            link.download = `${filename}.${ext}`;
             link.click();
             URL.revokeObjectURL(link.href);
 
             if (format === 'udf') {
                 alert('Belge UYAP Editör formatında (.udf) indirildi.');
+            } else if (format === 'pdf') {
+                alert('Belge PDF formatında (.pdf) indirildi.');
             } else {
                 alert('Belge Word formatında (.docx) indirildi.');
             }
