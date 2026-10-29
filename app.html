@@ -65,6 +65,10 @@
                 <i class="fa-solid fa-copy"></i>
                 <span>Kopyala</span>
             </button>
+            <a href="admin.html" class="flex items-center space-x-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-xs px-3 py-1.5 rounded-lg border border-amber-500/30 text-amber-400 font-semibold transition" title="Yönetici Paneli">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Admin</span>
+            </a>
             <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
                 <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-user-tie text-amber-400"></i>
@@ -156,8 +160,14 @@
                         </h1>
                         <p class="text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <button onclick="document.getElementById('pdfWordUploadInput').click()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-gray-950 font-semibold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center space-x-2">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                            <span>PDF / Word İçtihat Ekle</span>
+                        </button>
+                        <input type="file" id="pdfWordUploadInput" class="hidden" multiple accept=".pdf,.docx,.doc" onchange="handleExternalKararUpload(this)">
+                        
+                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-2 rounded-lg">
                             <i class="fa-solid fa-database text-amber-400 mr-1"></i> Toplam 4.8M+ Karar
                         </span>
                     </div>
@@ -497,36 +507,26 @@
     <script>
         function switchTab(tabId) {
             console.log("Switching to tab:", tabId);
-            
-            // Hide all tab contents
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
-            
-            // Reset sidebar links
             const links = document.querySelectorAll('.sidebar-link');
             links.forEach(el => {
                 el.classList.remove('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/20', 'font-medium');
                 el.classList.add('text-gray-300');
             });
-            
-            // Show target tab
             const targetTab = document.getElementById('tab-' + tabId);
             if (targetTab) {
                 targetTab.classList.add('active');
                 targetTab.style.display = 'block';
             }
-            
-            // Highlight target sidebar link
             const targetMenu = document.getElementById('menu-' + tabId);
             if (targetMenu) {
                 targetMenu.classList.add('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/20', 'font-medium');
                 targetMenu.classList.remove('text-gray-300');
             }
-
-            // Update breadcrumb
             const breadcrumbMap = {
                 'dilekce': 'Dilekçe Yazımı',
                 'ictihat': 'İçtihat & Mevzuat Arama',
@@ -909,7 +909,7 @@ e-İmzalıdır`;
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tahliye taahhütnamesinde tarih uyuşmazlığı ve ispat külfeti kuralları hk." }
                     ];
                 } else if (m.includes('zamanaşımı') || m.includes('süre') || m.includes('alacak')) {
-                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatında da 5 yıllık zamanaşımı uygulanır.";
+                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatı alacakları da 5 yıllık zamanaşımına tabidir.";
                     kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı Türk Borçlar Kanunu md. 146";
                     emsalListesi = [
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı süresinin başlangıç tarihi hk." }
@@ -1026,6 +1026,35 @@ e-İmzalıdır`;
             switchTab('dilekce');
             performSearch();
         };
+
+        function handleExternalKararUpload(input) {
+            if (input.files && input.files.length > 0) {
+                let addedCount = 0;
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
+                    const fileName = file.name;
+                    ictihatDatabase.unshift({
+                        id: ictihatDatabase.length + 1,
+                        court: "Yüklenen Özel Karar / Mevzuat",
+                        courtCode: "yargitay",
+                        deptCode: "all",
+                        esasNo: "2026/Özel",
+                        kararNo: "K. 2026/" + Math.floor(Math.random() * 1000),
+                        tarih: new Date().toLocaleDateString('tr-TR'),
+                        title: fileName,
+                        snippet: "Kullanıcı tarafından panele PDF/Word formatında eklenen özel içtihat veya karar metnidir.",
+                        summary: "Harici kaynak olarak yüklenen " + fileName + " dosyası sistem veritabanına başarıyla indekslendi ve arama motoruna eklendi.",
+                        kanunMaddesi: "İlgili Yasal Düzenlemeler",
+                        tags: ["# Özel Karar", "# Yüklenen Belge"],
+                        categoryKey: fileName.toLowerCase() + " özel karar mevzuat"
+                    });
+                    addedCount++;
+                }
+                alert(addedCount + " adet PDF/Word formatındaki içtihat/karar başarıyla sisteme eklendi ve arama havuzuna dahil edildi!");
+                input.value = '';
+                performSearch();
+            }
+        }
     </script>
 </body>
 </html>
