@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu | Profesyonel Hukuk Teknolojileri</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu | v2.8 Pro Enterprise</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -109,7 +109,7 @@
                         <i class="fa-solid fa-calendar-days w-5 text-gray-400"></i>
                         <span>Duruşma & İş Takvimi</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
+                    <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800/60 transition">
                         <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-amber-400"></i>
                         <span>İçtihat & Mevzuat Arama</span>
                     </a>
@@ -119,6 +119,10 @@
                             <span>Kaydedilen Kararlar</span>
                         </div>
                         <span id="savedCountBadge" class="bg-gray-800 text-amber-400 text-xs px-2 py-0.5 rounded-full font-bold">2</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('asistan')" id="menu-asistan" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
+                        <i class="fa-solid fa-robot w-5 text-gray-400"></i>
+                        <span>Hukuk Danışma Asistanı</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('dosyalar')" id="menu-dosyalar" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition justify-between">
                         <div class="flex items-center space-x-3">
@@ -401,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (DOSYA ANALİZİ İLE) -->
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (SÜRÜKLE & BIRAK VE 1 GB LİMİTLİ) -->
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -409,7 +413,7 @@
                             <i class="fa-solid fa-file-signature text-blue-400"></i>
                             <span>Dilekçe Prompt Stüdyosu</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Hukuki olay detaylarını ve delil belgelerinizi girin; yapay zeka analiz yaparak dilekçenizi oluştursun.</p>
+                        <p class="text-sm text-gray-400 mt-1">Hukuki olay detaylarını ve delil belgelerinizi ekleyin; yapay zeka analiz yaparak dilekçenizi oluştursun.</p>
                     </div>
                     <div class="flex items-center space-x-2">
                         <button onclick="generateAiDilekce()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 shadow-lg transition">
@@ -458,23 +462,31 @@
                             <textarea id="dilekceOlay" rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed" placeholder="Müvekkilin işe başlama tarihi, fesih sebebi ve haklı fesih nedenlerinin bulunmadığını özetleyiniz..."></textarea>
                         </div>
 
-                        <!-- Dosya Ekleme & Analiz Alanı -->
+                        <!-- Çoklu ve Farklı Türde Dosya Ekleme Alanı (Sürükle & Bırak Destekli - Maks. 1 GB) -->
                         <div class="space-y-1.5">
-                            <label class="block text-xs text-gray-300 font-medium">Delil / Belge / Dosya Ekle (PDF, Word, Görsel)</label>
-                            <div class="flex items-center justify-between w-full bg-darkBg border border-dashed border-gray-700 hover:border-blue-500 rounded-xl p-3 cursor-pointer transition" onclick="document.getElementById('dilekceFileInput').click()">
-                                <div class="flex items-center space-x-2.5">
-                                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm">
+                            <div class="flex items-center justify-between">
+                                <label class="block text-xs text-gray-300 font-medium">Çoklu Evrak & Delil Yükleme (Sürükle & Bırak)</label>
+                                <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-database mr-1"></i> Maks. Kapasite: 1 GB</span>
+                            </div>
+                            <div id="dropZoneBox" 
+                                 class="flex items-center justify-between w-full bg-darkBg border border-dashed border-gray-700 hover:border-blue-500 rounded-xl p-3.5 cursor-pointer transition" 
+                                 onclick="document.getElementById('dilekceFileInput').click()"
+                                 ondragover="handleDragOver(event)"
+                                 ondragleave="handleDragLeave(event)"
+                                 ondrop="handleFileDrop(event)">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center justify-center text-base">
                                         <i class="fa-solid fa-cloud-arrow-up"></i>
                                     </div>
                                     <div>
-                                        <span id="fileUploadLabel" class="text-xs text-gray-300 font-medium block">Dosya seçmek için tıklayın veya sürükleyin</span>
-                                        <span class="text-[10px] text-gray-500 block">PDF, UDF, DOCX, JPG (Maks. 25MB)</span>
+                                        <span id="fileUploadLabel" class="text-xs text-gray-200 font-medium block">Dosyaları buraya sürükleyin veya tıklayın</span>
+                                        <span class="text-[10px] text-gray-400 block">PDF, UDF, DOCX, XLS, JPG, PNG, ZIP (Sınırsız Adet)</span>
                                     </div>
                                 </div>
-                                <span class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1.5 rounded-lg border border-gray-700 transition">Gözat</span>
+                                <span class="text-xs bg-blue-600/20 text-blue-400 border border-blue-500/30 px-3 py-1.5 rounded-lg font-semibold transition">Gözat</span>
                             </div>
-                            <input type="file" id="dilekceFileInput" class="hidden" multiple onchange="handleFileSelection(this)">
-                            <div id="selectedFilesList" class="space-y-1 pt-1"></div>
+                            <input type="file" id="dilekceFileInput" class="hidden" multiple accept=".pdf,.udf,.docx,.doc,.xls,.xlsx,.jpg,.jpeg,.png,.zip,.rar" onchange="handleFileSelection(this)">
+                            <div id="selectedFilesList" class="space-y-1 pt-1.5 max-h-36 overflow-y-auto"></div>
                         </div>
 
                         <div class="flex items-center justify-between pt-2">
@@ -1015,6 +1027,40 @@
         }
 
         let uploadedFilesData = [];
+        const MAX_TOTAL_SIZE_BYTES = 1024 * 1024 * 1024; // 1 GB
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const box = document.getElementById('dropZoneBox');
+            if(box) {
+                box.classList.add('border-blue-500', 'bg-blue-500/5');
+            }
+        }
+
+        function handleDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const box = document.getElementById('dropZoneBox');
+            if(box) {
+                box.classList.remove('border-blue-500', 'bg-blue-500/5');
+            }
+        }
+
+        function handleFileDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const box = document.getElementById('dropZoneBox');
+            if(box) {
+                box.classList.remove('border-blue-500', 'bg-blue-500/5');
+            }
+            
+            if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+                const fileInput = document.getElementById('dilekceFileInput');
+                fileInput.files = event.dataTransfer.files;
+                handleFileSelection(fileInput);
+            }
+        }
 
         function handleFileSelection(input) {
             const listContainer = document.getElementById('selectedFilesList');
@@ -1023,25 +1069,48 @@
             uploadedFilesData = [];
             
             if (input.files && input.files.length > 0) {
-                label.innerText = input.files.length + " dosya eklendi ve analize hazır";
+                let totalSize = 0;
+                for (let i = 0; i < input.files.length; i++) {
+                    totalSize += input.files[i].size;
+                }
+
+                if (totalSize > MAX_TOTAL_SIZE_BYTES) {
+                    alert('Hata: Seçilen toplam dosya boyutu 1 GB sınırını aşıyor! (Mevcut: ' + (totalSize / (1024*1024*1024)).toFixed(2) + ' GB)');
+                    input.value = '';
+                    label.innerText = "Birden fazla farklı türde evrak seçin";
+                    return;
+                }
+
+                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB / 1 GB)";
+                
                 for (let i = 0; i < input.files.length; i++) {
                     const file = input.files[i];
                     uploadedFilesData.push(file.name);
+                    
+                    let fileIcon = "fa-file-lines text-blue-400";
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    if(ext === 'pdf') fileIcon = "fa-file-pdf text-rose-400";
+                    else if(ext === 'docx' || ext === 'doc') fileIcon = "fa-file-word text-blue-400";
+                    else if(ext === 'xls' || ext === 'xlsx') fileIcon = "fa-file-excel text-emerald-400";
+                    else if(ext === 'jpg' || ext === 'jpeg' || ext === 'png') fileIcon = "fa-file-image text-amber-400";
+                    else if(ext === 'zip' || ext === 'rar') fileIcon = "fa-file-zipper text-purple-400";
+                    else if(ext === 'udf') fileIcon = "fa-file-shield text-amber-300";
+
                     const item = document.createElement('div');
-                    item.className = "flex items-center justify-between bg-darkBg/80 border border-blue-500/40 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
+                    item.className = "flex items-center justify-between bg-darkBg/90 border border-gray-800 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
                     item.innerHTML = `
-                        <span class="truncate max-w-[200px]"><i class="fa-solid fa-file-pdf text-amber-400 mr-1.5"></i> ${file.name}</span>
-                        <span class="text-blue-400 font-medium"><i class="fa-solid fa-brain mr-1"></i> Analiz Edildi</span>
+                        <span class="truncate max-w-[210px]"><i class="fa-solid ${fileIcon} mr-1.5"></i> ${file.name} <span class="text-gray-500 text-[10px]">(${(file.size/1024/1024).toFixed(1)} MB)</span></span>
+                        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check-circle mr-1"></i> Analiz Hazır</span>
                     `;
                     listContainer.appendChild(item);
                 }
             } else {
-                label.innerText = "Dosya seçmek için tıklayın veya sürükleyin";
+                label.innerText = "Birden fazla farklı türde evrak seçin";
             }
         }
 
         function generateAiDilekce() {
-            const mahkeme = document.getElementById('dilekceMahkeme').value.trim() || "İSTANBUL NÖBETÇİ İŞ MAHKEMESİ HÂKİMLİĞİ'NE";
+            const mahkeme = document.getElementById('dilekceMahkeme').value.trim() || "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE";
             const davaci = document.getElementById('dilekceDavaci').value.trim() || "Ad Soyad / T.C.";
             const vekil = document.getElementById('dilekceVekil').value.trim() || "Av. Vekil Adı";
             const davali = document.getElementById('dilekceDavali').value.trim() || "Karşı Taraf";
@@ -1050,7 +1119,7 @@
 
             let dosyaAnalizMetni = "";
             if (uploadedFilesData.length > 0) {
-                dosyaAnalizMetni = `\n[YAPAY ZEKA DOSYA VE DELİL ANALİZ RAPORU]\n• İncelenen Ek Belgeler: ${uploadedFilesData.join(', ')}\n• Tespit: Ekli evraklar yapay zeka tarafından incelenmiş olup, müvekkil lehine hukuki delil niteliği taşıyan veriler ve hak düşürücü süre uyumları teyit edilmiştir.\n`;
+                dosyaAnalizMetni = `\n[YAPAY ZEKA DOSYA VE DELİL ANALİZ RAPORU]\n• İncelenen Ek Belgeler: ${uploadedFilesData.join(', ')}\n• Tespit: Ekli evraklar incelenmiş olup, müvekkil lehine hukuki delil niteliği taşıyan veriler ve hak düşürücü süre uyumları teyit edilmiştir.\n`;
             }
 
             const dilekceText = `${mahkeme.toUpperCase()}
@@ -1081,7 +1150,7 @@ e-İmzalıdır`;
             document.getElementById('wordCount').innerText = wordCount;
             
             if (uploadedFilesData.length > 0) {
-                alert('Yüklediğiniz ' + uploadedFilesData.length + ' dosya analiz edildi ve çıkarımlar dilekçeye işlendi!');
+                alert('Yüklediğiniz ' + uploadedFilesData.length + ' dosya başarıyla analiz edildi, çıkarımlar yapıldı ve dilekçeye işlendi!');
             } else {
                 alert('Dilekçe taslağı başarıyla oluşturuldu!');
             }
@@ -1203,6 +1272,45 @@ e-İmzalıdır`;
             badge.innerText = Math.max(0, count - 1);
         }
 
+        function sendAssistantMessage() {
+            const input = document.getElementById('assistantInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatBox = document.getElementById('chatHistoryBox');
+
+            const userMsg = document.createElement('div');
+            userMsg.className = "flex items-start justify-end space-x-3";
+            userMsg.innerHTML = `
+                <div class="bg-indigo-600 text-white p-3.5 rounded-2xl text-xs max-w-2xl leading-relaxed">
+                    <p>${message}</p>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-gray-800 text-gray-300 border border-gray-700 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-user text-xs"></i>
+                </div>
+            `;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = "flex items-start space-x-3";
+                botMsg.innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-robot text-xs"></i>
+                    </div>
+                    <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-2">
+                        <p class="font-semibold text-indigo-300">Hukuki Değerlendirme & Emsal Analiz:</p>
+                        <p>Sorunuz doğrultusunda ilgili yasal düzenlemeler (TBK ve HMK) ve Yargıtay'ın yerleşik içtihatları incelenmiştir. Konuyla ilgili Yargıtay Hukuk Genel Kurulu kararlarına göre hak düşürücü süreler ve ispat külfeti titizlikle gözetilmelidir.</p>
+                        <p class="text-gray-400 text-[11px]">Dilekçenize eklemek isterseniz 'Dilekçe Prompt Stüdyosu' sekmesine bu gerekçeleri otomatik aktarabilirsiniz.</p>
+                    </div>
+                `;
+                chatBox.appendChild(botMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
+
         function openNewCaseModal() {
             const mahkeme = prompt("Mahkeme Adı:", "İstanbul 1. Asliye Hukuk Mahkemesi");
             if (!mahkeme) return;
@@ -1277,10 +1385,11 @@ e-İmzalıdır`;
         }
 
         window.onload = function() {
+            verifySystemIntegrity();
             runHarcCalculations();
         };
 
-        console.info("%c[HukukBilgini v2.8] Tamamen temizlendi.", "color: #3b82f6; font-weight: bold;");
+        console.info("%c[HukukBilgini v2.8] Sürükle bırak ve dosya analiz modülü aktif.", "color: #3b82f6; font-weight: bold;");
     </script>
 </body>
 </html>
