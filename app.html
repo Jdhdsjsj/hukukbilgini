@@ -156,7 +156,10 @@
                         <p class="text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
                     </div>
                     <div class="flex items-center space-x-3">
-                        
+                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-2 rounded-lg">
+                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Toplam 4.8M+ Karar
+                        </span>
+                    </div>
                 </div>
 
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
@@ -491,6 +494,17 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('aside');
+            if (sidebar) {
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('absolute');
+                sidebar.classList.toggle('z-30');
+                sidebar.classList.toggle('inset-y-0');
+                sidebar.classList.toggle('left-0');
+            }
+        }
+
         function switchTab(tabId) {
             console.log("Switching to tab:", tabId);
             const tabs = document.querySelectorAll('.tab-content');
@@ -523,6 +537,12 @@
             const bcElem = document.getElementById('currentBreadcrumb');
             if (bcElem) {
                 bcElem.innerText = breadcrumbMap[tabId] || 'Çalışma Alanı';
+            }
+            if (window.innerWidth < 768) {
+                const sidebar = document.querySelector('aside');
+                if (sidebar && !sidebar.classList.contains('hidden')) {
+                    toggleMobileSidebar();
+                }
             }
         }
 
@@ -813,6 +833,7 @@ e-İmzalıdır`;
             loadUserData();
         }
 
+        // Giriş Modalı Kontrolleri
         function loginPrompt() {
             const modal = document.getElementById('loginModal');
             if (modal) {
@@ -841,6 +862,7 @@ e-İmzalıdır`;
             localStorage.setItem('hukuk_active_user', name);
             localStorage.setItem('hukuk_user_email', email);
             
+            // Admin paneli kullanıcı tablosuna yeni kullanıcıyı ekle
             let adminUsers = JSON.parse(localStorage.getItem('hukuk_registered_users') || '[]');
             if (!adminUsers.some(u => u.email === email)) {
                 adminUsers.push({
@@ -924,7 +946,7 @@ e-İmzalıdır`;
                 </div>
                 <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
                     <span class="text-gray-500">Bugün eklendi</span>
-                    <span class="text-amber-400 font-semibold cursor-pointer" onclick="alert('Detaylar açılıyor...')">Detaylar →</span>
+                    <span class="text-amber-400 font-semibold cursor-pointer" onclick="alert('Dosya detayları açılıyor...')">Detaylar →</span>
                 </div>
             `;
             container.prepend(card);
