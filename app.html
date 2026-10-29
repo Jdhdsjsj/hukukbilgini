@@ -225,7 +225,7 @@
                 <div id="searchResultsContainer" class="space-y-4"></div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE YAZIMI -->
+            <!-- TAB 2: DİLEKÇE YAZIMI (Tek Kutu + Maks 50 MB Sürükle Bırak) -->
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -255,7 +255,7 @@
                             <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de 3 yıldır çalışırken 15.10.2026 tarihinde hiçbir haklı gerekçe gösterilmeden işten çıkarıldı. İşe iade ve tazminat davası açmak istiyoruz..."></textarea>
                         </div>
 
-                        <!-- Genişletilmiş Dosya Yükleme Alanı (Maks 1 GB, Sürükle Bırak) -->
+                        <!-- Genişletilmiş Dosya Yükleme Alanı (Maks 50 MB, Sürükle Bırak) -->
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
                                 <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme (Çoklu / Sürükle-Bırak)</label>
@@ -272,7 +272,7 @@
                                 </div>
                                 <div>
                                     <span id="fileUploadLabel" class="text-xs text-gray-200 font-medium block">Dosyaları buraya sürükleyip bırakın veya tıklayın</span>
-                                    <span class="text-[10px] text-gray-400 block mt-0.5">PDF, UDF, DOCX, XLS, JPG, PNG, ZIP (Sınırsız Adet)</span>
+                                    <span class="text-[10px] text-gray-400 block mt-0.5">PDF, UDF, DOCX, XLS, JPG, PNG, ZIP (Maks. 50 MB)</span>
                                 </div>
                             </div>
                             <input type="file" id="dilekceFileInput" class="hidden" multiple accept=".pdf,.udf,.docx,.doc,.xls,.xlsx,.jpg,.jpeg,.png,.zip,.rar" onchange="handleFileSelection(this)">
@@ -382,7 +382,7 @@
                 </div>
 
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
-                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davasında hakkaniyet indirimi oranı nasıl hesaplanır?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                     <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
                         <span>Kaynakları Tara & Cevapla</span>
                         <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
@@ -552,21 +552,24 @@
                 id: 1, court: "Yargıtay 9. Hukuk Dairesi", courtCode: "yargitay", deptCode: "9.hd", esasNo: "2023/14520", kararNo: "2024/4812", tarih: "14.05.2024",
                 title: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812 - Kıdem Tazminatı Hesabında Primler",
                 snippet: "İşçiye düzenli olarak ödenen prim, ikramiye ve benzeri ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi gerektiği hk.",
-                summary: "Süreklilik gösteren prim ve yan hakların kıdem tazminatı matrahına dahil edilmesi zorunludur.",
-                tags: ["# İş Hukuku", "# Kıdem Tazminatı"], categoryKey: "kıdem tazminatı primler iş 2023/14520 2024/4812 yargıtay 9. hukuk dairesi"
+                summary: "Süreklilik gösteren prim, ikramiye ve yan hakların kıdem tazminatı matrahına dahil edilmesi zorunludur. Çıplak ücret değil giydirilmiş brüt ücret esas alınır.",
+                kanunMaddesi: "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14",
+                tags: ["# İş Hukuku", "# Kıdem Tazminatı", "# Primler"], categoryKey: "kıdem tazminatı primler iş 2023/14520 2024/4812 yargıtay 9. hukuk dairesi"
             },
             {
                 id: 2, court: "Anayasa Mahkemesi (AYM)", courtCode: "aym", deptCode: "all", esasNo: "2021/38902", kararNo: "B. No: 2021/38902", tarih: "22.01.2024",
                 title: "Anayasa Mahkemesi, B. No: 2021/38902 - Adil Yargılanma ve Makul Süre İhlali",
                 snippet: "Hukuk yargılamalarında uzun süren yargılama süreçlerinin adil yargılanma hakkını ihlal ettiği hk.",
-                summary: "Mahkeme süreçlerinin 7 yılı aşması makul süre ilkesine aykırıdır.",
+                summary: "Mahkeme süreçlerinin makul süreyi aşması adil yargılanma hakkının ihlalini oluşturur. Tazminat hakkı doğar.",
+                kanunMaddesi: "Anayasa md. 36 ve 6216 sayılı Kanun md. 45",
                 tags: ["# AYM", "# Adil Yargılanma"], categoryKey: "anayasa mahkemesi adil yargılanma makul süre 2021/38902"
             },
             {
                 id: 3, court: "Yargıtay Hukuk Genel Kurulu", courtCode: "yargitay", deptCode: "hukuk_genel", esasNo: "2022/4-890", kararNo: "2023/112", tarih: "05.10.2023",
                 title: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112 - Hasılı Davaya İştirak Yasağı",
                 snippet: "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla hak devri ve sözleşmelerin hukuki geçerliliği hk.",
-                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince dava sonucundan menfaat sağlamak amacıyla yapılan iştirak sözleşmeleri geçersizdir.",
+                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince dava sonucundan menfaat sağlamak amacıyla yapılan iştirak sözleşmeleri hukuka ve ahlaka aykırıdır.",
+                kanunMaddesi: "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı TBK md. 26, 27",
                 tags: ["# Borçlar Hukuku", "# Hasılı Davaya İştirak"], categoryKey: "yargıtay hukuk genel kurulu e. 2022/4-890 k. 2023/112 hasılı davaya iştirak yasağı champerty devir"
             },
             {
@@ -580,7 +583,8 @@
                 id: 5, court: "Yargıtay 3. Hukuk Dairesi", courtCode: "yargitay", deptCode: "3.hd", esasNo: "2023/4120", kararNo: "2024/910", tarih: "10.03.2024",
                 title: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910 - Kira Tespit ve TÜFE Sınırı",
                 snippet: "Kira tespit davalarında TÜFE üst sınırı ve hakkaniyet indirimi esasları hk.",
-                summary: "TÜFE 12 aylık ortalama üst sınırı aşlamaz.",
+                summary: "TÜFE 12 aylık ortalama üst sınırı aşlamaz. Hakkaniyet indirimi uygulanırken hakkaniyet kurallarına uyulmalıdır.",
+                kanunMaddesi: "6098 sayılı Türk Borçlar Kanunu md. 344, 345",
                 tags: ["# Kira Hukuku"], categoryKey: "yargıtay 3. hukuk dairesi e. 2023/4120 k. 2024/910 kira tespit tüfe"
             }
         ];
@@ -611,7 +615,7 @@
             const container = document.getElementById('searchResultsContainer');
             if (!container) return;
 
-            let html = `<div class="flex items-center justify-between px-2 mb-4"><p class="text-sm text-gray-400">Arama sonucunda <strong class="text-white">${results.length}</strong> karar bulundu.</p></div>`;
+            let html = `<div class="flex items-center justify-between px-2 mb-4"><p class="text-sm text-gray-400">Arama sonucunda <strong class="text-white">${results.length}</strong> tam kaynaklı karar bulundu.</p></div>`;
 
             if (results.length === 0) {
                 html += `<div class="bg-cardBg border border-gray-800 rounded-2xl p-8 text-center text-gray-400 text-xs">Kriterlerinize uygun karar bulunamadı.</div>`;
@@ -619,14 +623,25 @@
                 results.forEach(item => {
                     html += `
                         <div class="bg-cardBg border border-gray-800 hover:border-amber-500/50 rounded-2xl p-6 transition space-y-3">
-                            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-lg font-semibold">${item.court}</span>
-                                <span class="text-xs text-gray-400">Esas: ${item.esasNo} | Karar: ${item.kararNo}</span>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-800 pb-2 gap-2">
+                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-lg font-semibold inline-block"><i class="fa-solid fa-landmark mr-1"></i> ${item.court}</span>
+                                <div class="text-xs text-gray-300 space-x-3">
+                                    <span><strong>Esas No:</strong> ${item.esasNo}</span>
+                                    <span><strong>Karar No:</strong> ${item.kararNo}</span>
+                                    <span><strong>Tarih:</strong> ${item.tarih}</span>
+                                </div>
                             </div>
                             <h3 class="text-base font-bold text-white cursor-pointer hover:text-amber-400" onclick="openKararModal('${item.title}')">${item.title}</h3>
                             <p class="text-xs text-gray-300 leading-relaxed">${item.snippet}</p>
-                            <div class="bg-darkBg/60 p-3 rounded-xl border border-gray-800 text-xs text-gray-300">
-                                <strong class="text-amber-400 block mb-1">Gelişmiş Özet:</strong> ${item.summary}
+                            <div class="bg-darkBg/70 p-3.5 rounded-xl border border-gray-800 space-y-2 text-xs">
+                                <div><strong class="text-amber-400">Eksiksiz Karar Özeti & Esas Gerekçe:</strong> ${item.summary}</div>
+                                ${item.kanunMaddesi ? `<div><strong class="text-blue-400">Yasal / Mevzuat Dayanağı:</strong> ${item.kanunMaddesi}</div>` : ''}
+                                <div><strong class="text-gray-400">Etiketler / Konu Anahtarları:</strong> ${item.tags.join(' ')}</div>
+                            </div>
+                            <div class="flex justify-end pt-1">
+                                <button onclick="openKararModal('${item.title}')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow">
+                                    Tam Metni İncele →
+                                </button>
                             </div>
                         </div>
                     `;
@@ -762,6 +777,7 @@ e-İmzalıdır`;
             document.getElementById('savedCountBadge').innerText = Math.max(0, count - 1);
         }
 
+        // Dava Dosyalarım - Tek tek silme fonksiyonu
         function deleteSingleCase(btn) {
             const card = btn.closest('.case-card');
             if (card) {
@@ -804,26 +820,45 @@ e-İmzalıdır`;
         const ictihatFullDetails = {
             "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112": {
                 baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112",
-                metin: "T.C. YARGITAY HUKUK GENEL KURULU\nEsas No: 2022/4-890\nKarar No: 2023/112\n\nÖZET: Taraflar arasındaki uyuşmazlıkta, dava haklarının devri ve sözleşme serbestisi çerçevesinde 3. kişilerin dava konusuna müdahalesi ile champerty (hasılı davaya iştirak) yasakları incelenmiştir. Türk hukukunda Avukatlık Kanunu md. 35/1 ve Borçlar Kanunu hükümleri gereğince avukatın dava hakkının bir kısmını veya tamamını menfaat karşılığı devralması yasaktır. Ancak alacağın devri genel hükümler çerçevesinde mümkündür."
+                metin: "T.C. YARGITAY HUKUK GENEL KURULU
+Esas No: 2022/4-890
+Karar No: 2023/112
+
+ÖZET: Taraflar arasındaki uyuşmazlıkta, dava haklarının devri ve sözleşme serbestisi çerçevesinde 3. kişilerin dava konusuna müdahalesi ile champerty (hasılı davaya iştirak) yasakları incelenmiştir. Türk hukukunda Avukatlık Kanunu md. 35/1 ve Borçlar Kanunu hükümleri gereğince avukatın dava hakkının bir kısmını veya tamamını menfaat karşılığı devralması yasaktır. Ancak alacağın devri genel hükümler çerçevesinde mümkündür."
             },
             "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400": {
                 baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400",
-                metin: "T.C. YARGITAY 4. HUKUK DAİRESİ\nEsas No: 2022/110\nKarar No: 2023/400\n\nÖZET: Haksız fiil sorumluluğu, tazminat hesaplama ilkeleri ve sözleşmesel yasaklar. Dava hakkının kötüye kullanılması ve 3. kişilerin davaya iştirak ederek menfaat sağlaması durumunda sözleşmenin hukuka aykırılığı değerlendirilmiştir."
+                metin: "T.C. YARGITAY 4. HUKUK DAİRESİ
+Esas No: 2022/110
+Karar No: 2023/400
+
+ÖZET: Haksız fiil sorumluluğu, tazminat hesaplama ilkeleri ve sözleşmesel yasaklar. Dava hakkının kötüye kullanılması ve 3. kişilerin davaya iştirak ederek menfaat sağlaması durumunda sözleşmenin hukuka aykırılığı değerlendirilmiştir."
             },
             "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812": {
                 baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812",
-                metin: "T.C. YARGITAY 9. HUKUK DAİRESİ\nEsas No: 2023/14520\nKarar No: 2024/4812\n\nÖZET: Kıdem tazminatı matrahına dahil edilecek prim, ikramiye ve düzenli ek ödemelerin kapsamı ve giydirilmiş brüt ücret hesaplaması."
+                metin: "T.C. YARGITAY 9. HUKUK DAİRESİ
+Esas No: 2023/14520
+Karar No: 2024/4812
+
+ÖZET: Kıdem tazminatı matrahına dahil edilecek prim, ikramiye ve düzenli ek ödemelerin kapsamı ve giydirilmiş brüt ücret hesaplaması."
             },
             "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910": {
                 baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910",
-                metin: "T.C. YARGITAY 3. HUKUK DAİRESİ\nEsas No: 2023/4120\nKarar No: 2024/910\n\nÖZET: Kira tespit davalarında TÜFE üst sınırı ve 5 yılı aşan sözleşmelerde hakkaniyet indirimi uygulanması esasları."
+                metin: "T.C. YARGITAY 3. HUKUK DAİRESİ
+Esas No: 2023/4120
+Karar No: 2024/910
+
+ÖZET: Kira tespit davalarında TÜFE üst sınırı ve 5 yılı aşan sözleşmelerde hakkaniyet indirimi uygulanması esasları."
             }
         };
 
         function inspectKararDetail(baslik) {
-            const data = ictihatFullDetails[baslik] || {
+            let foundKey = Object.keys(ictihatFullDetails).find(k => baslik.includes(k) || k.includes(baslik));
+            const data = ictihatFullDetails[foundKey] || {
                 baslik: baslik,
-                metin: "T.C. YARGITAY İÇTİHADI BİRLEŞTİRME / EMSAL KARAR METNİ\n\nİlgili dava dosyası ve yasal dayanaklar incelenmiş olup, uyuşmazlığın çözümü noktasında üst mahkeme yerleşik içtihatları bağlayıcı niteliktedir."
+                metin: "T.C. YARGITAY İÇTİHADI BİRLEŞTİRME / EMSAL KARAR METNİ
+
+İlgili dava dosyası ve yasal dayanaklar incelenmiş olup, uyuşmazlığın çözümü noktasında üst mahkeme yerleşik içtihatları bağlayıcı niteliktedir."
             };
             const modalTitle = document.getElementById('modalTitle');
             if (modalTitle) modalTitle.innerText = data.baslik;
@@ -842,6 +877,10 @@ e-İmzalıdır`;
             if (modal) modal.classList.add('hidden');
         }
 
+        function openKararModal(title) {
+            inspectKararDetail(title);
+        }
+
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             const message = input.value.trim();
@@ -857,9 +896,10 @@ e-İmzalıdır`;
                 let emsalListesi = [];
 
                 const m = message.toLowerCase();
+                
                 if (m.includes('iştirak') || m.includes('hasılı') || m.includes('champerty')) {
-                    netCevap = "Hasılı davaya iştirak yasağı (Anglo-Amerikan hukukundaki 'champerty'), dava sonucunda (elde edilecek menfaatten/niceden) pay almak amacıyla 3. kişilerin veya vekillerin dava masraflarını üstlenmesi veya dava hakkını devralması durumudur. Türk hukukunda Avukatlık Kanunu md. 35/1 ve Borçlar Kanunu gereğince avukatların dava sonucundan pay alması kesinlikle yasaktır; ayrıca champerty kuralları gereği dava hakkının haksız menfaat karşılığı devri hukuka aykırıdır.";
-                    kanunDayanagi = "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı Türk Borçlar Kanunu (TBK) md. 26, 27 (Hukuka ve Ahlaka Aykırılık)";
+                    netCevap = "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla 3. kişilerin veya vekillerin dava masraflarını üstlenmesi veya dava hakkını devralması durumudur. Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince avukatların dava sonucundan pay alması kesinlikle yasaktır.";
+                    kanunDayanagi = "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı Türk Borçlar Kanunu (TBK) md. 26, 27";
                     emsalListesi = [
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Dava hakkının devri ve sözleşme serbestisi sınırları, iştirak yasakları hk." },
                         { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "3. kişilerin dava sonucundan menfaat sağlaması sözleşmelerinin geçersizliği hk." }
@@ -868,7 +908,8 @@ e-İmzalıdır`;
                     netCevap = "İş sözleşmesinin işveren tarafından haklı neden olmaksızın feshedilmesi durumunda, kıdem tazminatı en az 1 yıllık kıdem şartıyla son brüt ücret üzerinden ödenir. Hesaplamada çıplak ücrete ek olarak düzenli ödenen prim, ikramiye, gıda ve yakacak yardımları da (giydirilmiş ücret olarak) hesaba katılır.";
                     kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 18, 20 ve 1475 sayılı Kanun md. 14";
                     emsalListesi = [
-                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812", ozet: "Prim ve düzenli ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi hk." }
+                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812", ozet: "Prim ve düzenli ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi hk." },
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk." }
                     ];
                 } else if (m.includes('kira') || m.includes('tahliye') || m.includes('artış') || m.includes('tespit')) {
                     netCevap = "Konut ve çatılı işyeri kiralarında yeni dönemin kira bedeli, bir önceki yıldaki TÜFE (12 aylık ortalamalara göre) üst sınırı ile sınırlıdır. Beş yılı dolduran sözleşmelerde kira tespit davası açılabilir.";
@@ -878,16 +919,17 @@ e-İmzalıdır`;
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tahliye taahhütnamesinde tarih uyuşmazlığı ve ispat külfeti kuralları hk." }
                     ];
                 } else if (m.includes('zamanaşımı') || m.includes('süre') || m.includes('alacak')) {
-                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatında da 5 yıllık zamanaşımı uygulanır.";
+                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatı alacakları da 5 yıllık zamanaşımına tabidir.";
                     kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı Türk Borçlar Kanunu md. 146";
                     emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı süresinin başlangıç tarihi hk." }
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk." }
                     ];
                 } else {
                     netCevap = `"${message}" konulu hukuki uyuşmazlığınızda; yüklenen kaynaklar ve 6100 sayılı HMK hükümleri uyarınca iddia ve savunmanın dayandığı vakıaların ispatı, usul hukukundaki delil kurallarına göre taraflara düşmektedir. İlgili yasal dayanaklar ve emsal kararlar aşağıda listelenmiştir.`;
                     kanunDayanagi = "6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) md. 190 (İspat Yükü) ve ilgili maddi hukuk hükümleri";
                     emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk." }
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk." },
+                        { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "Haksız fiil sorumluluğu ve tazminat hesaplama ilkeleri hk." }
                     ];
                 }
 
@@ -912,13 +954,13 @@ e-İmzalıdır`;
                             <i class="fa-solid fa-robot text-xs"></i>
                         </div>
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
-                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Net Hukuki Mütalaa & Gerekçeli Cevap:</p>
-                            <p class="text-gray-100 font-medium">${netCevap}</p>
-                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
-                                <p><strong class="text-blue-400">Kanuni Dayanak:</strong> ${kanunDayanagi}</p>
+                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Doğrulanmış Kaynak Mütalaası:</p>
+                            <p class="text-gray-100 font-medium text-sm leading-relaxed">${netCevap}</p>
+                            <div class="bg-cardBg p-3.5 rounded-xl border border-gray-700/80 space-y-1">
+                                <p><strong class="text-blue-400">Kanuni / Mevzuat Dayanağı:</strong> ${kanunDayanagi}</p>
                             </div>
-                            <div class="space-y-1 pt-1">
-                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal İçtihatlar ve Ulaşılabilir Kaynak Kutucukları (${emsalListesi.length} Adet):</p>
+                            <div class="space-y-1.5 pt-1">
+                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Doğrulanmış Emsal Kararlar (${emsalListesi.length} Adet):</p>
                                 ${emsalHTML}
                             </div>
                         </div>
@@ -941,8 +983,11 @@ e-İmzalıdır`;
                 }
                 filename = "Dava_Dilekcesi";
             } else if (activeTab === 'tab-harc') {
-                exportContent = "HUKUKBİLGİNİ HARÇ VE VEKALET HESAPLAMA RAPORU\n\n" +
-                                "Dava Açılış Masrafı: " + document.getElementById('resToplamMasraf').innerText + "\n" +
+                exportContent = "HUKUKBİLGİNİ HARÇ VE VEKALET HESAPLAMA RAPORU
+
+" +
+                                "Dava Açılış Masrafı: " + document.getElementById('resToplamMasraf').innerText + "
+" +
                                 "Karşı Vekalet Ücreti (AAÜT): " + document.getElementById('resVekaletUcreti').innerText;
                 filename = "Harc_Hesaplama_Raporu";
             } else {
