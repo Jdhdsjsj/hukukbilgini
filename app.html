@@ -491,6 +491,48 @@
         </div>
     </div>
 
+
+    <!-- GİRİŞ YAP / KAYIT OL MODALI -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-gray-700 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-gray-700/60 pb-3">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                        <i class="fa-solid fa-user-lock"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-white">HukukBilgini Oturum Açma</h3>
+                </div>
+                <button onclick="closeLoginModalBox()" class="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-800 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4 pt-1">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">E-posta Adresi</label>
+                    <input type="email" id="loginEmailInput" placeholder="avukat@hukukburosu.com" class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-xs rounded-xl px-3.5 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Şifre</label>
+                    <input type="password" id="loginPasswordInput" placeholder="••••••••" class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-xs rounded-xl px-3.5 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Ad Soyad / Unvan (Görünen İsim)</label>
+                    <input type="text" id="loginNameInput" placeholder="Av. Mehmet Ege Yıldız" class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-xs rounded-xl px-3.5 py-3 focus:outline-none" value="Av. Mehmet Ege Yıldız">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-gray-700/60">
+                <button onclick="closeLoginModalBox()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs px-4 py-2.5 rounded-xl transition">
+                    İptal
+                </button>
+                <button onclick="submitLoginForm()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold text-xs px-6 py-2.5 rounded-xl transition shadow-md">
+                    Giriş Yap / Kaydol
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
         function toggleMobileSidebar() {
@@ -575,7 +617,7 @@
                 id: 2, court: "Anayasa Mahkemesi (AYM)", courtCode: "aym", deptCode: "all", esasNo: "2021/38902", kararNo: "B. No: 2021/38902", tarih: "22.01.2024",
                 title: "Anayasa Mahkemesi, B. No: 2021/38902 - Adil Yargılanma ve Makul Süre İhlali",
                 snippet: "Hukuk yargılamalarında uzun süren yargılama süreçlerinin adil yargılanma hakkını ihlal ettiği hk.",
-                summary: "Mahkeme süreçlerinin makul süreyi aşması adil yargılanma hakkının ihlalini oluşturur. Tazminat hakkı doğar.",
+                summary: "Mahkeme süreçlerinin makul süreyi aşması adil yargılanma hakkını ihlal eder. Tazminat hakkı doğar.",
                 kanunMaddesi: "Anayasa md. 36 ve 6216 sayılı Kanun md. 45",
                 tags: ["# AYM", "# Adil Yargılanma"], categoryKey: "anayasa mahkemesi adil yargılanma makul süre 2021/38902"
             },
@@ -583,7 +625,7 @@
                 id: 3, court: "Yargıtay Hukuk Genel Kurulu", courtCode: "yargitay", deptCode: "hukuk_genel", esasNo: "2022/4-890", kararNo: "2023/112", tarih: "05.10.2023",
                 title: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112 - Hasılı Davaya İştirak Yasağı",
                 snippet: "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla hak devri ve sözleşmelerin hukuki geçerliliği hk.",
-                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince avukatın dava sonucundan pay alması kesinlikle yasaktır.",
+                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince dava sonucundan menfaat sağlamak amacıyla yapılan iştirak sözleşmeleri hukuka ve ahlaka aykırıdır.",
                 kanunMaddesi: "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı TBK md. 26, 27",
                 tags: ["# Borçlar Hukuku", "# Hasılı Davaya İştirak"], categoryKey: "yargıtay hukuk genel kurulu e. 2022/4-890 k. 2023/112 hasılı davaya iştirak yasağı champerty devir"
             },
@@ -787,10 +829,11 @@ e-İmzalıdır`;
         
         function loadUserData() {
             const authArea = document.getElementById('userAuthArea');
-            const activeUser = localStorage.getItem('hukuk_active_user');
+            const activeUser = localStorage.getItem('hukuk_active_user'); // Varsayılan olarak boş/null (oturum kapalı)
             
             if (authArea) {
                 if (activeUser) {
+                    // Oturum açıkken: Avukat adı ve çıkış yap butonu
                     authArea.innerHTML = `
                         <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
                             <div class="flex items-center space-x-2">
@@ -803,6 +846,7 @@ e-İmzalıdır`;
                         </div>
                     `;
                 } else {
+                    // Oturum kapalıyken: Giriş Yap / Kayıt Ol butonu
                     authArea.innerHTML = `
                         <button onclick="loginPrompt()" class="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-xs px-3.5 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
                             <i class="fa-solid fa-user"></i>
@@ -832,12 +876,31 @@ e-İmzalıdır`;
             loadUserData();
         }
 
+        // Giriş Modalı Kontrolleri
         function loginPrompt() {
-            const userName = prompt("Lütfen adınızı ve unvanınızı girin (Örn: Av. Mehmet Ege Yıldız):", "Av. Mehmet Ege Yıldız");
-            if (userName && userName.trim() !== "") {
-                localStorage.setItem('hukuk_active_user', userName.trim());
-                loadUserData();
+            const modal = document.getElementById('loginModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeLoginModalBox() {
+            const modal = document.getElementById('loginModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function submitLoginForm() {
+            const email = document.getElementById('loginEmailInput').value.trim();
+            const name = document.getElementById('loginNameInput').value.trim() || "Avukat";
+            
+            if (!email) {
+                alert("Lütfen geçerli bir e-posta adresi girin.");
+                return;
             }
+
+            localStorage.setItem('hukuk_active_user', name);
+            localStorage.setItem('hukuk_user_email', email);
+            
+            closeLoginModalBox();
+            loadUserData();
         }
 
         function saveUserData() {
@@ -903,7 +966,7 @@ e-İmzalıdır`;
                     </div>
                     <h3 class="text-sm font-bold text-white">${mahkeme}</h3>
                     <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${esas || '2026/Yeni'}</strong></p>
-                    <p class="text-xs text-gray-300"><strong>Durum:</strong> Kaydedildi.</p>
+                    <p class="text-xs text-gray-300"><strong>Davacı:</strong> Selin Korkmaz<br><strong>Davalı:</strong> Murat Aydın</p>
                 </div>
                 <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
                     <span class="text-gray-500">Bugün eklendi</span>
@@ -1047,10 +1110,10 @@ e-İmzalıdır`;
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
                             <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Net Hukuki Mütalaa & Gerekçeli Cevap:</p>
                             <p class="text-gray-100 font-medium">${netCevap}</p>
-                            <div class="bg-cardBg p-3.5 rounded-xl border border-gray-700/80 space-y-1">
+                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
                                 <p><strong class="text-blue-400">Kanuni Dayanak:</strong> ${kanunDayanagi}</p>
                             </div>
-                            <div class="space-y-1.5 pt-1">
+                            <div class="space-y-1 pt-1">
                                 <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal İçtihatlar ve Ulaşılabilir Kaynak Kutucukları (${emsalListesi.length} Adet):</p>
                                 ${emsalHTML}
                             </div>
