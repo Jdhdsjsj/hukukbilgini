@@ -157,23 +157,24 @@
                         <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-arrow-up mr-1"></i> %12 bu hafta artış</span>
                     </div>
 
-                    <!-- Ciro yerine Kullanıcı Sayısı -->
+                    <!-- Canlı Artan Kullanıcı Sayısı (0'dan başlar) -->
                     <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-2 shadow-lg">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs text-gray-400 font-semibold uppercase">Toplam Kullanıcı Sayısı</span>
+                            <span class="text-xs text-gray-400 font-semibold uppercase">TOPLAM KULLANICI SAYISI</span>
                             <i class="fa-solid fa-users text-blue-400"></i>
                         </div>
-                        <p class="text-2xl font-bold text-white">1,420</p>
-                        <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-arrow-up mr-1"></i> 85 yeni kayıt bugün</span>
+                        <p id="liveUserCount" class="text-2xl font-bold text-white">0</p>
+                        <span id="liveUserSub" class="text-[11px] text-emerald-400"><i class="fa-solid fa-arrow-up mr-1"></i> 0 yeni kayıt bugün</span>
                     </div>
 
+                    <!-- Canlı Artan Dilekçe Sayısı (0'dan başlar) -->
                     <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-2 shadow-lg">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs text-gray-400 font-semibold uppercase">Üretilen Dilekçe (Bugün)</span>
+                            <span class="text-xs text-gray-400 font-semibold uppercase">ÜRETİLEN DİLEKÇE (BUGÜN)</span>
                             <i class="fa-solid fa-file-signature text-indigo-400"></i>
                         </div>
-                        <p class="text-2xl font-bold text-white">312</p>
-                        <span class="text-[11px] text-gray-400">Sınırsız Kotada Sorunsuz</span>
+                        <p id="liveDilekceCount" class="text-2xl font-bold text-white">0</p>
+                        <span class="text-[11px] text-gray-400">Canlı Sayaç Aktif</span>
                     </div>
 
                     <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-2 shadow-lg">
@@ -239,44 +240,56 @@
                                     <th class="pb-3 px-3 text-right">İşlemler</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-800">
-                                <tr>
+                            <tbody id="adminUserTableBody" class="divide-y divide-gray-800">
+                                <tr data-user-id="1">
                                     <td class="py-3 px-3 font-bold text-white flex items-center space-x-2">
                                         <i class="fa-solid fa-user-tie text-amber-400"></i>
                                         <span>Av. Mehmet Ege Yıldız</span>
                                     </td>
                                     <td class="py-3 px-3">mehmet@mehmetegeyildiz.com</td>
-                                    <td class="py-3 px-3"><span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-semibold">Pro Enterprise (Admin)</span></td>
+                                    <td class="py-3 px-3">
+                                        <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-semibold">Pro Enterprise (Admin)</span>
+                                        <span class="block text-[10px] text-gray-400 mt-0.5">Kota: <strong class="text-white user-quota">Sınırsız</strong></span>
+                                    </td>
                                     <td class="py-3 px-3 text-gray-400">01.09.2026</td>
                                     <td class="py-3 px-3 text-right space-x-2">
-                                        <button onclick="alert('Kullanıcı yetkileri düzenleniyor.')" class="text-blue-400 hover:text-blue-300">Düzenle</button>
-                                        <button onclick="alert('Kullanıcı hesabı aktif.')" class="text-emerald-400 hover:text-emerald-300">Aktif</button>
+                                        <button onclick="setCustomQuota(this)" class="text-amber-400 hover:text-amber-300 font-medium" title="Kullanıcının dilekçe üretim kotasını belirle">Kota Belirle</button>
+                                        <button onclick="renewUserQuota(this)" class="text-emerald-400 hover:text-emerald-300 font-medium" title="Kotayı yenile / sıfırla">Kota Yenile</button>
+                                        <button onclick="deleteUserRow(this)" class="text-rose-400 hover:text-rose-300 font-medium" title="Kullanıcıyı sistemden sil">Sil</button>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-user-id="2">
                                     <td class="py-3 px-3 font-bold text-white flex items-center space-x-2">
                                         <i class="fa-solid fa-user text-gray-400"></i>
                                         <span>Av. Ahmet Yılmaz</span>
                                     </td>
                                     <td class="py-3 px-3">ahmet@hukukburosu.com</td>
-                                    <td class="py-3 px-3"><span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-semibold">Standart Avukat</span></td>
+                                    <td class="py-3 px-3">
+                                        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-semibold">Standart Avukat</span>
+                                        <span class="block text-[10px] text-gray-400 mt-0.5">Kota: <strong class="text-white user-quota">50 Adet</strong></span>
+                                    </td>
                                     <td class="py-3 px-3 text-gray-400">14.09.2026</td>
                                     <td class="py-3 px-3 text-right space-x-2">
-                                        <button onclick="alert('Kullanıcı yetkileri düzenleniyor.')" class="text-blue-400 hover:text-blue-300">Düzenle</button>
-                                        <button onclick="confirm('Bu kullanıcıyı askıya almak istiyor musunuz?')" class="text-rose-400 hover:text-rose-300">Askıya Al</button>
+                                        <button onclick="setCustomQuota(this)" class="text-amber-400 hover:text-amber-300 font-medium">Kota Belirle</button>
+                                        <button onclick="renewUserQuota(this)" class="text-emerald-400 hover:text-emerald-300 font-medium">Kota Yenile</button>
+                                        <button onclick="deleteUserRow(this)" class="text-rose-400 hover:text-rose-300 font-medium">Sil</button>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-user-id="3">
                                     <td class="py-3 px-3 font-bold text-white flex items-center space-x-2">
                                         <i class="fa-solid fa-user text-gray-400"></i>
                                         <span>Av. Selin Korkmaz</span>
                                     </td>
                                     <td class="py-3 px-3">selin@korkmazhukuk.com</td>
-                                    <td class="py-3 px-3"><span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold">Kurumsal Sınırsız</span></td>
+                                    <td class="py-3 px-3">
+                                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold">Kurumsal Sınırsız</span>
+                                        <span class="block text-[10px] text-gray-400 mt-0.5">Kota: <strong class="text-white user-quota">Sınırsız</strong></span>
+                                    </td>
                                     <td class="py-3 px-3 text-gray-400">22.09.2026</td>
                                     <td class="py-3 px-3 text-right space-x-2">
-                                        <button onclick="alert('Kullanıcı yetkileri düzenleniyor.')" class="text-blue-400 hover:text-blue-300">Düzenle</button>
-                                        <button onclick="confirm('Bu kullanıcıyı askıya almak istiyor musunuz?')" class="text-rose-400 hover:text-rose-300">Askıya Al</button>
+                                        <button onclick="setCustomQuota(this)" class="text-amber-400 hover:text-amber-300 font-medium">Kota Belirle</button>
+                                        <button onclick="renewUserQuota(this)" class="text-emerald-400 hover:text-emerald-300 font-medium">Kota Yenile</button>
+                                        <button onclick="deleteUserRow(this)" class="text-rose-400 hover:text-rose-300 font-medium">Sil</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -459,6 +472,59 @@
                 sidebar.classList.toggle('z-30');
                 sidebar.classList.toggle('inset-y-0');
                 sidebar.classList.toggle('left-0');
+            }
+        }
+
+        // Canlı Sayaçlar (0'dan başlayıp saniyesinde artar)
+        let currentUsers = 0;
+        let currentDilekce = 0;
+        
+        setInterval(() => {
+            currentUsers += Math.floor(Math.random() * 2);
+            currentDilekce += Math.floor(Math.random() * 3);
+            
+            const userElem = document.getElementById('liveUserCount');
+            const dilekceElem = document.getElementById('liveDilekceCount');
+            
+            if (userElem) userElem.innerText = currentUsers.toLocaleString('tr-TR');
+            if (dilekceElem) dilekceElem.innerText = currentDilekce.toLocaleString('tr-TR');
+        }, 1200);
+
+        // Kullanıcı Silme Fonksiyonu
+        function deleteUserRow(btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                if (confirm("Bu kullanıcıyı sistemden kalıcı olarak silmek istediğinize emin misiniz?")) {
+                    row.remove();
+                    alert("Kullanıcı başarıyla silindi.");
+                }
+            }
+        }
+
+        // Kota Yenileme Fonksiyonu
+        function renewUserQuota(btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                const quotaEl = row.querySelector('.user-quota');
+                if (quotaEl) {
+                    quotaEl.innerText = "100 Adet (Yenilendi)";
+                    alert("Kullanıcının dilekçe üretim kotası sıfırlanarak yenilendi.");
+                }
+            }
+        }
+
+        // Özel Kota Belirleme Fonksiyonu
+        function setCustomQuota(btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                const newQuota = prompt("Kullanıcı için yeni dilekçe kotasını girin (Örn: 150 Adet veya Sınırsız):", "100 Adet");
+                if (newQuota !== null && newQuota.trim() !== "") {
+                    const quotaEl = row.querySelector('.user-quota');
+                    if (quotaEl) {
+                        quotaEl.innerText = newQuota;
+                        alert("Kullanıcı kotası başarıyla güncellendi: " + newQuota);
+                    }
+                }
             }
         }
     </script>
