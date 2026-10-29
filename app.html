@@ -65,9 +65,14 @@
                 <i class="fa-solid fa-copy"></i>
                 <span>Kopyala</span>
             </button>
-            <div class="flex items-center space-x-2 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
-                <i class="fa-solid fa-user-tie text-amber-400"></i>
-                <span>Av. Mehmet Ege Yıldız</span>
+            <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user-tie text-amber-400"></i>
+                    <span>Av. Mehmet Ege Yıldız</span>
+                </div>
+                <button onclick="alert('Oturum kapatıldı. Güvenli çıkış yapıldı.'); location.reload();" class="text-gray-400 hover:text-rose-400 pl-2 border-l border-gray-700 transition" title="Çıkış Yap">
+                    <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                </button>
             </div>
             <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
                 <i class="fa-solid fa-file-word"></i>
@@ -491,28 +496,37 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         function switchTab(tabId) {
-            console.switchTab = tabId;
-            document.querySelectorAll('.tab-content').forEach(el => {
+            console.log("Switching to tab:", tabId);
+            
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
-            document.querySelectorAll('.sidebar-link').forEach(el => {
+            
+            // Reset sidebar links
+            const links = document.querySelectorAll('.sidebar-link');
+            links.forEach(el => {
                 el.classList.remove('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/20', 'font-medium');
                 el.classList.add('text-gray-300');
             });
             
+            // Show target tab
             const targetTab = document.getElementById('tab-' + tabId);
             if (targetTab) {
                 targetTab.classList.add('active');
                 targetTab.style.display = 'block';
             }
             
+            // Highlight target sidebar link
             const targetMenu = document.getElementById('menu-' + tabId);
             if (targetMenu) {
                 targetMenu.classList.add('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/20', 'font-medium');
                 targetMenu.classList.remove('text-gray-300');
             }
 
+            // Update breadcrumb
             const breadcrumbMap = {
                 'dilekce': 'Dilekçe Yazımı',
                 'ictihat': 'İçtihat & Mevzuat Arama',
@@ -895,7 +909,7 @@ e-İmzalıdır`;
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tahliye taahhütnamesinde tarih uyuşmazlığı ve ispat külfeti kuralları hk." }
                     ];
                 } else if (m.includes('zamanaşımı') || m.includes('süre') || m.includes('alacak')) {
-                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatı alacakları da 5 yıllık zamanaşımına tabidir.";
+                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatında da 5 yıllık zamanaşımı uygulanır.";
                     kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı Türk Borçlar Kanunu md. 146";
                     emsalListesi = [
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı süresinin başlangıç tarihi hk." }
@@ -984,7 +998,7 @@ e-İmzalıdır`;
             if (format === 'udf') ext = 'udf';
             else if (format === 'pdf') ext = 'pdf';
 
-            const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8'}}]};
+            const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `${filename}.${ext}`;
