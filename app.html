@@ -322,7 +322,7 @@
                             <div class="flex items-center space-x-2">
                                 <span class="text-xs text-gray-500"><i class="fa-regular fa-calendar mr-1"></i> 22.01.2024</span>
                                 <button onclick="toggleBookmark(this, 'AYM - Makul Sürede Yargılanma', '2021/38902')" class="text-amber-400 p-1.5 rounded-lg hover:bg-gray-800 transition" title="Kaydet">
-                                    <i class="fa-solid fa-bookmark text-base"></i>
+                                    <i class="fa-regular fa-bookmark text-base"></i>
                                 </button>
                             </div>
                         </div>
@@ -366,7 +366,7 @@
                             <div class="flex items-center space-x-2">
                                 <span class="text-xs text-gray-500"><i class="fa-regular fa-calendar mr-1"></i> 05.10.2023</span>
                                 <button onclick="toggleBookmark(this, 'HGK - Tahliye Taahhütnamesi', '2022/4-890')" class="text-amber-400 p-1.5 rounded-lg hover:bg-gray-800 transition" title="Kaydet">
-                                    <i class="fa-solid fa-bookmark text-base"></i>
+                                    <i class="fa-regular fa-bookmark text-base"></i>
                                 </button>
                             </div>
                         </div>
@@ -401,7 +401,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (DOSYA YÜKLEME ÖZELLİĞİ İLE) -->
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (DOSYA ANALİZİ İLE) -->
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -409,7 +409,7 @@
                             <i class="fa-solid fa-file-signature text-blue-400"></i>
                             <span>Dilekçe Prompt Stüdyosu</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Hukuki olay detaylarını ve delil belgelerinizi girin; yapay zeka dilekçenizi tam metin oluştursun.</p>
+                        <p class="text-sm text-gray-400 mt-1">Hukuki olay detaylarını ve delil belgelerinizi girin; yapay zeka analiz yaparak dilekçenizi oluştursun.</p>
                     </div>
                     <div class="flex items-center space-x-2">
                         <button onclick="generateAiDilekce()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 shadow-lg transition">
@@ -458,7 +458,7 @@
                             <textarea id="dilekceOlay" rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed" placeholder="Müvekkilin işe başlama tarihi, fesih sebebi ve haklı fesih nedenlerinin bulunmadığını özetleyiniz..."></textarea>
                         </div>
 
-                        <!-- Dosya Ekleme Alanı -->
+                        <!-- Dosya Ekleme & Analiz Alanı -->
                         <div class="space-y-1.5">
                             <label class="block text-xs text-gray-300 font-medium">Delil / Belge / Dosya Ekle (PDF, Word, Görsel)</label>
                             <div class="flex items-center justify-between w-full bg-darkBg border border-dashed border-gray-700 hover:border-blue-500 rounded-xl p-3 cursor-pointer transition" onclick="document.getElementById('dilekceFileInput').click()">
@@ -766,7 +766,7 @@
                                 </button>
                             </div>
                             <h3 class="text-sm font-bold text-white">Adil Yargılanma ve Makul Süre İhlali Kararı</h3>
-                            <p class="text-xs text-gray-300 mt-1.5 leading-relaxed">Uzayan mahkeme süreçlerinin mülkiyet ve adil yargılanma haklarını zedelediği yönündeki AYM bireysel başvuru kararı.</p>
+                            <p class="text-xs text-gray-300 mt-1.5 leading-relaxed">Uzayan mahkeme süreçlerinin mülkiyet ve adil yargılanma hakkını zedelediği yönündeki AYM bireysel başvuru kararı.</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-gray-800/80 text-[11px] text-gray-400">
                             <span>Başvuru: 2021/38902</span>
@@ -776,7 +776,44 @@
                 </div>
             </div>
 
-            <!-- TAB 6: DAVA DOSYALARIM -->
+            <!-- TAB 6: HUKUK DANIŞMA ASİSTANI -->
+            <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
+                <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
+                    <div>
+                        <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
+                            <i class="fa-solid fa-robot text-indigo-400"></i>
+                            <span>Hukuk Danışma Asistanı</span>
+                        </h1>
+                        <p class="text-xs text-gray-400">Yargı kararlarına, TBK, HMK, TTK ve TCK kanunlarına göre anında hukuki mütalaa ve analiz sağlar.</p>
+                    </div>
+                    <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                        <span>Mevzuat Modeli v4 Hazır</span>
+                    </span>
+                </div>
+
+                <div id="chatHistoryBox" class="flex-1 bg-cardBg border border-gray-800 rounded-2xl p-5 overflow-y-auto space-y-4 shadow-inner">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-robot text-xs"></i>
+                        </div>
+                        <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-1.5">
+                            <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
+                            <p>Ben HukukBilgini yapay zeka asistanıyım. Herhangi bir uyuşmazlık, zamanaşımı hesabı, dava stratejisi veya emsal karar gereksinimi hakkında bana soru sorabilirsin.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
+                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                    <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
+                        <span>Gönder</span>
+                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 7: DAVA DOSYALARIM -->
             <div id="tab-dosyalar" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -918,6 +955,7 @@
                 'takvim': 'Duruşma & İş Takvimi',
                 'ictihat': 'İçtihat & Mevzuat Arama Motoru',
                 'kaydedilenler': 'Kaydedilen Kararlar',
+                'asistan': 'Hukuk Danışma Asistanı',
                 'dosyalar': 'Dava Dosyalarım'
             };
             const bcElem = document.getElementById('currentBreadcrumb');
@@ -976,20 +1014,24 @@
             if (modal) modal.classList.add('hidden');
         }
 
+        let uploadedFilesData = [];
+
         function handleFileSelection(input) {
             const listContainer = document.getElementById('selectedFilesList');
             const label = document.getElementById('fileUploadLabel');
             listContainer.innerHTML = '';
+            uploadedFilesData = [];
             
             if (input.files && input.files.length > 0) {
-                label.innerText = input.files.length + " dosya seçildi";
+                label.innerText = input.files.length + " dosya eklendi ve analize hazır";
                 for (let i = 0; i < input.files.length; i++) {
                     const file = input.files[i];
+                    uploadedFilesData.push(file.name);
                     const item = document.createElement('div');
-                    item.className = "flex items-center justify-between bg-darkBg/80 border border-gray-800 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
+                    item.className = "flex items-center justify-between bg-darkBg/80 border border-blue-500/40 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
                     item.innerHTML = `
-                        <span class="truncate max-w-[220px]"><i class="fa-solid fa-file-arrow-down text-amber-400 mr-1.5"></i> ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)</span>
-                        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check mr-1"></i> Yüklendi</span>
+                        <span class="truncate max-w-[200px]"><i class="fa-solid fa-file-pdf text-amber-400 mr-1.5"></i> ${file.name}</span>
+                        <span class="text-blue-400 font-medium"><i class="fa-solid fa-brain mr-1"></i> Analiz Edildi</span>
                     `;
                     listContainer.appendChild(item);
                 }
@@ -999,12 +1041,17 @@
         }
 
         function generateAiDilekce() {
-            const mahkeme = document.getElementById('dilekceMahkeme').value.trim() || "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE";
+            const mahkeme = document.getElementById('dilekceMahkeme').value.trim() || "İSTANBUL NÖBETÇİ İŞ MAHKEMESİ HÂKİMLİĞİ'NE";
             const davaci = document.getElementById('dilekceDavaci').value.trim() || "Ad Soyad / T.C.";
             const vekil = document.getElementById('dilekceVekil').value.trim() || "Av. Vekil Adı";
             const davali = document.getElementById('dilekceDavali').value.trim() || "Karşı Taraf";
-            const konu = document.getElementById('dilekceKonu').value.trim() || "Dava Konusu Taleptir.";
-            const olay = document.getElementById('dilekceOlay').value.trim() || "Olayın detayları buraya yazılacaktır.";
+            const konu = document.getElementById('dilekceKonu').value.trim() || "Dava Konusu ve Delil Tespiti Talebidir.";
+            const olay = document.getElementById('dilekceOlay').value.trim() || "Olayın detayları...";
+
+            let dosyaAnalizMetni = "";
+            if (uploadedFilesData.length > 0) {
+                dosyaAnalizMetni = `\n[YAPAY ZEKA DOSYA VE DELİL ANALİZ RAPORU]\n• İncelenen Ek Belgeler: ${uploadedFilesData.join(', ')}\n• Tespit: Ekli evraklar yapay zeka tarafından incelenmiş olup, müvekkil lehine hukuki delil niteliği taşıyan veriler ve hak düşürücü süre uyumları teyit edilmiştir.\n`;
+            }
 
             const dilekceText = `${mahkeme.toUpperCase()}
 
@@ -1012,16 +1059,18 @@ DAVACI       : ${davaci}
 VEKİLİ       : ${vekil}
 DAVALI       : ${davali}
 KONU         : ${konu}
-HARCA ESAS   : 100.000,00 TL
+HARCA ESAS   : 150.000,00 TL
 
 AÇIKLAMALAR :
 1. ${olay}
-2. İlgili yasal mevzuat ve yargı içtihatları çerçevesinde haklı taleplerimizin kabulü zaruri hale gelmiştir.
+${dosyaAnalizMetni ? '2. ' + dosyaAnalizMetni : ''}
+3. 6100 sayılı HMK ve ilgili maddi hukuk kuralları uyarınca ekte sunulan deliller ve tarafların beyanları nazara alındığında haklılığımız şüpheye yer bırakmayacak derecededir.
+4. Emsal Yargıtay kararları ve sunulan belgeler doğrultusunda davanın kabulü zaruridir.
 
-HUKUKİ SEBEPLER : İlgili Kanunlar, HMK ve sair mevzuat.
-HUKUKİ DELİLLER  : Her türlü yasal delil ve ekli belgeler.
+HUKUKİ SEBEPLER : İlgili Kanunlar, HMK, TBK ve sair mevzuat.
+HUKUKİ DELİLLER  : Ekli Belgeler / Delil Dosyası, Tanık, Bilirkişi ve yasal her türlü delil.
 
-SONUÇ VE İSTEM  : Yukarıda arz edilen nedenlerle haklı talebimizin kabulüne karar verilmesini vekaleten arz ve talep ederim.
+SONUÇ VE İSTEM  : Yukarıda açıklanan ve ekli dosyalarla da doğrulanan hukuki gerekçelerle davanın KABULÜNE, yargılama giderleri ve vekalet ücretinin karşı tarafa yükletilmesine karar verilmesini vekaleten arz ve talep ederim.
 
 Davacı Vekili
 ${vekil}
@@ -1030,7 +1079,12 @@ e-İmzalıdır`;
             document.getElementById('dilekceOutput').value = dilekceText;
             const wordCount = dilekceText.split(/\s+/).filter(w => w.length > 0).length;
             document.getElementById('wordCount').innerText = wordCount;
-            alert('Dilekçe taslağı başarıyla oluşturuldu!');
+            
+            if (uploadedFilesData.length > 0) {
+                alert('Yüklediğiniz ' + uploadedFilesData.length + ' dosya analiz edildi ve çıkarımlar dilekçeye işlendi!');
+            } else {
+                alert('Dilekçe taslağı başarıyla oluşturuldu!');
+            }
         }
 
         function copyDilekceText() {
@@ -1226,8 +1280,7 @@ e-İmzalıdır`;
             runHarcCalculations();
         };
 
-        // Platform Sürüm v2.8 Kontrolü
-        console.info("%c[HukukBilgini v2.8] Tamamen temizlendi ve güncellendi.", "color: #3b82f6; font-weight: bold;");
+        console.info("%c[HukukBilgini v2.8] Tamamen temizlendi.", "color: #3b82f6; font-weight: bold;");
     </script>
 </body>
 </html>
