@@ -793,48 +793,48 @@ e-İmzalıdır`;
                 let emsalListesi = [];
 
                 const m = message.toLowerCase();
-                if (m.includes('kıdem') || m.includes('tazminat')) {
-                    netCevap = "İşçinin haklı fesih veya haksız fesih durumlarında kıdem tazminatı, son brüt ücret üzerinden hesaplanır ve prim/ikramiye gibi düzenli ödemeler matraha dahildir.";
-                    kanunDayanagi = "4857 sayılı İş Kanunu md. 120 (1475 sayılı Kanun md. 14)";
+                if (m.includes('kıdem') || m.includes('tazminat') || m.includes('işten') || m.includes('fesih')) {
+                    netCevap = "İş sözleşmesinin işveren tarafından haklı neden olmaksızın feshedilmesi durumunda, kıdem tazminatı en az 1 yıllık kıdem şartıyla son brüt ücret üzerinden ödenir. Hesaplamada çıplak ücrete ek olarak düzenli ödenen prim, ikramiye, gıda ve yakacak yardımları da (giydirilmiş ücret olarak) hesaba katılır.";
+                    kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 18, 20 ve 1475 sayılı Kanun md. 14";
                     emsalListesi = [
-                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812", ozet: "Primlerin kıdem tazminatı matrahına dahil edilmesi hk." },
-                        { baslik: "Yargıtay 22. Hukuk Dairesi, E. 2018/1250, K. 2019/8400", ozet: "Giydirilmiş ücret hesaplama esasları." },
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2017/9-120, K. 2020/55", ozet: "İşçilik alacaklarında primlerin süreklilik unsuru." }
+                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812", ozet: "Prim ve düzenli ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi hk.", linkTab: "ictihat" },
+                        { baslik: "Yargıtay 22. Hukuk Dairesi, E. 2018/1250, K. 2019/8400", ozet: "Giydirilmiş brüt ücretin tespiti ve ikramiyelerin hesaba katılması hk.", linkTab: "ictihat" },
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2017/9-120, K. 2020/55", ozet: "Süreklilik arz eden ödemelerde işverenin tek taraflı tasarrufunun geçersizliği hk.", linkTab: "ictihat" }
                     ];
-                } else if (m.includes('kira') || m.includes('tahliye') || m.includes('artış')) {
-                    netCevap = "Konut ve çatılı işyeri kiralarında kira artış oranları TÜFE (12 aylık ortalamalara göre) üst sınırı ile sınırlıdır. Beş yılı dolduran sözleşmelerde kira tespit davası açılabilir.";
-                    kanunDayanagi = "6098 sayılı Türk Borçlar Kanunu (TBK) md. 344 ve 345";
+                } else if (m.includes('kira') || m.includes('tahliye') || m.includes('artış') || m.includes('tespit')) {
+                    netCevap = "Konut ve çatılı işyeri kiralarında yeni dönemin kira bedeli, bir önceki yıldaki TÜFE (12 aylık ortalamalara göre) üst sınırı ile sınırlıdır. Beş yılı dolduran kira sözleşmelerinde hakkaniyet indirimi de gözetilerek kira tespit davası açılabilir.";
+                    kanunDayanagi = "6098 sayılı Türk Borçlar Kanunu (TBK) md. 344, 345 ve 352";
                     emsalListesi = [
-                        { baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910", ozet: "TÜFE oranı ve hakkaniyet indirimi esasları." },
-                        { baslik: "Yargıtay 6. Hukuk Dairesi, E. 2021/890, K. 2021/2100", ozet: "Tahliye taahhütnamesinde geçerlilik şartları." },
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tarih uyuşmazlığında ispat külfeti." }
+                        { baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910", ozet: "Kira tespit davalarında TÜFE üst sınırı ve hakkaniyet indirimi esasları hk.", linkTab: "ictihat" },
+                        { baslik: "Yargıtay 6. Hukuk Dairesi, E. 2021/890, K. 2021/2100", ozet: "Yazılı tahliye taahhütnamesinde geçerlilik şartları ve tarih savunması hk.", linkTab: "ictihat" },
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tahliye taahhütnamesinde tarih uyuşmazlığı ve ispat yükü kuralları hk.", linkTab: "ictihat" }
                     ];
-                } else if (m.includes('zamanaşımı') || m.includes('süre')) {
-                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatında da 5 yıllık zamanaşımı uygulanır.";
-                    kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı TBK md. 146";
+                } else if (m.includes('zamanaşımı') || m.includes('süre') || m.includes('alacak')) {
+                    netCevap = "İşçilik alacaklarında (ücret, fazla çalışma, ulusal bayram genel tatil ücreti) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatı alacakları da 5 yıllık zamanaşımına tabidir.";
+                    kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı Türk Borçlar Kanunu md. 146";
                     emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı başlangıcı." },
-                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2020/510, K. 2020/8900", ozet: "İhbar tazminatında zamanaşımı süresi." }
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı süresinin başlangıç tarihi hk.", linkTab: "ictihat" },
+                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2020/510, K. 2020/8900", ozet: "İhbar ve kıdem tazminatında zamanaşımı itirazının değerlendirilmesi hk.", linkTab: "ictihat" }
                     ];
                 } else {
-                    netCevap = "Sorunuzdaki hukuki uyuşmazlık bakımından temel kural, talep sonucunun dayandığı maddi vakıaların ispat külfetine uygun olarak yazılı delil veya tanıkla kanıtlanmasıdır.";
-                    kanunDayanagi = "6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) md. 190 (İspat Yükü)";
+                    netCevap = `"${message}" konulu hukuki uyuşmazlığınızda; 6100 sayılı HMK hükümleri uyarınca iddia ve savunmanın dayandığı vakıaların ispatı, usul hukukundaki delil kurallarına göre taraflara düşmektedir. İlgili yasal dayanaklar ve emsal kararlar aşağıda listelenmiştir.`;
+                    kanunDayanagi = "6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) md. 190 (İspat Yükü) ve ilgili maddi hukuk hükümleri";
                     emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin değerlendirilmesi." },
-                        { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "Haksız fiil ve sorumluluk esasları." }
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk.", linkTab: "ictihat" },
+                        { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "Haksız fiil sorumluluğu ve tazminat hesaplama ilkeleri hk.", linkTab: "ictihat" }
                     ];
                 }
 
                 let emsalHTML = "";
                 emsalListesi.forEach((item) => {
                     emsalHTML += `
-                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-2.5 my-1 text-xs">
+                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
                             <div>
-                                <strong class="text-amber-400 block">${item.baslik}</strong>
-                                <span class="text-[11px] text-gray-300">${item.ozet}</span>
+                                <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
+                                <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
                             </div>
-                            <button onclick="openKararModal('${item.baslik} - ${item.ozet}')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[11px] px-3 py-1.5 rounded-lg transition shrink-0 ml-3">
-                                Kararı İncele →
+                            <button onclick="switchTab('${item.linkTab}'); document.getElementById('searchInput').value='${item.baslik.split(',')[0]}'; performSearch();" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-[11px] px-3.5 py-2 rounded-lg transition shrink-0 ml-3 shadow">
+                                Karara Git →
                             </button>
                         </div>
                     `;
@@ -845,14 +845,14 @@ e-İmzalıdır`;
                         <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-robot text-xs"></i>
                         </div>
-                        <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-2.5">
+                        <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
                             <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Net Hukuki Mütalaa & Gerekçeli Cevap:</p>
-                            <p class="text-gray-100 font-medium">${netCevap}</p>
-                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
-                                <p><strong class="text-blue-400">Kanuni Dayanak:</strong> ${kanunDayanagi}</p>
+                            <p class="text-gray-100 font-medium text-sm leading-relaxed">${netCevap}</p>
+                            <div class="bg-cardBg p-3.5 rounded-xl border border-gray-700/80 space-y-1">
+                                <p><strong class="text-blue-400">Kanuni / Mevzuat Dayanağı:</strong> ${kanunDayanagi}</p>
                             </div>
-                            <div class="space-y-1 pt-1">
-                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal İçtihatlar ve Ulaşılabilir Kaynak Kutucukları (${emsalListesi.length} Adet):</p>
+                            <div class="space-y-1.5 pt-1">
+                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> İlgili Tüm Emsal İçtihatlar ve Doğrudan Erişim Kutucukları (${emsalListesi.length} Adet):</p>
                                 ${emsalHTML}
                             </div>
                         </div>
