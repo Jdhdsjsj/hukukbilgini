@@ -60,12 +60,7 @@
 
     <!-- TOP NAVIGATION BAR -->
     <header class="h-16 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-6 z-20 shrink-0">
-        <!-- Logo & Brand & Mobil Menü Butonu -->
-        <div class="flex items-center space-x-3">
-            <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-300 hover:text-white p-1.5 rounded-lg bg-gray-800">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchAdminTab('genel')">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchAdminTab('genel')">
             <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xl">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
@@ -73,7 +68,6 @@
                 <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini Yönetim</span>
                 <span class="block text-[10px] text-gray-400 tracking-wider">Enterprise Admin Konsolu</span>
             </div>
-        </div>
         </div>
 
         <div class="hidden md:flex items-center text-sm text-gray-400 space-x-2">
@@ -95,10 +89,10 @@
     </header>
 
     <!-- MAIN WRAPPER -->
-    <div class="flex flex-1 overflow-hidden relative">
+    <div class="flex flex-1 overflow-hidden">
         
         <!-- SIDEBAR -->
-        <aside class="hidden md:flex w-64 bg-sidebarBg border-r border-gray-800 flex-col justify-between shrink-0 select-none absolute md:relative inset-y-0 left-0 z-30 transition">
+        <aside class="w-64 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between shrink-0 select-none">
             <div class="p-4 space-y-6 overflow-y-auto">
                 <div class="space-y-1">
                     <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Yönetim Menüsü</p>
@@ -133,17 +127,17 @@
         </aside>
 
         <!-- CONTENT -->
-        <main class="flex-1 overflow-y-auto bg-darkBg p-4 sm:p-6 lg:p-8">
+        <main class="flex-1 overflow-y-auto bg-darkBg p-6 lg:p-8">
             
             <!-- TAB 1: GENEL BAKIŞ -->
             <div id="admin-genel" class="admin-tab active space-y-6 max-w-7xl mx-auto" style="display: block;">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-chart-pie text-amber-400"></i>
                             <span>Sistem Genel Bakış & Metrikler</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Platformun anlık kullanım istatistikleri ve veritabanı durum özeti.</p>
+                        <p class="text-sm text-gray-400 mt-1">Platformun anlık kullanım istatistikleri ve veritabanı durum özeti.</p>
                     </div>
                 </div>
 
@@ -456,20 +450,27 @@
                 bcElem.innerText = breadcrumbMap[tabId] || 'Yönetim Konsolu';
             }
         }
-    
-        // Mobil Sidebar Açma / Kapatma
-        function toggleMobileSidebar() {
-            const sidebar = document.querySelector('aside');
-            if (sidebar) {
-                sidebar.classList.toggle('hidden');
-                sidebar.classList.toggle('absolute');
-                sidebar.classList.toggle('z-30');
-                sidebar.classList.toggle('inset-y-0');
-                sidebar.classList.toggle('left-0');
+
+        // --- ADMIN VERİ TABANI & LOCALSTORAGE YÖNETİMİ ---
+
+        function loadAdminUserData() {
+            const savedTable = localStorage.getItem('admin_user_table_html');
+            if (savedTable) {
+                const tableBody = document.getElementById('adminUserTableBody');
+                if (tableBody) tableBody.innerHTML = savedTable;
             }
+            updateAdminStats();
         }
 
-        // Site ile Senkronize Gerçek Zamanlı Sayaçlar
+        function saveAdminUserData() {
+            const tableBody = document.getElementById('adminUserTableBody');
+            if (tableBody) {
+                localStorage.setItem('admin_user_table_html', tableBody.innerHTML);
+            }
+            updateAdminStats();
+        }
+
+        // Site ile Senkronize İstatistikler
         function updateAdminStats() {
             const tableBody = document.getElementById('adminUserTableBody');
             const userCount = tableBody ? tableBody.querySelectorAll('tr').length : 0;
@@ -482,7 +483,49 @@
             if (dilekceElem) dilekceElem.innerText = parseInt(totalDilekce).toLocaleString('tr-TR');
         }
 
-        // Yeni Kullanıcı Ekleme Fonksiyonu
+        window.addEventListener('load', () => {
+            loadAdminUserData();
+        });
+
+        // Kullanıcı Silme Fonksiyonu
+        function deleteUserRow(btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                if (confirm("Bu kullanıcıyı sistemden kalıcı olarak silmek istediğinize emin misiniz?")) {
+                    row.remove();
+                    saveAdminUserData();
+                }
+            }
+        }
+
+        // Kota Yenileme Fonksiyonu
+        function renewUserQuota(btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                const quotaEl = row.querySelector('.user-quota');
+                if (quotaEl) {
+                    quotaEl.innerText = "100 Adet (Yenilendi)";
+                    saveAdminUserData();
+                }
+            }
+        }
+
+        // Özel Kota Belirleme Fonksiyonu
+        function setCustomQuota(btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                const newQuota = prompt("Kullanıcı için yeni dilekçe kotasını girin (Örn: 150 Adet veya Sınırsız):", "100 Adet");
+                if (newQuota !== null && newQuota.trim() !== "") {
+                    const quotaEl = row.querySelector('.user-quota');
+                    if (quotaEl) {
+                        quotaEl.innerText = newQuota;
+                        saveAdminUserData();
+                    }
+                }
+            }
+        }
+
+        // Yeni Kullanıcı Ekleme
         function addNewUserPrompt() {
             const email = prompt("Yeni avukat / kullanıcı e-posta adresini girin:");
             if (!email) return;
@@ -511,46 +554,8 @@
                 </td>
             `;
             tableBody.appendChild(newRow);
-            updateAdminStats();
+            saveAdminUserData();
         }
-
-        // Kullanıcı Silme Fonksiyonu
-        function deleteUserRow(btn) {
-            const row = btn.closest('tr');
-            if (row) {
-                row.remove();
-                updateAdminStats();
-            }
-        }
-
-        // Kota Yenileme Fonksiyonu
-        function renewUserQuota(btn) {
-            const row = btn.closest('tr');
-            if (row) {
-                const quotaEl = row.querySelector('.user-quota');
-                if (quotaEl) {
-                    quotaEl.innerText = "100 Adet (Yenilendi)";
-                }
-            }
-        }
-
-        // Özel Kota Belirleme Fonksiyonu
-        function setCustomQuota(btn) {
-            const row = btn.closest('tr');
-            if (row) {
-                const newQuota = prompt("Kullanıcı için yeni dilekçe kotasını girin (Örn: 150 Adet veya Sınırsız):", "100 Adet");
-                if (newQuota !== null && newQuota.trim() !== "") {
-                    const quotaEl = row.querySelector('.user-quota');
-                    if (quotaEl) {
-                        quotaEl.innerText = newQuota;
-                    }
-                }
-            }
-        }
-
-        window.addEventListener('load', () => {
-            updateAdminStats();
-        });
     </script>
 </body>
 </html>
