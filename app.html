@@ -52,7 +52,7 @@
         <div class="hidden md:flex items-center text-sm text-gray-400 space-x-2">
             <span>Çalışma Alanı</span>
             <i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>
-            <span id="currentBreadcrumb" class="text-amber-400 font-medium">Dilekçe Stüdyosu</span>
+            <span id="currentBreadcrumb" class="text-amber-400 font-medium">Dilekçe Yazımı</span>
         </div>
 
         <!-- Right Action Buttons -->
@@ -94,7 +94,7 @@
                 <!-- Quick Prompt Button -->
                 <button onclick="switchTab('dilekce')" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium text-xs py-2.5 px-3 rounded-xl shadow-md flex items-center justify-center space-x-2 transition">
                     <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i>
-                    <span>Dilekçe Prompt Stüdyosu</span>
+                    <span>Dilekçe Yazımı</span>
                 </button>
 
                 <!-- Navigation Menu -->
@@ -103,7 +103,7 @@
                     
                     <a href="javascript:void(0)" onclick="switchTab('dilekce')" id="menu-dilekce" class="sidebar-link active flex items-center bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium space-x-3 px-3 py-2.5 rounded-xl text-sm transition">
                         <i class="fa-solid fa-file-lines w-5 text-amber-400"></i>
-                        <span>Dilekçe Stüdyosu</span>
+                        <span>Dilekçe Yazımı</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
                         <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-gray-400"></i>
@@ -225,13 +225,13 @@
                 <div id="searchResultsContainer" class="space-y-4"></div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (Tek Kutu + Genişletilmiş Dosya Alanı + Program İçi Analiz) -->
+            <!-- TAB 2: DİLEKÇE YAZIMI -->
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
                         <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-file-signature text-blue-400"></i>
-                            <span>Dilekçe Stüdyosu</span>
+                            <span>Dilekçe Yazımı</span>
                         </h1>
                         <p class="text-sm text-gray-400 mt-1">Talebinizi yazın ve belgelerinizi ekleyin; asistan anında analiz yaparak dilekçenizi oluştursun.</p>
                     </div>
@@ -353,7 +353,7 @@
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (Gelişmiş Web / Kaynak Taramalı Kapsamlı Cevap Motoru) -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (Gelişmiş Taramalı, Çoklu Emsal ve Ulaşılabilir Kutucuklar) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
                     <div>
@@ -361,11 +361,11 @@
                             <i class="fa-solid fa-robot text-indigo-400"></i>
                             <span>Hukuk Danışma Asistanı</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Verilen hukuk kaynaklarında ve güncel mevzuatta tarama yaparak kapsamlı ve doyurucu mütalaa sunar.</p>
+                        <p class="text-xs text-gray-400">Verilen hukuk kaynaklarında ve güncel mevzuatta tarama yaparak net mütalaa ve tüm emsal kararları listeler.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                        <span>Web / Kaynak Tarama Aktif</span>
+                        <span>Kaynak Tarama Aktif</span>
                     </span>
                 </div>
 
@@ -376,13 +376,13 @@
                         </div>
                         <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-1.5">
                             <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                            <p>Hukuk Danışma Asistanı; sorduğunuz hukuki soru veya uyuşmazlık konusunda, belirttiğiniz harici kaynakları ve emsal içtihat havuzunu derinlemesine tarayarak eksiksiz, doyurucu ve gerekçeli mütalaa sunmak üzere hazırdır. Sorunuzu yazabilirsiniz.</p>
+                            <p>Hukuk Danışma Asistanı; sorduğunuz hukuki soru veya uyuşmazlık konusunda, belirttiğiniz harici kaynakları ve emsal içtihat havuzunu derinlemesine tarayarak net cevaplar, kanuni dayanaklar ve tüm emsal kararları yanlarında inceleme kutucuklarıyla birlikte sunar. Sorunuzu yazabilirsiniz.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
-                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kıdem tazminatı matrahına primler dahil mi?' veya 'Kira tespit davası'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                     <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
                         <span>Kaynakları Tara & Cevapla</span>
                         <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
@@ -478,7 +478,7 @@
                 </button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 text-sm text-gray-300 leading-relaxed">
-                <p>Karar detay ve metin içeriği burada yer alır...</p>
+                <p>Seçilen emsal kararın tam metni, daire gerekçesi ve yasal dayanakları burada yer almaktadır...</p>
             </div>
             <div class="px-6 py-4 border-t border-gray-700 bg-sidebarBg flex items-center justify-between">
                 <button onclick="closeKararModal()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold text-xs px-6 py-2 rounded-xl transition">
@@ -511,7 +511,7 @@
             }
 
             const breadcrumbMap = {
-                'dilekce': 'Dilekçe Stüdyosu',
+                'dilekce': 'Dilekçe Yazımı',
                 'ictihat': 'İçtihat & Mevzuat Arama',
                 'kaydedilenler': 'Kaydedilen Kararlar',
                 'asistan': 'Hukuk Danışma Asistanı',
@@ -647,7 +647,7 @@
                     return;
                 }
 
-                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB / 50 MB)";
+                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB)";
                 analysisBox.classList.remove('hidden');
                 
                 let analysisHTML = "";
@@ -790,26 +790,55 @@ e-İmzalıdır`;
             setTimeout(() => {
                 let netCevap = "";
                 let kanunDayanagi = "";
-                let emsalİctihat = "";
+                let emsalListesi = [];
 
                 const m = message.toLowerCase();
                 if (m.includes('kıdem') || m.includes('tazminat')) {
                     netCevap = "İşçinin haklı fesih veya haksız fesih durumlarında kıdem tazminatı, son brüt ücret üzerinden hesaplanır ve prim/ikramiye gibi düzenli ödemeler matraha dahildir.";
                     kanunDayanagi = "4857 sayılı İş Kanunu md. 120 (1475 sayılı Kanun md. 14)";
-                    emsalİctihat = "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812";
+                    emsalListesi = [
+                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812", ozet: "Primlerin kıdem tazminatı matrahına dahil edilmesi hk." },
+                        { baslik: "Yargıtay 22. Hukuk Dairesi, E. 2018/1250, K. 2019/8400", ozet: "Giydirilmiş ücret hesaplama esasları." },
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2017/9-120, K. 2020/55", ozet: "İşçilik alacaklarında primlerin süreklilik unsuru." }
+                    ];
                 } else if (m.includes('kira') || m.includes('tahliye') || m.includes('artış')) {
                     netCevap = "Konut ve çatılı işyeri kiralarında kira artış oranları TÜFE (12 aylık ortalamalara göre) üst sınırı ile sınırlıdır. Beş yılı dolduran sözleşmelerde kira tespit davası açılabilir.";
                     kanunDayanagi = "6098 sayılı Türk Borçlar Kanunu (TBK) md. 344 ve 345";
-                    emsalİctihat = "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910";
+                    emsalListesi = [
+                        { baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910", ozet: "TÜFE oranı ve hakkaniyet indirimi esasları." },
+                        { baslik: "Yargıtay 6. Hukuk Dairesi, E. 2021/890, K. 2021/2100", ozet: "Tahliye taahhütnamesinde geçerlilik şartları." },
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tarih uyuşmazlığında ispat külfeti." }
+                    ];
                 } else if (m.includes('zamanaşımı') || m.includes('süre')) {
                     netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatında da 5 yıllık zamanaşımı uygulanır.";
                     kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı TBK md. 146";
-                    emsalİctihat = "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120";
+                    emsalListesi = [
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı başlangıcı." },
+                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2020/510, K. 2020/8900", ozet: "İhbar tazminatında zamanaşımı süresi." }
+                    ];
                 } else {
                     netCevap = "Sorunuzdaki hukuki uyuşmazlık bakımından temel kural, talep sonucunun dayandığı maddi vakıaların ispat külfetine uygun olarak yazılı delil veya tanıkla kanıtlanmasıdır.";
-                    kanunDayanagi = "6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) md. 190 (İspat Yükü) ve ilgili maddi hukuk maddeleri";
-                    emsalİctihat = "Yargıtay Yerleşik İçtihatları (Örn: HGK, E. 2022/4-890)";
+                    kanunDayanagi = "6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) md. 190 (İspat Yükü)";
+                    emsalListesi = [
+                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin değerlendirilmesi." },
+                        { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "Haksız fiil ve sorumluluk esasları." }
+                    ];
                 }
+
+                let emsalHTML = "";
+                emsalListesi.forEach((item) => {
+                    emsalHTML += `
+                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-2.5 my-1 text-xs">
+                            <div>
+                                <strong class="text-amber-400 block">${item.baslik}</strong>
+                                <span class="text-[11px] text-gray-300">${item.ozet}</span>
+                            </div>
+                            <button onclick="openKararModal('${item.baslik} - ${item.ozet}')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[11px] px-3 py-1.5 rounded-lg transition shrink-0 ml-3">
+                                Kararı İncele →
+                            </button>
+                        </div>
+                    `;
+                });
 
                 chatBox.innerHTML += `
                     <div class="flex space-x-3">
@@ -821,7 +850,10 @@ e-İmzalıdır`;
                             <p class="text-gray-100 font-medium">${netCevap}</p>
                             <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
                                 <p><strong class="text-blue-400">Kanuni Dayanak:</strong> ${kanunDayanagi}</p>
-                                <p><strong class="text-amber-400">Emsal İçtihat / Dayanak:</strong> ${emsalİctihat}</p>
+                            </div>
+                            <div class="space-y-1 pt-1">
+                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal İçtihatlar ve Ulaşılabilir Kaynak Kutucukları (${emsalListesi.length} Adet):</p>
+                                ${emsalHTML}
                             </div>
                         </div>
                     </div>
