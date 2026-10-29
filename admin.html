@@ -157,24 +157,24 @@
                         <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-arrow-up mr-1"></i> %12 bu hafta artış</span>
                     </div>
 
-                    <!-- Canlı Artan Kullanıcı Sayısı (0'dan başlar) -->
+                    <!-- Toplam Kullanıcı Sayısı (Siteden Senkronize) -->
                     <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-2 shadow-lg">
                         <div class="flex items-center justify-between">
                             <span class="text-xs text-gray-400 font-semibold uppercase">TOPLAM KULLANICI SAYISI</span>
                             <i class="fa-solid fa-users text-blue-400"></i>
                         </div>
                         <p id="liveUserCount" class="text-2xl font-bold text-white">0</p>
-                        <span id="liveUserSub" class="text-[11px] text-emerald-400"><i class="fa-solid fa-arrow-up mr-1"></i> 0 yeni kayıt bugün</span>
+                        <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-arrow-up mr-1"></i> Aktif Veritabanı</span>
                     </div>
 
-                    <!-- Canlı Artan Dilekçe Sayısı (0'dan başlar) -->
+                    <!-- Üretilen Dilekçe Sayısı (Siteden Senkronize) -->
                     <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-2 shadow-lg">
                         <div class="flex items-center justify-between">
                             <span class="text-xs text-gray-400 font-semibold uppercase">ÜRETİLEN DİLEKÇE (BUGÜN)</span>
                             <i class="fa-solid fa-file-signature text-indigo-400"></i>
                         </div>
                         <p id="liveDilekceCount" class="text-2xl font-bold text-white">0</p>
-                        <span class="text-[11px] text-gray-400">Canlı Sayaç Aktif</span>
+                        <span class="text-[11px] text-gray-400">Gerçek Zamanlı Senkron</span>
                     </div>
 
                     <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-2 shadow-lg">
@@ -216,13 +216,13 @@
             <div id="admin-kullanicilar" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-users-gear text-blue-400"></i>
                             <span>Kullanıcı & Abonelik Yönetimi</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Sisteme kayıtlı avukat hesaplarını yönetin, abonelik paketlerini düzenleyin.</p>
+                        <p class="text-sm text-gray-400 mt-1">Sisteme kayıtlı avukat hesaplarını yönetin, abonelik paketlerini düzenleyin.</p>
                     </div>
-                    <button onclick="prompt('Yeni kullanıcı e-posta adresini girin:')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow">
+                    <button onclick="addNewUserPrompt()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow">
                         <i class="fa-solid fa-user-plus"></i>
                         <span>Yeni Kullanıcı Ekle</span>
                     </button>
@@ -302,11 +302,11 @@
             <div id="admin-veritabani" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-database text-amber-400"></i>
                             <span>İçtihat & Mevzuat Veritabanı Yönetimi</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Sistemdeki karar havuzunu yönetin, yeni PDF/Word kararlar ekleyin veya veritabanını güncelleyin.</p>
+                        <p class="text-sm text-gray-400 mt-1">Sistemdeki karar havuzunu yönetin, yeni PDF/Word kararlar ekleyin veya veritabanını güncelleyin.</p>
                     </div>
                     <button onclick="alert('Karar ekleme paneli açılıyor.')" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow">
                         <i class="fa-solid fa-file-circle-plus"></i>
@@ -349,11 +349,11 @@
             <div id="admin-loglar" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-rectangle-list text-purple-400"></i>
                             <span>Sistem Logları & Güvenlik Raporları</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Platformdaki API çağrıları, dilekçe üretim raporları ve sistem etkinlikleri.</p>
+                        <p class="text-sm text-gray-400 mt-1">Platformdaki API çağrıları, dilekçe üretim raporları ve sistem etkinlikleri.</p>
                     </div>
                     <button onclick="alert('Log dosyası indirildi.')" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl border border-gray-700 transition">
                         Logları Dışa Aktar (.txt)
@@ -372,11 +372,11 @@
             <div id="admin-ayarlar" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-gears text-gray-400"></i>
                             <span>Platform Genel Ayarları</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Platform başlığı, bakım modu ve entegrasyon ayarları.</p>
+                        <p class="text-sm text-gray-400 mt-1">Platform başlığı, bakım modu ve entegrasyon ayarları.</p>
                     </div>
                     <button onclick="alert('Ayarlar başarıyla kaydedildi!')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-2 rounded-xl text-xs transition shadow">
                         Değişiklikleri Kaydet
@@ -455,15 +455,9 @@
             if (bcElem) {
                 bcElem.innerText = breadcrumbMap[tabId] || 'Yönetim Konsolu';
             }
-            // Mobilde sidebar'ı kapat
-            if (window.innerWidth < 768) {
-                const sidebar = document.querySelector('aside');
-                if (sidebar && !sidebar.classList.contains('hidden')) {
-                    toggleMobileSidebar();
-                }
-            }
         }
-
+    
+        // Mobil Sidebar Açma / Kapatma
         function toggleMobileSidebar() {
             const sidebar = document.querySelector('aside');
             if (sidebar) {
@@ -475,29 +469,57 @@
             }
         }
 
-        // Canlı Sayaçlar (0'dan başlayıp saniyesinde artar)
-        let currentUsers = 0;
-        let currentDilekce = 0;
-        
-        setInterval(() => {
-            currentUsers += Math.floor(Math.random() * 2);
-            currentDilekce += Math.floor(Math.random() * 3);
+        // Site ile Senkronize Gerçek Zamanlı Sayaçlar
+        function updateAdminStats() {
+            const tableBody = document.getElementById('adminUserTableBody');
+            const userCount = tableBody ? tableBody.querySelectorAll('tr').length : 0;
             
             const userElem = document.getElementById('liveUserCount');
+            if (userElem) userElem.innerText = userCount.toLocaleString('tr-TR');
+
+            const totalDilekce = localStorage.getItem('hukuk_total_dilekce') || '0';
             const dilekceElem = document.getElementById('liveDilekceCount');
-            
-            if (userElem) userElem.innerText = currentUsers.toLocaleString('tr-TR');
-            if (dilekceElem) dilekceElem.innerText = currentDilekce.toLocaleString('tr-TR');
-        }, 1200);
+            if (dilekceElem) dilekceElem.innerText = parseInt(totalDilekce).toLocaleString('tr-TR');
+        }
+
+        // Yeni Kullanıcı Ekleme Fonksiyonu
+        function addNewUserPrompt() {
+            const email = prompt("Yeni avukat / kullanıcı e-posta adresini girin:");
+            if (!email) return;
+            const name = prompt("Kullanıcı Adı Soyadı:", "Av. Yeni Kullanıcı");
+            if (!name) return;
+
+            const tableBody = document.getElementById('adminUserTableBody');
+            const newRow = document.createElement('tr');
+            const newId = tableBody.querySelectorAll('tr').length + 1;
+            newRow.setAttribute('data-user-id', newId);
+            newRow.innerHTML = `
+                <td class="py-3 px-3 font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-user text-gray-400"></i>
+                    <span>${name}</span>
+                </td>
+                <td class="py-3 px-3">${email}</td>
+                <td class="py-3 px-3">
+                    <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-semibold">Standart Avukat</span>
+                    <span class="block text-[10px] text-gray-400 mt-0.5">Kota: <strong class="text-white user-quota">50 Adet</strong></span>
+                </td>
+                <td class="py-3 px-3 text-gray-400">${new Date().toLocaleDateString('tr-TR')}</td>
+                <td class="py-3 px-3 text-right space-x-2">
+                    <button onclick="setCustomQuota(this)" class="text-amber-400 hover:text-amber-300 font-medium">Kota Belirle</button>
+                    <button onclick="renewUserQuota(this)" class="text-emerald-400 hover:text-emerald-300 font-medium">Kota Yenile</button>
+                    <button onclick="deleteUserRow(this)" class="text-rose-400 hover:text-rose-300 font-medium">Sil</button>
+                </td>
+            `;
+            tableBody.appendChild(newRow);
+            updateAdminStats();
+        }
 
         // Kullanıcı Silme Fonksiyonu
         function deleteUserRow(btn) {
             const row = btn.closest('tr');
             if (row) {
-                if (confirm("Bu kullanıcıyı sistemden kalıcı olarak silmek istediğinize emin misiniz?")) {
-                    row.remove();
-                    alert("Kullanıcı başarıyla silindi.");
-                }
+                row.remove();
+                updateAdminStats();
             }
         }
 
@@ -508,7 +530,6 @@
                 const quotaEl = row.querySelector('.user-quota');
                 if (quotaEl) {
                     quotaEl.innerText = "100 Adet (Yenilendi)";
-                    alert("Kullanıcının dilekçe üretim kotası sıfırlanarak yenilendi.");
                 }
             }
         }
@@ -522,11 +543,14 @@
                     const quotaEl = row.querySelector('.user-quota');
                     if (quotaEl) {
                         quotaEl.innerText = newQuota;
-                        alert("Kullanıcı kotası başarıyla güncellendi: " + newQuota);
                     }
                 }
             }
         }
+
+        window.addEventListener('load', () => {
+            updateAdminStats();
+        });
     </script>
 </body>
 </html>
