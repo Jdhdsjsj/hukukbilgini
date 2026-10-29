@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu | Profesyonel Hukuk Teknolojileri</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -110,7 +110,7 @@
                         <span>Duruşma & İş Takvimi</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('ictihat')" id="menu-ictihat" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition">
-                        <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-gray-400"></i>
+                        <i class="fa-solid fa-magnifying-glass-arrow-right w-5 text-amber-400"></i>
                         <span>İçtihat & Mevzuat Arama</span>
                     </a>
                     <a href="javascript:void(0)" onclick="switchTab('kaydedilenler')" id="menu-kaydedilenler" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-gray-800/60 transition justify-between">
@@ -401,7 +401,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (İLK AÇILIŞTA AKTİF VE TAMAMEN BOŞ) -->
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (DOSYA YÜKLEME ÖZELLİĞİ İLE) -->
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -409,7 +409,7 @@
                             <i class="fa-solid fa-file-signature text-blue-400"></i>
                             <span>Dilekçe Prompt Stüdyosu</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Hukuki olay detaylarını girin; yapay zeka kanun maddeleri ve emsal içtihatlarla dilekçenizi tam metin oluştursun.</p>
+                        <p class="text-sm text-gray-400 mt-1">Hukuki olay detaylarını ve delil belgelerinizi girin; yapay zeka dilekçenizi tam metin oluştursun.</p>
                     </div>
                     <div class="flex items-center space-x-2">
                         <button onclick="generateAiDilekce()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 shadow-lg transition">
@@ -455,7 +455,26 @@
 
                         <div>
                             <label class="block text-xs text-gray-300 font-medium mb-1.5">Maddi Vakıalar ve Olayın Özeti</label>
-                            <textarea id="dilekceOlay" rows="5" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed" placeholder="Müvekkilin işe başlama tarihi, fesih sebebi ve haklı fesih nedenlerinin bulunmadığını özetleyiniz..."></textarea>
+                            <textarea id="dilekceOlay" rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed" placeholder="Müvekkilin işe başlama tarihi, fesih sebebi ve haklı fesih nedenlerinin bulunmadığını özetleyiniz..."></textarea>
+                        </div>
+
+                        <!-- Dosya Ekleme Alanı -->
+                        <div class="space-y-1.5">
+                            <label class="block text-xs text-gray-300 font-medium">Delil / Belge / Dosya Ekle (PDF, Word, Görsel)</label>
+                            <div class="flex items-center justify-between w-full bg-darkBg border border-dashed border-gray-700 hover:border-blue-500 rounded-xl p-3 cursor-pointer transition" onclick="document.getElementById('dilekceFileInput').click()">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                    <div>
+                                        <span id="fileUploadLabel" class="text-xs text-gray-300 font-medium block">Dosya seçmek için tıklayın veya sürükleyin</span>
+                                        <span class="text-[10px] text-gray-500 block">PDF, UDF, DOCX, JPG (Maks. 25MB)</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1.5 rounded-lg border border-gray-700 transition">Gözat</span>
+                            </div>
+                            <input type="file" id="dilekceFileInput" class="hidden" multiple onchange="handleFileSelection(this)">
+                            <div id="selectedFilesList" class="space-y-1 pt-1"></div>
                         </div>
 
                         <div class="flex items-center justify-between pt-2">
@@ -957,6 +976,28 @@
             if (modal) modal.classList.add('hidden');
         }
 
+        function handleFileSelection(input) {
+            const listContainer = document.getElementById('selectedFilesList');
+            const label = document.getElementById('fileUploadLabel');
+            listContainer.innerHTML = '';
+            
+            if (input.files && input.files.length > 0) {
+                label.innerText = input.files.length + " dosya seçildi";
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
+                    const item = document.createElement('div');
+                    item.className = "flex items-center justify-between bg-darkBg/80 border border-gray-800 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
+                    item.innerHTML = `
+                        <span class="truncate max-w-[220px]"><i class="fa-solid fa-file-arrow-down text-amber-400 mr-1.5"></i> ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)</span>
+                        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check mr-1"></i> Yüklendi</span>
+                    `;
+                    listContainer.appendChild(item);
+                }
+            } else {
+                label.innerText = "Dosya seçmek için tıklayın veya sürükleyin";
+            }
+        }
+
         function generateAiDilekce() {
             const mahkeme = document.getElementById('dilekceMahkeme').value.trim() || "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE";
             const davaci = document.getElementById('dilekceDavaci').value.trim() || "Ad Soyad / T.C.";
@@ -978,7 +1019,7 @@ AÇIKLAMALAR :
 2. İlgili yasal mevzuat ve yargı içtihatları çerçevesinde haklı taleplerimizin kabulü zaruri hale gelmiştir.
 
 HUKUKİ SEBEPLER : İlgili Kanunlar, HMK ve sair mevzuat.
-HUKUKİ DELİLLER  : Her türlü yasal delil.
+HUKUKİ DELİLLER  : Her türlü yasal delil ve ekli belgeler.
 
 SONUÇ VE İSTEM  : Yukarıda arz edilen nedenlerle haklı talebimizin kabulüne karar verilmesini vekaleten arz ve talep ederim.
 
@@ -1184,6 +1225,9 @@ e-İmzalıdır`;
         window.onload = function() {
             runHarcCalculations();
         };
+
+        // Platform Sürüm v2.8 Kontrolü
+        console.info("%c[HukukBilgini v2.8] Tamamen temizlendi ve güncellendi.", "color: #3b82f6; font-weight: bold;");
     </script>
 </body>
 </html>
