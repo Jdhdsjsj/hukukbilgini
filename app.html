@@ -70,7 +70,7 @@
                 <i class="fa-solid fa-copy"></i>
                 <span>Kopyala</span>
             </button>
-            <div class="flex items-center space-x-2 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
+            <div class="flex items-center space-x-2 bg-gray-800/90 text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
                 <div class="flex items-center space-x-1.5">
                     <i class="fa-solid fa-user-tie text-amber-400"></i>
                     <span class="hidden sm:inline">Av. Mehmet Ege Yıldız</span>
@@ -174,7 +174,7 @@
                             <i class="fa-solid fa-magnifying-glass text-lg"></i>
                         </div>
                         <input type="text" id="searchInput" 
-                            class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-sm rounded-xl pl-12 pr-32 py-4 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition shadow-inner"
+                            class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-xs sm:text-sm rounded-xl pl-12 pr-32 py-4 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition shadow-inner"
                             placeholder="Örn: 'Kıdem tazminatı hesaplamasında primler', 'ecrimisil davası zamanaşımı', 'kira tespit davalarında artış oranı'..."
                             oninput="performSearch()">
                         <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
@@ -191,7 +191,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-gray-700/60">
                         <div>
                             <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Mahkeme / Kurum</label>
-                            <select id="filterCourt" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition" onchange="performSearch()">
+                            <select id="filterCourt" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition" onchange="performSearch()">
                                 <option value="all">Tüm Mahkemeler</option>
                                 <option value="yargitay">Yargıtay (Hukuk & Ceza Daireleri)</option>
                                 <option value="danistay">Danıştay</option>
@@ -202,7 +202,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">İlgili Daire / Kurul</label>
-                            <select id="filterDepartment" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition" onchange="performSearch()">
+                            <select id="filterDepartment" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition" onchange="performSearch()">
                                 <option value="all">Tüm Daireler</option>
                                 <option value="9.hd">9. Hukuk Dairesi (İş Hukuku)</option>
                                 <option value="3.hd">3. Hukuk Dairesi (Borçlar / Tüketici)</option>
@@ -215,12 +215,12 @@
                         <div>
                             <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Esas / Karar No</label>
                             <div class="flex space-x-2">
-                                <input type="text" id="filterEsasNo" placeholder="Esas No" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-500" oninput="performSearch()">
+                                <input type="text" id="filterEsasNo" placeholder="Esas No" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-500" oninput="performSearch()">
                             </div>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Tarih Aralığı</label>
-                            <select id="filterDateRange" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition">
+                            <select id="filterDateRange" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition">
                                 <option value="all">Tüm Zamanlar</option>
                                 <option value="son1yil">Son 1 Yıl</option>
                                 <option value="son3yil">Son 3 Yıl</option>
@@ -543,7 +543,6 @@
             if (bcElem) {
                 bcElem.innerText = breadcrumbMap[tabId] || 'Çalışma Alanı';
             }
-            // Mobilde sekme değişince sidebar'ı kapat
             if (window.innerWidth < 768) {
                 const sidebar = document.querySelector('aside');
                 if (sidebar && !sidebar.classList.contains('hidden')) {
@@ -590,7 +589,7 @@
                 id: 3, court: "Yargıtay Hukuk Genel Kurulu", courtCode: "yargitay", deptCode: "hukuk_genel", esasNo: "2022/4-890", kararNo: "2023/112", tarih: "05.10.2023",
                 title: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112 - Hasılı Davaya İştirak Yasağı",
                 snippet: "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla hak devri ve sözleşmelerin hukuki geçerliliği hk.",
-                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince dava sonucundan menfaat sağlamak amacıyla yapılan iştirak sözleşmeleri hukuka ve ahlaka aykırıdır.",
+                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince avukatın dava sonucundan pay alması kesinlikle yasaktır.",
                 kanunMaddesi: "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı TBK md. 26, 27",
                 tags: ["# Borçlar Hukuku", "# Hasılı Davaya İştirak"], categoryKey: "yargıtay hukuk genel kurulu e. 2022/4-890 k. 2023/112 hasılı davaya iştirak yasağı champerty devir"
             },
@@ -788,24 +787,68 @@ e-İmzalıdır`;
             generateAiDilekce();
         }
 
+        // --- KULLANICI VERİ TABANI & LOCALSTORAGE YÖNETİMİ ---
+        
+        function loadUserData() {
+            const savedBookmarks = localStorage.getItem('hukuk_bookmarks');
+            if (savedBookmarks) {
+                const list = document.getElementById('savedCardsList');
+                if (list) list.innerHTML = savedBookmarks;
+            }
+            
+            const savedCases = localStorage.getItem('hukuk_cases');
+            if (savedCases) {
+                const container = document.getElementById('casesListContainer');
+                if (container) container.innerHTML = savedCases;
+            }
+            
+            updateBadgeCounts();
+        }
+
+        function saveUserData() {
+            const list = document.getElementById('savedCardsList');
+            if (list) {
+                localStorage.setItem('hukuk_bookmarks', list.innerHTML);
+            }
+            
+            const container = document.getElementById('casesListContainer');
+            if (container) {
+                localStorage.setItem('hukuk_cases', container.innerHTML);
+            }
+            updateBadgeCounts();
+        }
+
+        function updateBadgeCounts() {
+            const list = document.getElementById('savedCardsList');
+            if (list) {
+                const cards = list.querySelectorAll('.bg-cardBg');
+                const badge = document.getElementById('savedCountBadge');
+                if (badge) badge.innerText = cards.length;
+            }
+
+            const container = document.getElementById('casesListContainer');
+            if (container) {
+                const cases = container.querySelectorAll('.case-card');
+                const badge = document.getElementById('casesCountBadge');
+                if (badge) badge.innerText = cases.length;
+            }
+        }
+
         function clearAllBookmarks() {
             document.getElementById('savedCardsList').innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı karar kalmadı.</div>';
-            document.getElementById('savedCountBadge').innerText = '0';
+            saveUserData();
         }
 
         function removeBookmarkCard(btn) {
             btn.closest('.bg-cardBg').remove();
-            let count = parseInt(document.getElementById('savedCountBadge').innerText) || 1;
-            document.getElementById('savedCountBadge').innerText = Math.max(0, count - 1);
+            saveUserData();
         }
 
         function deleteSingleCase(btn) {
             const card = btn.closest('.case-card');
             if (card) {
                 card.remove();
-                const badge = document.getElementById('casesCountBadge');
-                let count = parseInt(badge.innerText) || 1;
-                badge.innerText = Math.max(0, count - 1);
+                saveUserData();
             }
         }
 
@@ -833,8 +876,7 @@ e-İmzalıdır`;
                 </div>
             `;
             container.prepend(card);
-            const badge = document.getElementById('casesCountBadge');
-            badge.innerText = (parseInt(badge.innerText) || 0) + 1;
+            saveUserData();
             alert('Yeni dava dosyası eklendi.');
         }
 
@@ -921,7 +963,7 @@ e-İmzalıdır`;
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tahliye taahhütnamesinde tarih uyuşmazlığı ve ispat külfeti kuralları hk." }
                     ];
                 } else if (m.includes('zamanaşımı') || m.includes('süre') || m.includes('alacak')) {
-                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatında da 5 yıllık zamanaşımına tabidir.";
+                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatı alacakları da 5 yıllık zamanaşımına tabidir.";
                     kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı Türk Borçlar Kanunu md. 146";
                     emsalListesi = [
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı süresinin başlangıç tarihi hk." }
@@ -971,10 +1013,10 @@ e-İmzalıdır`;
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
                             <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Net Hukuki Mütalaa & Gerekçeli Cevap:</p>
                             <p class="text-gray-100 font-medium">${netCevap}</p>
-                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
+                            <div class="bg-cardBg p-3.5 rounded-xl border border-gray-700/80 space-y-1">
                                 <p><strong class="text-blue-400">Kanuni Dayanak:</strong> ${kanunDayanagi}</p>
                             </div>
-                            <div class="space-y-1 pt-1">
+                            <div class="space-y-1.5 pt-1">
                                 <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal İçtihatlar ve Ulaşılabilir Kaynak Kutucukları (${emsalListesi.length} Adet):</p>
                                 ${emsalHTML}
                             </div>
@@ -1035,6 +1077,7 @@ e-İmzalıdır`;
         }
 
         window.onload = function() {
+            loadUserData();
             switchTab('dilekce');
             performSearch();
         };
