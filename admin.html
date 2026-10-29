@@ -60,7 +60,12 @@
 
     <!-- TOP NAVIGATION BAR -->
     <header class="h-16 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-6 z-20 shrink-0">
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchAdminTab('genel')">
+        <!-- Logo & Brand & Mobil Menü Butonu -->
+        <div class="flex items-center space-x-3">
+            <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-300 hover:text-white p-1.5 rounded-lg bg-gray-800">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchAdminTab('genel')">
             <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xl">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
@@ -68,6 +73,7 @@
                 <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini Yönetim</span>
                 <span class="block text-[10px] text-gray-400 tracking-wider">Enterprise Admin Konsolu</span>
             </div>
+        </div>
         </div>
 
         <div class="hidden md:flex items-center text-sm text-gray-400 space-x-2">
@@ -89,10 +95,10 @@
     </header>
 
     <!-- MAIN WRAPPER -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden relative">
         
         <!-- SIDEBAR -->
-        <aside class="w-64 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between shrink-0 select-none">
+        <aside class="hidden md:flex w-64 bg-sidebarBg border-r border-gray-800 flex-col justify-between shrink-0 select-none absolute md:relative inset-y-0 left-0 z-30 transition">
             <div class="p-4 space-y-6 overflow-y-auto">
                 <div class="space-y-1">
                     <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Yönetim Menüsü</p>
@@ -127,17 +133,17 @@
         </aside>
 
         <!-- CONTENT -->
-        <main class="flex-1 overflow-y-auto bg-darkBg p-6 lg:p-8">
+        <main class="flex-1 overflow-y-auto bg-darkBg p-4 sm:p-6 lg:p-8">
             
             <!-- TAB 1: GENEL BAKIŞ -->
             <div id="admin-genel" class="admin-tab active space-y-6 max-w-7xl mx-auto" style="display: block;">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-chart-pie text-amber-400"></i>
                             <span>Sistem Genel Bakış & Metrikler</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Platformun anlık kullanım istatistikleri ve veritabanı durum özeti.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Platformun anlık kullanım istatistikleri ve veritabanı durum özeti.</p>
                     </div>
                 </div>
 
@@ -209,11 +215,11 @@
             <div id="admin-kullanicilar" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-users-gear text-blue-400"></i>
                             <span>Kullanıcı & Abonelik Yönetimi</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Sisteme kayıtlı avukat hesaplarını yönetin, abonelik paketlerini düzenleyin.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Sisteme kayıtlı avukat hesaplarını yönetin, abonelik paketlerini düzenleyin.</p>
                     </div>
                     <button onclick="prompt('Yeni kullanıcı e-posta adresini girin:')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow">
                         <i class="fa-solid fa-user-plus"></i>
@@ -283,11 +289,11 @@
             <div id="admin-veritabani" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-database text-amber-400"></i>
                             <span>İçtihat & Mevzuat Veritabanı Yönetimi</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Sistemdeki karar havuzunu yönetin, yeni PDF/Word kararlar ekleyin veya veritabanını güncelleyin.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Sistemdeki karar havuzunu yönetin, yeni PDF/Word kararlar ekleyin veya veritabanını güncelleyin.</p>
                     </div>
                     <button onclick="alert('Karar ekleme paneli açılıyor.')" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow">
                         <i class="fa-solid fa-file-circle-plus"></i>
@@ -330,11 +336,11 @@
             <div id="admin-loglar" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-rectangle-list text-purple-400"></i>
                             <span>Sistem Logları & Güvenlik Raporları</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Platformdaki API çağrıları, dilekçe üretim raporları ve sistem etkinlikleri.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Platformdaki API çağrıları, dilekçe üretim raporları ve sistem etkinlikleri.</p>
                     </div>
                     <button onclick="alert('Log dosyası indirildi.')" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl border border-gray-700 transition">
                         Logları Dışa Aktar (.txt)
@@ -353,11 +359,11 @@
             <div id="admin-ayarlar" class="admin-tab space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-gears text-gray-400"></i>
                             <span>Platform Genel Ayarları</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Platform başlığı, bakım modu ve entegrasyon ayarları.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Platform başlığı, bakım modu ve entegrasyon ayarları.</p>
                     </div>
                     <button onclick="alert('Ayarlar başarıyla kaydedildi!')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-2 rounded-xl text-xs transition shadow">
                         Değişiklikleri Kaydet
@@ -435,6 +441,24 @@
             const bcElem = document.getElementById('adminBreadcrumb');
             if (bcElem) {
                 bcElem.innerText = breadcrumbMap[tabId] || 'Yönetim Konsolu';
+            }
+            // Mobilde sidebar'ı kapat
+            if (window.innerWidth < 768) {
+                const sidebar = document.querySelector('aside');
+                if (sidebar && !sidebar.classList.contains('hidden')) {
+                    toggleMobileSidebar();
+                }
+            }
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('aside');
+            if (sidebar) {
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('absolute');
+                sidebar.classList.toggle('z-30');
+                sidebar.classList.toggle('inset-y-0');
+                sidebar.classList.toggle('left-0');
             }
         }
     </script>
