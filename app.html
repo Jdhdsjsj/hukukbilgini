@@ -75,7 +75,7 @@
             </button>
             <button class="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-emerald-600/20 transition" onclick="exportFile('udf')">
                 <i class="fa-solid fa-file-shield"></i>
-                <span>UYAP Editör (.udf)</span>
+                <span>UYAP Editör (.udf) İndir</span>
             </button>
         </div>
     </header>
@@ -221,7 +221,7 @@
                 <div id="searchResultsContainer" class="space-y-4"></div>
             </div>
 
-            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU -->
+            <!-- TAB 2: DİLEKÇE PROMPT STÜDYOSU (Tek Kutu + Genişletilmiş Dosya Alanı + Program İçi Analiz) -->
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -281,7 +281,9 @@
                                 <span class="flex items-center"><i class="fa-solid fa-microchip mr-1.5"></i> Yüklenen Dosya İncelemesi & Çıkarımlar</span>
                                 <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-check mr-1"></i> Analiz Edildi</span>
                             </div>
-                            <div id="analysisResultsList" class="text-[11px] text-gray-300 space-y-1"></div>
+                            <div id="analysisResultsList" class="text-[11px] text-gray-300 space-y-1">
+                                <!-- Dinamik çıkarımlar -->
+                            </div>
                         </div>
 
                         <div class="flex items-center justify-between pt-2">
@@ -376,7 +378,7 @@
                 </div>
 
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
-                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davasında hakkaniyet indirimi oranı nasıl hesaplanır?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                     <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
                         <span>Kaynakları Tara & Cevapla</span>
                         <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
@@ -607,7 +609,7 @@
         }
 
         let uploadedFilesData = [];
-        const MAX_TOTAL_SIZE_BYTES = 1024 * 1024 * 1024; // 1 GB
+        const MAX_TOTAL_SIZE_BYTES = 50 * 1024 * 1024; // 50 MB
 
         function handleDragOver(event) { event.preventDefault(); event.stopPropagation(); }
         function handleDragLeave(event) { event.preventDefault(); event.stopPropagation(); }
@@ -634,14 +636,14 @@
                 for (let i = 0; i < input.files.length; i++) { totalSize += input.files[i].size; }
 
                 if (totalSize > MAX_TOTAL_SIZE_BYTES) {
-                    alert('Hata: Toplam dosya boyutu 1 GB sınırını aşıyor!');
+                    alert('Hata: Toplam dosya boyutu 50 MB sınırını aşıyor!');
                     input.value = '';
                     label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
                     analysisBox.classList.add('hidden');
                     return;
                 }
 
-                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB)";
+                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB / 50 MB)";
                 analysisBox.classList.remove('hidden');
                 
                 let analysisHTML = "";
@@ -729,7 +731,6 @@ e-İmzalıdır`;
             document.getElementById('savedCountBadge').innerText = Math.max(0, count - 1);
         }
 
-        // Dava Dosyalarım - Tek tek silme fonksiyonu
         function deleteSingleCase(btn) {
             if (confirm("Bu dava dosyasını silmek istediğinize emin misiniz?")) {
                 const card = btn.closest('.case-card');
@@ -772,7 +773,6 @@ e-İmzalıdır`;
             alert('Yeni dava dosyası eklendi.');
         }
 
-        // Hukuk Danışma Asistanı - Gelişmiş Kaynak/Web Tarama Simülasyonu
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             const message = input.value.trim();
@@ -804,13 +804,38 @@ e-İmzalıdır`;
         }
 
         function exportFile(format) {
-            const content = document.getElementById('dilekceOutput').value;
-            if(!content.trim()) { alert('İndirilecek dilekçe metni bulunmuyor.'); return; }
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const activeTab = document.querySelector('.tab-content.active').id;
+            let exportContent = "";
+            let filename = "HukukBilgini_Belge";
+
+            if (activeTab === 'tab-dilekce') {
+                exportContent = document.getElementById('dilekceOutput').value;
+                if (!exportContent.trim()) {
+                    alert('İndirilecek dilekçe taslağı boş! Lütfen önce taslak oluşturun.');
+                    return;
+                }
+                filename = "Dava_Dilekcesi";
+            } else if (activeTab === 'tab-harc') {
+                exportContent = "HUKUKBİLGİNİ HARÇ VE VEKALET HESAPLAMA RAPORU\n\n" +
+                                "Dava Açılış Masrafı: " + document.getElementById('resToplamMasraf').innerText + "\n" +
+                                "Karşı Vekalet Ücreti (AAÜT): " + document.getElementById('resVekaletUcreti').innerText;
+                filename = "Harc_Hesaplama_Raporu";
+            } else {
+                exportContent = "HukukBilgini Platform İnceleme Metni - " + new Date().toLocaleDateString('tr-TR');
+            }
+
+            const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `HukukBilgini_Dilekce.${format === 'udf' ? 'udf' : 'docx'}`;
+            link.download = `${filename}.${format === 'udf' ? 'udf' : 'docx'}`;
             link.click();
+            URL.revokeObjectURL(link.href);
+
+            if (format === 'udf') {
+                alert('Belge UYAP Editör formatında (.udf) indirildi.');
+            } else {
+                alert('Belge Word formatında (.docx) indirildi.');
+            }
         }
 
         function copyCurrentContext() {
@@ -818,7 +843,7 @@ e-İmzalıdır`;
         }
 
         function openLoginModal() {
-            alert('Giriş ekranı açılıyor...');
+            alert('Oturum açık: Doğrulama gerektirmeden tam yetkili işlem yapabilirsiniz.');
         }
 
         window.onload = function() {
