@@ -73,7 +73,7 @@
             <div class="flex items-center space-x-2 bg-gray-800/90 text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
                 <div class="flex items-center space-x-1.5">
                     <i class="fa-solid fa-user-tie text-amber-400"></i>
-                    <span class="hidden sm:inline">Av. Mehmet Ege Yıldız</span>
+                    <span id="currentUserName" class="hidden sm:inline">Av. Mehmet Ege Yıldız</span>
                 </div>
                 <button onclick="alert('Oturum kapatıldı. Güvenli çıkış yapıldı.'); location.reload();" class="text-gray-400 hover:text-rose-400 pl-1.5 border-l border-gray-700 transition" title="Çıkış Yap">
                     <i class="fa-solid fa-right-from-bracket text-xs"></i>
@@ -767,6 +767,7 @@ e-İmzalıdır`;
             const wordCount = dilekceText.split(/\s+/).filter(w => w.length > 0).length;
             document.getElementById('wordCount').innerText = wordCount;
             
+            // Dilekçe sayısını localStorage'da artır (Sessizce)
             let currentCount = parseInt(localStorage.getItem('hukuk_total_dilekce') || '0');
             localStorage.setItem('hukuk_total_dilekce', currentCount + 1);
         }
@@ -792,6 +793,10 @@ e-İmzalıdır`;
         // --- KULLANICI VERİ TABANI & LOCALSTORAGE YÖNETİMİ ---
         
         function loadUserData() {
+            const activeUser = localStorage.getItem('hukuk_active_user') || 'Av. Mehmet Ege Yıldız';
+            const nameSpan = document.getElementById('currentUserName');
+            if (nameSpan) nameSpan.innerText = activeUser;
+
             const savedBookmarks = localStorage.getItem('hukuk_bookmarks');
             if (savedBookmarks) {
                 const list = document.getElementById('savedCardsList');
@@ -870,7 +875,7 @@ e-İmzalıdır`;
                     </div>
                     <h3 class="text-sm font-bold text-white">${mahkeme}</h3>
                     <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${esas || '2026/Yeni'}</strong></p>
-                    <p class="text-xs text-gray-300"><strong>Davacı:</strong> Selin Korkmaz<br><strong>Davalı:</strong> Murat Aydın</p>
+                    <p class="text-xs text-gray-300"><strong>Durum:</strong> Kaydedildi.</p>
                 </div>
                 <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
                     <span class="text-gray-500">Bugün eklendi</span>
@@ -892,7 +897,7 @@ e-İmzalıdır`;
             },
             "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812": {
                 baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812",
-                metin: "T.C. YARGITAY 9. HUKUK DAİRESİ\nEsas No: 2023/14520\nKarar No: 2024/4812\n\nÖZET: Kıdem tazminatı matrahına dahil edilecek prim, ikramiye ve düzenli ek ödemelerin kapsamı ve giydirilış brüt ücret hesaplaması."
+                metin: "T.C. YARGITAY 9. HUKUK DAİRESİ\nEsas No: 2023/14520\nKarar No: 2024/4812\n\nÖZET: Kıdem tazminatı matrahına dahil edilecek prim, ikramiye ve düzenli ek ödemelerin kapsamı ve giydirilmiş brüt ücret hesaplaması."
             },
             "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910": {
                 baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910",
@@ -976,7 +981,7 @@ e-İmzalıdır`;
                         { baslik: "Yargıtay 2. Hukuk Dairesi, E. 2022/8900, K. 2023/1200", ozet: "Boşanma davalarında kusur belirlemesi ve tazminat şartları hk." },
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2020/2-300, K. 2021/45", ozet: "Velayet düzenlemesinde çocuğun üstün yararı ilkesi hk." }
                     ];
-                } else if (m.includes('miras') || m.includes('saklı pay') || m.includes('vasiyetname') || m.includes('tenkis')) {
+                } else if (m.includes('miras') || m.includes('saklı pay') || m.includes('vasiyetname') || m.news?.includes('tenkis')) {
                     netCevap = "Miras hukukunda yasal mirasçıların saklı payları Türk Medeni Kanunu ile güvence altına alınmıştır. Yapılan kazandırmaların saklı payları ihlal etmesi durumunda tenkis davası açılabilir.";
                     kanunDayanagi = "4721 sayılı Türk Medeni Kanunu (TMK) md. 506, 560 ve 563";
                     emsalListesi = [
