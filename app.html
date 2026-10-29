@@ -70,14 +70,8 @@
                 <i class="fa-solid fa-copy"></i>
                 <span>Kopyala</span>
             </button>
-            <div class="flex items-center space-x-2 bg-gray-800/90 text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
-                <div class="flex items-center space-x-1.5">
-                    <i class="fa-solid fa-user-tie text-amber-400"></i>
-                    <span id="currentUserName" class="hidden sm:inline">Av. Mehmet Ege Yıldız</span>
-                </div>
-                <button onclick="alert('Oturum kapatıldı. Güvenli çıkış yapıldı.'); location.reload();" class="text-gray-400 hover:text-rose-400 pl-1.5 border-l border-gray-700 transition" title="Çıkış Yap">
-                    <i class="fa-solid fa-right-from-bracket text-xs"></i>
-                </button>
+            <div id="userAuthArea" class="flex items-center space-x-2">
+                <!-- Dinamik olarak JavaScript ile doldurulacak (Giriş Yap veya Kullanıcı Profili) -->
             </div>
             <button class="hidden sm:flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
                 <i class="fa-solid fa-file-word"></i>
@@ -767,7 +761,6 @@ e-İmzalıdır`;
             const wordCount = dilekceText.split(/\s+/).filter(w => w.length > 0).length;
             document.getElementById('wordCount').innerText = wordCount;
             
-            // Dilekçe sayısını localStorage'da artır (Sessizce)
             let currentCount = parseInt(localStorage.getItem('hukuk_total_dilekce') || '0');
             localStorage.setItem('hukuk_total_dilekce', currentCount + 1);
         }
@@ -793,9 +786,31 @@ e-İmzalıdır`;
         // --- KULLANICI VERİ TABANI & LOCALSTORAGE YÖNETİMİ ---
         
         function loadUserData() {
-            const activeUser = localStorage.getItem('hukuk_active_user') || 'Av. Mehmet Ege Yıldız';
-            const nameSpan = document.getElementById('currentUserName');
-            if (nameSpan) nameSpan.innerText = activeUser;
+            const authArea = document.getElementById('userAuthArea');
+            const activeUser = localStorage.getItem('hukuk_active_user');
+            
+            if (authArea) {
+                if (activeUser) {
+                    authArea.innerHTML = `
+                        <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-user-tie text-amber-400"></i>
+                                <span id="currentUserName">${activeUser}</span>
+                            </div>
+                            <button onclick="logoutUser()" class="text-gray-400 hover:text-rose-400 pl-2 border-l border-gray-700 transition" title="Çıkış Yap">
+                                <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    authArea.innerHTML = `
+                        <button onclick="loginPrompt()" class="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-xs px-3.5 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Giriş Yap / Kayıt Ol</span>
+                        </button>
+                    `;
+                }
+            }
 
             const savedBookmarks = localStorage.getItem('hukuk_bookmarks');
             if (savedBookmarks) {
@@ -810,6 +825,19 @@ e-İmzalıdır`;
             }
             
             updateBadgeCounts();
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('hukuk_active_user');
+            loadUserData();
+        }
+
+        function loginPrompt() {
+            const userName = prompt("Lütfen adınızı ve unvanınızı girin (Örn: Av. Mehmet Ege Yıldız):", "Av. Mehmet Ege Yıldız");
+            if (userName && userName.trim() !== "") {
+                localStorage.setItem('hukuk_active_user', userName.trim());
+                loadUserData();
+            }
         }
 
         function saveUserData() {
@@ -981,7 +1009,7 @@ e-İmzalıdır`;
                         { baslik: "Yargıtay 2. Hukuk Dairesi, E. 2022/8900, K. 2023/1200", ozet: "Boşanma davalarında kusur belirlemesi ve tazminat şartları hk." },
                         { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2020/2-300, K. 2021/45", ozet: "Velayet düzenlemesinde çocuğun üstün yararı ilkesi hk." }
                     ];
-                } else if (m.includes('miras') || m.includes('saklı pay') || m.includes('vasiyetname') || m.news?.includes('tenkis')) {
+                } else if (m.includes('miras') || m.includes('saklı pay') || m.includes('vasiyetname') || m.includes('tenkis')) {
                     netCevap = "Miras hukukunda yasal mirasçıların saklı payları Türk Medeni Kanunu ile güvence altına alınmıştır. Yapılan kazandırmaların saklı payları ihlal etmesi durumunda tenkis davası açılabilir.";
                     kanunDayanagi = "4721 sayılı Türk Medeni Kanunu (TMK) md. 506, 560 ve 563";
                     emsalListesi = [
@@ -1076,10 +1104,6 @@ e-İmzalıdır`;
 
         function copyCurrentContext() {
             copyDilekceText();
-        }
-
-        function openLoginModal() {
-            alert('Oturum açık: Doğrulama gerektirmeden tam yetkili işlem yapabilirsiniz.');
         }
 
         window.onload = function() {
