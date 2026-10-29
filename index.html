@@ -1,232 +1,180 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Yapay Zeka Destekli Hukuki Otomasyon & İçtihat Platformu</title>
-    <!-- Tailwind CSS -->
+    <title>HukukBilgini - Hukuk & İçtihat Platformu | Giriş</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        hb: {
-                            sidebar: '#0b0f19',
-                            canvas: '#0f172a',
-                            card: '#161f32',
-                            cardhover: '#1e2942',
-                            border: '#243049',
-                            gold: '#cda85b',
-                            goldlight: '#dfbe79',
-                            blue: '#2563eb',
-                            accent: '#3b82f6'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                        serif: ['Merriweather', 'Georgia', 'serif']
+                        darkBg: '#0b0f19',
+                        sidebarBg: '#0f172a',
+                        cardBg: '#1e293b',
+                        accentGold: '#f59e0b',
+                        accentHover: '#d97706',
+                        brandBlue: '#3b82f6'
                     }
                 }
             }
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-amber-500 selection:text-slate-950">
+<body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- ÜST NAVBAR -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 via-hb-gold to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-900/30">
-                    <i class="fa-solid fa-scale-balanced text-slate-950 text-lg font-bold"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-lg tracking-tight text-white">HukukBilgini</span>
-                    <span class="text-[10px] text-slate-400 tracking-wider uppercase font-medium">LegalTech SaaS Platform</span>
-                </div>
+    <!-- TOP NAVIGATION BAR -->
+    <header class="h-20 bg-sidebarBg/80 backdrop-blur-md border-b border-gray-800 flex items-center justify-between px-8 z-20 shrink-0 sticky top-0">
+        <!-- Logo & Brand -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-2xl shadow-lg">
+                <i class="fa-solid fa-scale-balanced"></i>
             </div>
-
-            <nav class="hidden md:flex items-center gap-8 text-xs font-medium text-slate-300">
-                <a href="#avantajlar" class="hover:text-amber-400 transition-colors">Avantajlarımız</a>
-                <a href="#fiyatlandirma" class="hover:text-amber-400 transition-colors">Abonelik & Fiyat</a>
-                <a href="admin.html" target="_blank" class="hover:text-amber-400 transition-colors">Yönetici Paneli</a>
-            </nav>
-
-            <div class="flex items-center gap-3">
-                <button onclick="openReferenceModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-key text-amber-400"></i>
-                    <span>Referans Kodum Var</span>
-                </button>
-                <a href="#fiyatlandirma" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow-lg shadow-amber-900/20 transition-all">
-                    Abone Ol →
-                </a>
+            <div>
+                <span class="text-xl font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
+                <span class="block text-[11px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
             </div>
+        </div>
+
+        <!-- Navigation Links / Actions -->
+        <div class="flex items-center space-x-4">
+            <a href="#ozellikler" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition">Özellikler</a>
+            <a href="#hakkimizda" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition">Hakkımızda</a>
+            <button onclick="openLoginModal()" class="bg-gray-800 hover:bg-gray-700 text-xs px-4 py-2.5 rounded-xl border border-gray-700 text-gray-200 transition font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-user text-amber-400"></i>
+                <span>Giriş Yap</span>
+            </button>
+            <button onclick="window.location.href='app.html'" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-950 text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 transition flex items-center space-x-2">
+                <span>Uygulamaya Git</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
         </div>
     </header>
 
     <!-- HERO SECTION -->
-    <section class="pt-32 pb-20 md:pt-44 md:pb-32 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(205,168,91,0.15),rgba(255,255,255,0))]"></div>
-        <div class="max-w-5xl mx-auto text-center space-y-8 relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold">
-                <i class="fa-solid fa-sparkles text-[10px]"></i>
-                <span>Türk Hukukuna Tam Uyumlu Yapay Zeka Asistanı</span>
+    <main class="flex-1 flex flex-col items-center justify-center px-6 py-16 text-center max-w-5xl mx-auto space-y-8">
+        
+        <!-- Badge -->
+        <div class="inline-flex items-center space-x-2 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs px-4 py-1.5 rounded-full font-semibold">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Yapay Zeka Destekli Yeni Nesil Hukuk Asistanı</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Milyonlarca İçtihat ve Mevzuat <br>
+            <span class="bg-gradient-to-r from-amber-400 via-amber-200 to-yellow-500 bg-clip-text text-transparent">Tek Tıkla Elinizin Altında</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed">
+            Hukukçular ve hukuk büroları için özel olarak tasarlanmış akıllı arama motoru, dilekçe prompt stüdyosu ve yasal ajanda sistemi ile zamandan kazanın.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 w-full max-w-md">
+            <button onclick="window.location.href='app.html'" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-8 py-4 rounded-2xl text-sm shadow-xl shadow-amber-500/20 transition flex items-center justify-center space-x-3">
+                <span>Hemen Keşfet / Çalışma Alanı</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button onclick="openLoginModal()" class="w-full sm:w-auto bg-cardBg hover:bg-gray-800 border border-gray-700 text-gray-200 font-semibold px-8 py-4 rounded-2xl text-sm transition flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-user-shield text-blue-400"></i>
+                <span>Hesap Girişi</span>
+            </button>
+        </div>
+
+        <!-- Feature Cards Grid -->
+        <div id="ozellikler" class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 w-full text-left">
+            <div class="bg-cardBg/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-amber-500/40 transition">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
+                </div>
+                <h3 class="text-base font-bold text-white">Akıllı İçtihat Arama</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">Yargıtay, Danıştay ve AYM kararlarında yapay zeka destekli akıllı filtreleme ve otomatik karar özetleri.</p>
             </div>
 
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                Hukuki Araştırma ve Dilekçe Yazımında <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-hb-gold to-yellow-200">Kusursuz Güç</span>
-            </h1>
+            <div class="bg-cardBg/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-blue-500/40 transition">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <h3 class="text-base font-bold text-white">Dilekçe Prompt Stüdyosu</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">Kanun maddeleri ve emsal içtihatlarla tam uyumlu, saniyeler içinde hatasız dava dilekçeleri hazırlayın.</p>
+            </div>
 
-            <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                HMK m. 119 tam uyumlu dava dilekçeleri üretin, Yargıtay emsal içtihatlarını anında tarayın, yasal sürelerinizi hata payı olmadan hesaplayın.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                <a href="#fiyatlandirma" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-600 via-hb-gold to-yellow-400 hover:from-amber-500 text-slate-950 text-sm font-bold shadow-xl shadow-amber-900/30 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-bolt"></i>
-                    <span>Hemen Abone Ol (IBAN ile Öde)</span>
-                </a>
-                <button onclick="openReferenceModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-sm font-semibold text-slate-200 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-key text-amber-400"></i>
-                    <span>Referans Kodumu Gir ve Giriş Yap</span>
-                </button>
+            <div class="bg-cardBg/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-purple-500/40 transition">
+                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <h3 class="text-base font-bold text-white">Yasal Süre & Duruşma Ajandası</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">Kesin süreleri, duruşma günlerini ve dilekçe verme son tarihlerini akıllı ajandada kaybetmeden takip edin.</p>
             </div>
         </div>
-    </section>
 
-    <!-- TEK VE HER ŞEYİ KAPSIYAN PRO PLAN & IBAN ÖDEME BÖLÜMÜ -->
-    <section id="fiyatlandirma" class="py-20 px-6 bg-slate-900/50 border-y border-slate-800/80">
-        <div class="max-w-4xl mx-auto space-y-12">
-            <div class="text-center space-y-4 max-w-2xl mx-auto">
-                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Tek ve Her Şeyi Kapsayan Paket</h2>
-                <h3 class="text-3xl font-bold text-white tracking-tight">HukukBilgini Pro Sınırsız Lisans</h3>
-                <p class="text-sm text-slate-400">Ekstra modül ücreti yok. Tek bir üyelikle tüm profesyonel araçlara sınırsız erişim sağlayın.</p>
-            </div>
-
-            <!-- Fiyat Kartı & IBAN Bilgileri -->
-            <div class="p-8 md:p-10 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-500/50 shadow-2xl relative overflow-hidden space-y-8">
-                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-600 to-hb-gold text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">
-                    Her Şeyi Kapsayan Tek Paket
-                </div>
-
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-800 pb-8">
-                    <div>
-                        <div class="text-sm font-bold text-amber-400">HukukBilgini Pro Avukat Lisansı</div>
-                        <div class="text-xs text-slate-400 mt-1">Sınırsız Dilekçe, İçtihat Arama, Süre Hesaplama, Harçlar ve Duruşma Takvimi</div>
-                    </div>
-                    <div class="text-center md:text-right">
-                        <div class="text-4xl font-extrabold text-white">990 ₺ <span class="text-xs font-normal text-slate-400">/ ay</span></div>
-                        <div class="text-[10px] text-emerald-400 font-semibold mt-1">Anında Aktivasyon (VakıfBank Havale / EFT)</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <!-- Sol: Özellikler -->
-                    <ul class="space-y-3 text-xs text-slate-300">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Sınırsız HMK m. 119 Dilekçe Üretimi</span></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Yargıtay & Danıştay Canlı İçtihat Motoru</span></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Hukuki Süre, Adli Tatil & Zamanaşımı Hesaplayıcı</span></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Yargı Harç, Gider Avansı ve AAÜT Hesaplayıcı</span></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Duruşma Takvimi ve Google / Apple iCal Aktarımı</span></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i><span>Word (.docx) ve UYAP (.udf) Formatında İndirme</span></li>
-                    </ul>
-
-                    <!-- Sağ: VakıfBank IBAN Bilgileri ve Referans Kodu Talebi -->
-                    <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-                        <div class="text-xs font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-building-columns text-hb-gold"></i>
-                            <span>VakıfBank IBAN ile Havale / EFT Bilgileri</span>
-                        </div>
-                        <div class="space-y-1 text-xs text-slate-300 font-mono bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-                            <div class="text-slate-400 text-[10px]">Hesap Sahibi: Fatih Yıldız</div>
-                            <div class="text-amber-400 font-bold select-all pt-1">TR96 0001 5001 5800 7300 6566 54</div>
-                            <div class="text-[10px] text-slate-400 pt-1">Banka: Türkiye Vakıflar Bankası T.A.O.</div>
-                        </div>
-                        <p class="text-[11px] text-slate-400 leading-snug">
-                            Havale/EFT yaparken açıklama kısmına adınızı, soyadınızı ve e-postanızı yazınız. Ödeme onayından sonra size iletilen <strong>Referans Kodunu</strong> girerek platforma giriş yapabilirsiniz.
-                        </p>
-                        <button onclick="openReferenceModal()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow-md transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-key"></i>
-                            <span>Ödemeyi Yaptım - Referans Kodumu Gir</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <!-- FOOTER -->
-    <footer class="py-12 border-t border-slate-800 text-center text-xs text-slate-500 space-y-3">
-        <div class="flex items-center justify-center gap-2 text-white font-bold">
-            <i class="fa-solid fa-scale-balanced text-amber-500"></i>
-            <span>HukukBilgini LegalTech A.Ş.</span>
+    <footer id="hakkimizda" class="bg-sidebarBg border-t border-gray-800 py-8 px-8 text-center text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center space-x-2">
+            <span class="text-white font-bold">HukukBilgini.com</span>
+            <span>© 2026 Tüm Hakları Saklıdır.</span>
         </div>
-        <p>© 2026 Tüm hakları saklıdır. HMK ve UYAP standartlarına tam uyumludur.</p>
+        <div class="flex items-center space-x-6 text-gray-400">
+            <a href="#" class="hover:text-white transition">Kullanım Koşulları</a>
+            <a href="#" class="hover:text-white transition">Gizlilik Politikası</a>
+            <a href="#" class="hover:text-white transition">İletişim</a>
+        </div>
     </footer>
 
-    <!-- REFERANS KODU GİRİŞ MODALI -->
-    <div id="reference-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-hb-card border border-slate-200 dark:border-hb-border rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl space-y-5">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-hb-gold/40 text-hb-gold flex items-center justify-center mx-auto text-xl shadow">
-                <i class="fa-solid fa-key"></i>
-            </div>
-            <div>
-                <h3 class="text-sm font-bold text-slate-900 dark:text-white">Referans Kodu Doğrulama</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Vakıfbank ödemenizin ardından size verilen özel referans kodunu girerek aboneye özel sayfaya geçiş yapın.</p>
-            </div>
-
-            <div>
-                <input id="ref-code-input" type="text" placeholder="Örn: HB-8924" 
-                    class="w-full text-center tracking-widest uppercase font-mono text-base font-bold bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-hb-border rounded-xl py-3 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 transition-all">
-            </div>
-
-            <div class="space-y-2">
-                <button onclick="verifyReferenceCode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-hb-gold hover:from-amber-500 text-slate-950 text-xs font-bold shadow transition-all">
-                    Kodu Doğrula & Platforma Gir →
-                </button>
-                <button onclick="closeReferenceModal()" class="w-full py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium transition-all">
-                    İptal
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-gray-700 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden p-6 space-y-6">
+            <div class="flex items-center justify-between border-b border-gray-700 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-white">HukukBilgini Giriş</h3>
+                </div>
+                <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white p-1 rounded-lg">
+                    <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <div class="text-[10px] text-slate-400 pt-1">
-                Test için geçerli referans kodu: <strong class="text-amber-400 select-all">HB-2026</strong>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">E-Posta veya Baro Sicil No</label>
+                    <input type="text" placeholder="ornek@hukuk.com" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Şifre</label>
+                    <input type="password" placeholder="••••••••" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <button onclick="window.location.href='app.html'" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold py-3 rounded-xl text-xs transition shadow-lg">
+                    Giriş Yap
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- JAVASCRIPT -->
     <script>
-        function openReferenceModal() {
-            document.getElementById('reference-modal').classList.remove('hidden');
-            document.getElementById('ref-code-input').focus();
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
         }
-
-        function closeReferenceModal() {
-            document.getElementById('reference-modal').classList.add('hidden');
-        }
-
-        function verifyReferenceCode() {
-            const code = document.getElementById('ref-code-input').value.trim().toUpperCase();
-            if (!code) {
-                alert("Lütfen referans kodunu giriniz.");
-                return;
-            }
-
-            if (code === "HB-2026" || code.startsWith("HB-")) {
-                localStorage.setItem('hb_paid_subscriber', 'true');
-                localStorage.setItem('hb_ref_code', code);
-                alert("Referans kodu doğrulandı! Abonelere özel sayfaya yönlendiriliyorsunuz.");
-                window.location.href = "app.html";
-            } else {
-                alert("Geçersiz referans kodu! Lütfen geçerli bir kod giriniz veya destek hattı ile iletişime geçin.");
-            }
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
         }
     </script>
+
 </body>
 </html>
