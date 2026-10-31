@@ -49,7 +49,8 @@
         <!-- Navigation Links / Actions -->
         <div class="flex items-center space-x-4">
             <a href="#ozellikler" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition">Özellikler</a>
-            <a href="#hakkimizda" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition">Hakkımızda</a>
+            <!-- Hakkımızda butonuna tıklandığında modalı açacak şekilde güncellendi -->
+            <button onclick="openAboutModal()" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition bg-transparent border-none cursor-pointer">Hakkımızda</button>
             <button onclick="openLoginModal()" class="bg-gray-800 hover:bg-gray-700 text-xs px-4 py-2.5 rounded-xl border border-gray-700 text-gray-200 transition font-medium flex items-center space-x-2">
                 <i class="fa-solid fa-user text-amber-400"></i>
                 <span>Giriş Yap</span>
@@ -114,40 +115,55 @@
 
     </main>
 
-    <!-- FOOTER & HAKKIMIZDA SECTION -->
-    <footer id="hakkimizda" class="bg-sidebarBg border-t border-gray-800 py-16 px-8 text-gray-400">
-        <div class="max-w-5xl mx-auto space-y-10">
-            <!-- Hakkımızda Tam Metin Alanı -->
-            <div class="space-y-4 text-left">
-                <h3 class="text-xl font-bold text-white flex items-center space-x-2 border-b border-gray-800 pb-3">
-                    <i class="fa-solid fa-scale-balanced text-amber-400"></i>
-                    <span>Hakkımızda</span>
-                </h3>
-                <p class="text-xs sm:text-sm leading-relaxed text-gray-300">
-                    <strong>Av. Fatih Yıldız Hukuk ve Danışmanlık Bürosu</strong>, kurucu Avukat Fatih Yıldız öncülüğünde **2000 yılında İstanbul'da** kurulmuştur. Kuruluşumuzdan bu yana müvekkillerimizin hak ve menfaatlerini en üst düzeyde savunmak; hukuki süreçleri şeffaf, hızlı ve güvenilir bir şekilde neticelendirmek temel prensibimiz olmuştur.
-                </p>
-                <p class="text-xs sm:text-sm leading-relaxed text-gray-300">
-                    Büromuz; **Ticaret Hukuku, İcra Hukuku, İş Hukuku, Tazminat Hukuku, Gayrimenkul Hukuku ve Miras Hukuku** başta olmak üzere hukukun pek çok temel alanında uzman kadrosuyla avukatlık ve hukuki danışmanlık hizmeti sunmaktadır.
-                </p>
-                <p class="text-xs sm:text-sm leading-relaxed text-gray-300">
-                    Dava ve uyuşmazlık çözüm süreçlerinin yanı sıra, iş dünyasının dinamik yapısına uyum sağlayan önleyici hukuk anlayışımızla; sektöründe önde gelen birçok kurumsal şirkete **düzenli aylık hukuki müşavirlik hizmeti** vermekte, olası hukuki riskleri henüz doğmadan bertaraf etmekteyiz. Deneyimimiz, uzmanlığımız ve müvekkil odaklı yaklaşımımızla her hukuki meseleye özel stratejiler geliştirmeye ve güveninize layık olmaya devam ediyoruz.
-                </p>
+    <!-- FOOTER (Sadece telif ve alt linkler kaldı) -->
+    <footer class="bg-sidebarBg border-t border-gray-800 py-8 px-8 text-gray-400">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div class="flex items-center space-x-2">
+                <span class="text-white font-bold">HukukBilgini.com</span>
+                <span>© 2026 Tüm Hakları Saklıdır.</span>
             </div>
-
-            <!-- Alt Telif ve İletişim Linkleri -->
-            <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-                <div class="flex items-center space-x-2">
-                    <span class="text-white font-bold">HukukBilgini.com</span>
-                    <span>© 2026 Tüm Hakları Saklıdır.</span>
-                </div>
-                <div class="flex items-center space-x-6 text-gray-400">
-                    <a href="#" class="hover:text-white transition">Kullanım Koşulları</a>
-                    <a href="#" class="hover:text-white transition">Gizlilik Politikası</a>
-                    <a href="#" class="hover:text-white transition">İletişim</a>
-                </div>
+            <div class="flex items-center space-x-6 text-gray-400">
+                <a href="#" class="hover:text-white transition">Kullanım Koşulları</a>
+                <a href="#" class="hover:text-white transition">Gizlilik Politikası</a>
+                <button onclick="openAboutModal()" class="hover:text-white transition bg-transparent border-none cursor-pointer text-gray-400">İletişim</button>
             </div>
         </div>
     </footer>
+
+    <!-- HAKKIMIZDA MODAL (Açılır Pencere) -->
+    <div id="aboutModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-gray-700 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-gray-700 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Hakkımızda</h3>
+                </div>
+                <button onclick="closeAboutModal()" class="text-gray-400 hover:text-white p-1.5 rounded-lg transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-left text-xs sm:text-sm text-gray-300 leading-relaxed">
+                <p>
+                    <strong>Av. Fatih Yıldız Hukuk ve Danışmanlık Bürosu</strong>, kurucu Avukat Fatih Yıldız öncülüğünde 2000 yılında İstanbul'da kurulmuştur. Kuruluşumuzdan bu yana müvekkillerimizin hak ve menfaatlerini en üst düzeyde savunmak; hukuki süreçleri şeffaf, hızlı ve güvenilir bir şekilde neticelendirmek temel prensibimiz olmuştur.
+                </p>
+                <p>
+                    Büromuz; Ticaret Hukuku, İcra Hukuku, İş Hukuku, Tazminat Hukuku, Gayrimenkul Hukuku ve Miras Hukuku başta olmak üzere hukukun pek çok temel alanında uzman kadrosuyla avukatlık ve hukuki danışmanlık hizmeti sunmaktadır.
+                </p>
+                <p>
+                    Dava ve uyuşmazlık çözüm süreçlerinin yanı sıra, iş dünyasının dinamik yapısına uyum sağlayan önleyici hukuk anlayışımızla; sektöründe önde gelen birçok kurumsal şirkete düzenli hukuki müşavirlik hizmeti vermekte, olası hukuki riskleri henüz doğmadan bertaraf etmekteyiz. Deneyimimiz, uzmanlığımız ve müvekkil odaklı yaklaşımımızla her hukuki meseleye özel stratejiler geliştirmeye ve güveninize layık olmaya devam ediyoruz.
+                </p>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closeAboutModal()" class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-200 font-semibold py-3 rounded-xl text-xs transition">
+                    Kapat
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- LOGIN MODAL -->
     <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -187,6 +203,13 @@
         }
         function closeLoginModal() {
             document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function openAboutModal() {
+            document.getElementById('aboutModal').classList.remove('hidden');
+        }
+        function closeAboutModal() {
+            document.getElementById('aboutModal').classList.add('hidden');
         }
     </script>
 
