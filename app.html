@@ -445,10 +445,60 @@
         }
 
         // ----------------------------------------------------
-        // KALICI HAFIZA (LOCALSTORAGE) İLE KAYDEDİLENLER VE DOSYALAR
+        // KALICI HAFIZA (LOCALSTORAGE) VE İÇTİHAT VERİTABANI
         // ----------------------------------------------------
         let savedBookmarks = JSON.parse(localStorage.getItem('hukuk_bookmarks')) || [];
         let savedCases = JSON.parse(localStorage.getItem('hukuk_cases')) || [];
+
+        const dinamikIctihatListesi = [
+            {
+                id: 101,
+                daire: "Yargıtay 9. Hukuk Dairesi",
+                esas_no: "2023/14520",
+                karar_no: "2023/16890",
+                tarih: "15.11.2023",
+                baslik: "Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi",
+                ozet: "İşçiye düzenli olarak ödenen prim, ikramiye ve yakacak yardımı gibi ek menfaatlerin kıdem ve ihbar tazminatı hesaplanmasında esas brüt ücrete dahil edilmesi gerektiği hk.",
+                tam_metin: "Davacı işçi, kıdem ve ihbar tazminatına esas ücretin tespitinde düzenli ödenen primlerin dikkate alınmadığını ileri sürerek fark tazminat alacağının tahsilini istemiştir. Mahkemece yapılan yargılamada, işçiye yıl içinde sürekli ve düzenli ödenen primlerin tavan hesabında dikkate alınacağı ve giydirilmiş brüt ücretin bu doğrultuda belirlenmesi gerektiği kabul edilmiştir."
+            },
+            {
+                id: 102,
+                daire: "Yargıtay 3. Hukuk Dairesi",
+                esas_no: "2024/2100",
+                karar_no: "2024/4500",
+                tarih: "10.03.2024",
+                baslik: "Kira Tespit Davalarında 5 Yıllık Süre ve TÜFE Sınırı",
+                ozet: "Beş yıllık kira dönemi sonunda açılan kira tespit davalarında uygulanacak artış oranı ve hakim takdiri.",
+                tam_metin: "Taraflar arasındaki kira alacağı ve bedel tespiti davasında, sözleşmenin 5 yıllık dönemi doldurduğu anlaşılmaktadır. Türk Borçlar Kanunu'nun 344. maddesi uyarınca 5 yıllık dönemin sonunda hakim, tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını, kiralananın durumunu ve emsal kira bedellerini göz önünde bulundurarak hakkaniyete uygun yeni kira bedelini belirler."
+            },
+            {
+                id: 103,
+                daire: "Yargıtay 8. Hukuk Dairesi",
+                esas_no: "2022/8900",
+                karar_no: "2023/1200",
+                tarih: "20.01.2023",
+                baslik: "Ecrimisil (Haksız İşgal Tazminatı) ve 5 Yıllık Zamanaşımı",
+                ozet: "Elatmanın önlenmesi ve ecrimisil taleplerinde geriye dönük 5 yıllık zamanaşımı süresinin başlangıcı.",
+                tam_metin: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur."
+            }
+        ];
+
+        const dinamikMevzuatListesi = [
+            {
+                id: 1,
+                baslik: "6098 sayılı Türk Borçlar Kanunu",
+                tarih: "11.01.2011",
+                tur: "Kanun",
+                tam_metin: "Madde 344 - Kira bedelinin belirlenmesi: Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir."
+            },
+            {
+                id: 2,
+                baslik: "4857 sayılı İş Kanunu",
+                tarih: "22.05.2003",
+                tur: "Kanun",
+                tam_metin: "Madde 14 - Kıdem tazminatı: İş sözleşmesinin kıdem tazminatını gerektiren hallerde feshi durumunda işçiye her geçen tam yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
+            }
+        ];
 
         window.addEventListener('DOMContentLoaded', () => {
             loadUserData();
@@ -456,6 +506,57 @@
             renderBookmarks();
             renderCases();
         });
+
+        // KESİN ÇÖZÜMLÜ İÇTİHAT ARAMA FONKSİYONU
+        function performIctihatSearch() {
+            const inputEl = document.getElementById('searchInput');
+            const container = document.getElementById('searchResultsContainer');
+            if (!inputEl || !container) return;
+
+            const query = inputEl.value.trim().toLowerCase();
+
+            if (!query) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const bulunanlar = dinamikIctihatListesi.filter(item => 
+                item.baslik.toLowerCase().includes(query) || 
+                item.ozet.toLowerCase().includes(query) || 
+                item.daire.toLowerCase().includes(query) ||
+                item.tam_metin.toLowerCase().includes(query)
+            );
+
+            if (bulunanlar.length === 0) {
+                container.innerHTML = `<div class="bg-cardBg border border-gray-800 rounded-2xl p-6 text-center text-gray-400 text-xs">Aradığınız kriterlere uygun emsal karar bulunamadı.</div>`;
+                return;
+            }
+
+            let html = '';
+            bulunanlar.forEach(item => {
+                html += `
+                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 shadow-lg">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${item.daire}</span>
+                            <span class="text-xs text-gray-400">${item.tarih} | Esas: ${item.esas_no}</span>
+                        </div>
+                        <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">${item.ozet}</p>
+                        <div class="pt-2 border-t border-gray-800 text-[11px] text-gray-400 font-mono">
+                            ${item.tam_metin}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function clearSearch() {
+            const inputEl = document.getElementById('searchInput');
+            const container = document.getElementById('searchResultsContainer');
+            if (inputEl) inputEl.value = '';
+            if (container) container.innerHTML = '';
+        }
 
         function renderBookmarks() {
             const list = document.getElementById('savedCardsList');
@@ -541,103 +642,6 @@
             savedCases.unshift(yeniDosya);
             localStorage.setItem('hukuk_cases', JSON.stringify(savedCases));
             renderCases();
-        }
-
-        const dinamikIctihatListesi = [
-            {
-                id: 101,
-                daire: "Yargıtay 9. Hukuk Dairesi",
-                esas_no: "2023/14520",
-                karar_no: "2023/16890",
-                tarih: "15.11.2023",
-                baslik: "Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi",
-                ozet: "İşçiye düzenli olarak ödenen prim, ikramiye ve yakacak yardımı gibi ek menfaatlerin kıdem ve ihbar tazminatı hesaplanmasında esas brüt ücrete dahil edilmesi gerektiği hk.",
-                tam_metin: "Davacı işçi, kıdem ve ihbar tazminatına esas ücretin tespitinde düzenli ödenen primlerin dikkate alınmadığını ileri sürerek fark tazminat alacağının tahsilini istemiştir. Mahkemece yapılan yargılamada, işçiye yıl içinde sürekli ve düzenli ödenen primlerin tavan hesabında dikkate alınacağı ve giydirilmiş brüt ücretin bu doğrultuda belirlenmesi gerektiği kabul edilmiştir."
-            },
-            {
-                id: 102,
-                daire: "Yargıtay 3. Hukuk Dairesi",
-                esas_no: "2024/2100",
-                karar_no: "2024/4500",
-                tarih: "10.03.2024",
-                baslik: "Kira Tespit Davalarında 5 Yıllık Süre ve TÜFE Sınırı",
-                ozet: "Beş yıllık kira dönemi sonunda açılan kira tespit davalarında uygulanacak artış oranı ve hakim takdiri.",
-                tam_metin: "Taraflar arasındaki kira alacağı ve bedel tespiti davasında, sözleşmenin 5 yıllık dönemi doldurduğu anlaşılmaktadır. Türk Borçlar Kanunu'nun 344. maddesi uyarınca 5 yıllık dönemin sonunda hakim, tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını, kiralananın durumunu ve emsal kira bedellerini göz önünde bulundurarak hakkaniyete uygun yeni kira bedelini belirler."
-            },
-            {
-                id: 103,
-                daire: "Yargıtay 8. Hukuk Dairesi",
-                esas_no: "2022/8900",
-                karar_no: "2023/1200",
-                tarih: "20.01.2023",
-                baslik: "Ecrimisil (Haksız İşgal Tazminatı) ve 5 Yıllık Zamanaşımı",
-                ozet: "Elatmanın önlenmesi ve ecrimisil taleplerinde geriye dönük 5 yıllık zamanaşımı süresinin başlangıcı.",
-                tam_metin: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur."
-            }
-        ];
-
-        const dinamikMevzuatListesi = [
-            {
-                id: 1,
-                baslik: "6098 sayılı Türk Borçlar Kanunu",
-                tarih: "11.01.2011",
-                tur: "Kanun",
-                tam_metin: "Madde 344 - Kira bedelinin belirlenmesi: Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir."
-            },
-            {
-                id: 2,
-                baslik: "4857 sayılı İş Kanunu",
-                tarih: "22.05.2003",
-                tur: "Kanun",
-                tam_metin: "Madde 14 - Kıdem tazminatı: İş sözleşmesinin kıdem tazminatını gerektiren hallerde feshi durumunda işçiye her geçen tam yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
-            }
-        ];
-
-        // İçtihat Arama Sekmesi Fonksiyonu (Hem enter tuşuna basınca hem butona tıklayınca çalışır)
-        function performIctihatSearch() {
-            const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            const container = document.getElementById('searchResultsContainer');
-            if (!container) return;
-
-            if (!query) {
-                container.innerHTML = '';
-                return;
-            }
-
-            const bulunanlar = dinamikIctihatListesi.filter(item => 
-                item.baslik.toLowerCase().includes(query) || 
-                item.ozet.toLowerCase().includes(query) || 
-                item.daire.toLowerCase().includes(query) ||
-                item.tam_metin.toLowerCase().includes(query)
-            );
-
-            if (bulunanlar.length === 0) {
-                container.innerHTML = `<div class="bg-cardBg border border-gray-800 rounded-2xl p-6 text-center text-gray-400 text-xs">Aradığınız kriterlere uygun emsal karar bulunamadı.</div>`;
-                return;
-            }
-
-            let html = '';
-            bulunanlar.forEach(item => {
-                html += `
-                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 shadow-lg">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${item.daire}</span>
-                            <span class="text-xs text-gray-400">${item.tarih} | Esas: ${item.esas_no}</span>
-                        </div>
-                        <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed">${item.ozet}</p>
-                        <div class="pt-2 border-t border-gray-800 text-[11px] text-gray-400 font-mono">
-                            ${item.tam_metin}
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchResultsContainer').innerHTML = '';
         }
 
         // Danışma Asistanı Fonksiyonları
