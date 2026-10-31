@@ -146,7 +146,7 @@
         <!-- CONTENT AREA -->
         <main class="flex-1 overflow-y-auto bg-darkBg p-4 sm:p-6 lg:p-8">
             
-            <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA -->
+            <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA (JSON ENTEGRELİ) -->
             <div id="tab-ictihat" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -154,11 +154,11 @@
                             <i class="fa-solid fa-scale-balanced text-amber-400"></i>
                             <span>Akıllı İçtihat & Mevzuat Arama Motoru</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yerel JSON içtihat ve mevzuat veritabanımızda gelişmiş arama yapın.</p>
                     </div>
                     <div class="flex items-center space-x-2">
                         <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Toplam 4.8M+ Karar
+                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Yerel Arşiv Aktif
                         </span>
                     </div>
                 </div>
@@ -170,13 +170,13 @@
                         </div>
                         <input type="text" id="searchInput" 
                             class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-sm rounded-xl pl-12 pr-32 py-4 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition shadow-inner"
-                            placeholder="Örn: 'Kıdem tazminatı hesaplamasında primler', 'ecrimisil davası zamanaşımı', 'kira tespit davalarında artış oranı'..."
-                            oninput="performSearch()">
+                            placeholder="Örn: 'Kıdem tazminatı', 'Kira tespit', 'Ecrimisil'..."
+                            oninput="performIctihatSearch()">
                         <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
                             <button onclick="clearSearch()" class="text-gray-400 hover:text-white px-2 py-1 text-xs transition" title="Temizle">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
-                            <button onclick="performSearch()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold px-6 py-2.5 rounded-lg text-sm shadow-md transition flex items-center space-x-2">
+                            <button onclick="performIctihatSearch()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold px-6 py-2.5 rounded-lg text-sm shadow-md transition flex items-center space-x-2">
                                 <span>Ara</span>
                                 <i class="fa-solid fa-arrow-right text-xs"></i>
                             </button>
@@ -265,15 +265,15 @@
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (MEVZUAT.GOV.TR JSON ENTEGRELİ) -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (MEVZUAT JSON ENTEGRELİ) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
                         <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı & Mevzuat.gov.tr Canlı Tarama</span>
+                            <span>Hukuk Danışma Asistanı & Mevzuat Tarama</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Sorularınız otomatik olarak hazırladığımız yerel mevzuat veritabanına bağlanır ve eş zamanlı sunulur.</p>
+                        <p class="text-xs text-gray-400">Sorularınız yerel mevzuat veritabanımız üzerinden taranarak eş zamanlı sunulur.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -293,18 +293,18 @@
                                 </div>
                                 <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-1.5">
                                     <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                                    <p>Hukuki uyuşmazlığınızı yazın; <strong>hukukbilgini_mevzuat_veritabani.json</strong> veritabanımız ilgili kanun maddelerini tarasın. İstediğiniz sonuca tıklayarak sağdaki kutucukta tam metnini inceleyebilirsiniz.</p>
+                                    <p>Hukuki uyuşmazlığınızı yazın; <strong>hukukbilgini_mevzuat_veritabani.json</strong> veritabanımız ilgili kanun maddelerini tarasın.</p>
                                 </div>
-                          </div>
-                      </div>
+                            </div>
+                        </div>
 
-                      <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
-                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira bedeli tespiti', 'Kıdem tazminatı', 'Ecrimisil'..." class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                        <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
+                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira bedeli tespiti', 'Kıdem tazminatı'..." class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                             <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
                                 <span>Mevzuat Tara</span>
                                 <i class="fa-solid fa-paper-plane text-[10px]"></i>
-                          </button>
-                      </div>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Sağ Yan Kutu: Mevzuat Tam Metin Görüntüleyici -->
@@ -316,14 +316,14 @@
                             </div>
                             <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">JSON Veritabanı</span>
                         </div>
-                         
+                        
                         <div id="mevzuatViewerContent" class="flex-1 bg-[#0d1321] border border-gray-800 rounded-xl p-4 overflow-y-auto text-xs text-gray-300 space-y-3 font-mono leading-relaxed">
                             <div class="text-center text-gray-500 py-20 space-y-2">
                                 <i class="fa-solid fa-hand-pointer text-2xl text-gray-600 animate-bounce"></i>
                                 <p class="font-sans text-xs">Sol taraftaki asistan yanıtlarında yer alan sonuçlara tıklayarak resmi mevzuat metnini burada görüntüleyin.</p>
                             </div>
                         </div>
-                  </div>
+                    </div>
 
                 </div>
             </div>
@@ -350,7 +350,7 @@
                         </div>
                     </div>
                 </div>
-          </div>
+            </div>
 
         </main>
     </div>
@@ -460,26 +460,82 @@
         }
 
         // ----------------------------------------------------
-        // DİNAMİK JSON MEVZUAT VERİTABANI ENTEGRASYONU
+        // YEREL JSON MEVZUAT VE İÇTİHAT VERİTABANI ENTEGRASYONU
         // ----------------------------------------------------
         let dinamikMevzuatListesi = [];
+        let dinamikIctihatListesi = [];
 
         window.addEventListener('DOMContentLoaded', () => {
             loadUserData();
             switchTab('dilekce');
 
-            // Yerel JSON veritabanımızı arka planda yüklüyoruz
+            // Mevzuat JSON dosyasını yüklüyoruz
             fetch('hukukbilgini_mevzuat_veritabani.json')
                 .then(response => response.json())
                 .then(data => {
                     dinamikMevzuatListesi = data;
-                    console.log("Mevzuat veritabanı başarıyla yüklendi, toplam kayıt:", data.length);
+                    console.log("Mevzuat veritabanı yüklendi, kayıt:", data.length);
                 })
-                .catch(err => {
-                    console.error("Mevzuat dosyası okunamadı, yedek veriler devreye alınacak:", err);
-                });
+                .catch(err => console.error("Mevzuat dosyası okunamadı:", err));
+
+            // İçtihat JSON dosyasını yüklüyoruz
+            fetch('hukukbilgini_ictihat_veritabani.json')
+                .then(response => response.json())
+                .then(data => {
+                    dinamikIctihatListesi = data;
+                    console.log("İçtihat veritabanı yüklendi, kayıt:", data.length);
+                })
+                .catch(err => console.error("İçtihat dosyası okunamadı:", err));
         });
 
+        // İçtihat Arama Sekmesi Fonksiyonu
+        function performIctihatSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const container = document.getElementById('searchResultsContainer');
+            if (!container) return;
+
+            if (!query) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const bulunanlar = dinamikIctihatListesi.filter(item => 
+                item.baslik.toLowerCase().includes(query) || 
+                item.ozet.toLowerCase().includes(query) || 
+                item.daire.toLowerCase().includes(query) ||
+                item.tam_metin.toLowerCase().includes(query)
+            );
+
+            if (bulunanlar.length === 0) {
+                container.innerHTML = `<div class="bg-cardBg border border-gray-800 rounded-2xl p-6 text-center text-gray-400 text-xs">Aradığınız kriterlere uygun emsal karar bulunamadı.</div>`;
+                return;
+            }
+
+            let html = '';
+            bulunanlar.forEach(item => {
+                html += `
+                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 shadow-lg">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${item.daire}</span>
+                            <span class="text-xs text-gray-400">${item.tarih} | Esas: ${item.esas_no}</span>
+                        </div>
+                        <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">${item.ozet}</p>
+                        <div class="pt-2 border-t border-gray-800 text-[11px] text-gray-400 font-mono">
+                            ${item.tam_metin}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResultsContainer').innerHTML = '';
+        }
+
+        // Danışma Asistanı Fonksiyonları
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             const message = input.value.trim();
@@ -491,14 +547,11 @@
 
             setTimeout(() => {
                 let lowerQuery = message.toLowerCase();
-                
-                // Dinamik JSON listemizde arama yapalım
                 let bulunanlar = dinamikMevzuatListesi.filter(item => 
                     item.baslik.toLowerCase().includes(lowerQuery) || 
                     item.tam_metin.toLowerCase().includes(lowerQuery)
                 );
 
-                // Eğer eşleşme bulunamazsa ilk kaydı örnek gösterelim
                 if (bulunanlar.length === 0 && dinamikMevzuatListesi.length > 0) {
                     bulunanlar = [dinamikMevzuatListesi[0]];
                 }
@@ -534,7 +587,6 @@
                 `;
                 chatBox.scrollTop = chatBox.scrollHeight;
                 
-                // İlk bulunan sonucu otomatik sağ kutuya aç
                 if (bulunanlar.length > 0) {
                     openMevzuatDetailById(bulunanlar[0].id);
                 }
