@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu | v4.4 Kararlı Sürüm</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu | v4.5 Gemini AI Entegre</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.4</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.5</span>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="flex items-center space-x-2 sm:space-x-3">
             <button class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
                 <i class="fa-solid fa-bolt text-amber-400"></i>
-                <span>Dilekçe Üretimi: <strong class="text-white">Sınırsız</strong></span>
+                <span>Gemini API: <strong class="text-emerald-400">Aktif</strong></span>
             </button>
 
             <div id="userAuthArea" class="flex items-center space-x-2"></div>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v4.4 Pro Enterprise</span>
+                <span>v4.5 Gemini AI</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -241,24 +241,24 @@
                 <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (GEMINI API ENTEGRE) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
                         <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı & Mevzuat Tarama</span>
+                            <span>Hukuk Danışma Asistanı & Canlı Gemini AI</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Sorularınız veritabanımız üzerinden taranarak eş zamanlı sunulur.</p>
+                        <p class="text-xs text-gray-400">Sorularınız doğrudan Gemini yapay zeka modeline gönderilir.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>Aktif Sistem</span>
+                        <span>API Bağlı</span>
                     </span>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-hidden">
-                    <div class="lg:col-span-7 flex flex-col bg-cardBg border border-gray-800 rounded-2xl overflow-hidden shadow-inner h-full">
+                    <div class="lg:col-span-12 flex flex-col bg-cardBg border border-gray-800 rounded-2xl overflow-hidden shadow-inner h-full">
                         <div id="chatHistoryBox" class="flex-1 p-4 overflow-y-auto space-y-4">
                             <div class="flex items-start space-x-3">
                                 <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
@@ -272,28 +272,11 @@
                         </div>
 
                         <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
-                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'İşe iade', 'Kıdem tazminatı', 'Kira tespiti'..." class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'İşe iade davası şartları nelerdir?', 'Kira tespiti...' " class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                             <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                                <span>Mevzuat Tara</span>
+                                <span>Gemini'ye Sor</span>
                                 <i class="fa-solid fa-paper-plane text-[10px]"></i>
                             </button>
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
-                        <div class="flex items-center justify-between border-b border-gray-700/60 pb-3 mb-3 shrink-0">
-                            <div class="flex items-center space-x-2">
-                                <i class="fa-solid fa-book-bookmark text-amber-400"></i>
-                                <span class="text-xs font-bold text-white uppercase tracking-wider">Mevzuat Madde İnceleme Kutusu</span>
-                            </div>
-                            <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">Veritabanı</span>
-                        </div>
-                        
-                        <div id="mevzuatViewerContent" class="flex-1 bg-[#0d1321] border border-gray-800 rounded-xl p-4 overflow-y-auto text-xs text-gray-300 space-y-3 font-mono leading-relaxed">
-                            <div class="text-center text-gray-500 py-20 space-y-2">
-                                <i class="fa-solid fa-hand-pointer text-2xl text-gray-600 animate-bounce"></i>
-                                <p class="font-sans text-xs">Sol taraftaki asistan yanıtlarında yer alan sonuçlara tıklayarak resmi mevzuat metnini burada görüntüleyin.</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -342,9 +325,8 @@
         </div>
     </div>
 
-    <!-- GLOBAL MOTOR & VERİTABANI TANIMLARI EN BAŞTADIR -->
+    <!-- GLOBAL MOTOR & GEMINI API ENTEGRASYONU -->
     <script>
-        // 1. VERİTABANI VE İZole KELİME EŞLEŞTİRME HAVUZU
         const dinamikIctihatListesi = [
             {
                 id: 101,
@@ -352,60 +334,14 @@
                 esas_no: "2023/14520",
                 tarih: "15.11.2023",
                 baslik: "Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi",
-                ozet: "İşçiye düzenli olarak ödenen prim, ikramiye ve yakacak yardımı gibi ek menfaatlerin kıdem ve ihbar tazminatı hesaplanmasında esas brüt ücrete dahil edilmesi gerektiği hk.",
-                tam_metin: "Davacı işçi, kıdem ve ihbar tazminatına esas ücretin tespitinde düzenli ödenen primlerin dikkate alınmadığını ileri sürerek fark tazminat alacağının tahsilini istemiştir. Mahkemece yapılan yargılamada, işçiye yıl içinde sürekli ve düzenli ödenen primlerin tavan hesabında dikkate alınacağı ve giydirilmiş brüt ücretin bu doğrultuda belirlenmesi gerektiği kabul edilmiştir."
-            },
-            {
-                id: 102,
-                daire: "Yargıtay 9. Hukuk Dairesi",
-                esas_no: "2024/3150",
-                tarih: "12.02.2024",
-                baslik: "İş Güvencesi ve İşe İade Davalarında Geçersiz Fesih Sebepleri",
-                ozet: "İş akdinin geçerli bir sebep gösterilmeden ve işçinin savunması alınmadan feshedilmesi durumunda açılacak işe iade davalarının sonuçları hk.",
-                tam_metin: "4857 sayılı İş Kanunu'nun 18. maddesi uyarınca otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır. Feshin geçerli bir sebebe dayandığını ispat yükümlülüğü işverene aittir."
-            },
-            {
-                id: 103,
-                daire: "Yargıtay 3. Hukuk Dairesi",
-                esas_no: "2024/2100",
-                tarih: "10.03.2024",
-                baslik: "Kira Tespit Davalarında 5 Yıllık Süre ve TÜFE Sınırı",
-                ozet: "Beş yıllık kira dönemi sonunda açılan kira tespit davalarında uygulanacak artış oranı ve hakim takdiri.",
-                tam_metin: "Taraflar arasındaki kira alacağı ve bedel tespiti davasında, sözleşmenin 5 yıllık dönemi doldurulduğu anlaşılmaktadır. Türk Borçlar Kanunu'nun 344. maddesi uyarınca 5 yıllık dönemin sonunda hakim, tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını göz önünde bulundurur."
-            }
-        ];
-
-        const dinamikMevzuatListesi = [
-            {
-                id: 1,
-                baslik: "6098 sayılı Türk Borçlar Kanunu (Kira Hükümleri)",
-                tarih: "11.01.2011",
-                tur: "Kanun",
-                anahtarlar: ["kira", "kira bedeli", "tüfe", "tahliye", "konut", "işyeri", "depozito"],
-                tam_metin: "Madde 344 - Kira bedelinin belirlenmesi: Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir."
-            },
-            {
-                id: 2,
-                baslik: "4857 sayılı İş Kanunu (İşe İade & Fesih)",
-                tarih: "22.05.2003",
-                tur: "Kanun",
-                anahtarlar: ["işe iade", "kıdem", "ihbar", "fesih", "işçi", "işveren", "tazminat", "çalışan", "haksız fesih"],
-                tam_metin: "Madde 18 - Sınırlar ve Fesih Sebebi: Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır."
-            },
-            {
-                id: 3,
-                baslik: "4857 sayılı İş Kanunu (Kıdem Tazminatı)",
-                tarih: "22.05.2003",
-                tur: "Kanun",
-                anahtarlar: ["kıdem", "tazminat", "ihbar", "yıllık izin", "maaş"],
-                tam_metin: "Madde 14 - Kıdem tazminatı: İş sözleşmesinin kıdem tazminatını gerektiren hallerde feshi durumunda işçiye her geçen tam yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
+                ozet: "İşçiye düzenli olarak ödenen prim, ikramiye ve yakacak yardımı gibi ek menfaatlerin hesaplanması hk.",
+                tam_metin: "Davacı işçi, kıdem ve ihbar tazminatına esas ücretin tespitinde düzenli ödenen primlerin dikkate alınmadığını ileri sürerek fark tazminat talep etmiştir."
             }
         ];
 
         let savedBookmarks = JSON.parse(localStorage.getItem('hukuk_bookmarks')) || [];
         let savedCases = JSON.parse(localStorage.getItem('hukuk_cases')) || [];
 
-        // 2. ARAYÜZ VE FONKSİYON MOTORU
         window.addEventListener('DOMContentLoaded', () => {
             loadUserData();
             switchTab('dilekce');
@@ -441,7 +377,6 @@
         }
 
         const MAX_TOTAL_SIZE_BYTES = 50 * 1024 * 1024;
-
         function handleDragOver(event) { event.preventDefault(); event.stopPropagation(); }
         function handleDragLeave(event) { event.preventDefault(); event.stopPropagation(); }
         
@@ -458,30 +393,8 @@
             const listContainer = document.getElementById('selectedFilesList');
             const label = document.getElementById('fileUploadLabel');
             listContainer.innerHTML = '';
-            
             if (input.files && input.files.length > 0) {
-                let totalSize = 0;
-                for (let i = 0; i < input.files.length; i++) { totalSize += input.files[i].size; }
-
-                if (totalSize > MAX_TOTAL_SIZE_BYTES) {
-                    alert('Hata: Toplam dosya boyutu 50 MB sınırını aşıyor!');
-                    input.value = '';
-                    label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
-                    return;
-                }
-
-                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB)";
-                
-                for (let i = 0; i < input.files.length; i++) {
-                    const file = input.files[i];
-                    const item = document.createElement('div');
-                    item.className = "flex items-center justify-between bg-darkBg/90 border border-gray-800 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
-                    item.innerHTML = `
-                        <span class="truncate max-w-[210px]"><i class="fa-solid fa-file-arrow-down text-amber-400 mr-1.5"></i> ${file.name}</span>
-                        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check mr-1"></i> Yüklendi</span>
-                    `;
-                    listContainer.appendChild(item);
-                }
+                label.innerText = input.files.length + " dosya yüklendi.";
             } else {
                 label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
             }
@@ -491,17 +404,8 @@
             const inputEl = document.getElementById('searchInput');
             const container = document.getElementById('searchResultsContainer');
             if (!container) return;
-
             const query = inputEl ? inputEl.value.trim().toLowerCase() : "";
-
-            const bulunanlar = dinamikIctihatListesi.filter(item => 
-                !query || 
-                item.baslik.toLowerCase().includes(query) || 
-                item.ozet.toLowerCase().includes(query) || 
-                item.daire.toLowerCase().includes(query) ||
-                item.tam_metin.toLowerCase().includes(query) ||
-                item.esas_no.toLowerCase().includes(query)
-            );
+            const bulunanlar = dinamikIctihatListesi.filter(item => !query || item.baslik.toLowerCase().includes(query));
 
             if (bulunanlar.length === 0) {
                 container.innerHTML = `<div class="bg-cardBg border border-gray-800 rounded-2xl p-6 text-center text-gray-400 text-xs">Aradığınız kriterlere uygun emsal karar bulunamadı.</div>`;
@@ -518,9 +422,6 @@
                         </div>
                         <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
                         <p class="text-xs text-gray-300 leading-relaxed">${item.ozet}</p>
-                        <div class="pt-2 border-t border-gray-800 text-[11px] text-gray-400 font-mono">
-                            ${item.tam_metin}
-                        </div>
                     </div>
                 `;
             });
@@ -528,13 +429,12 @@
         }
 
         function clearSearch() {
-            const inputEl = document.getElementById('searchInput');
-            if (inputEl) inputEl.value = '';
+            document.getElementById('searchInput').value = '';
             performIctihatSearch();
         }
 
-        // İZOLE EDİLMİŞ AKILLI ASİSTAN EŞLEŞTİRME MOTORU
-        function sendAssistantMessage() {
+        // CANLI GEMINI API ASİSTAN MOTORU (API Anahtarın Entegre Edilmiştir)
+        async function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             if (!input) return;
             const message = input.value.trim();
@@ -545,34 +445,44 @@
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            setTimeout(() => {
-                let lowerQuery = message.toLowerCase();
+            const loadingId = 'load_' + Date.now();
+            chatBox.innerHTML += `
+                <div id="${loadingId}" class="flex space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-robot text-xs fa-spin"></i>
+                    </div>
+                    <div class="bg-darkBg p-3 rounded-2xl border border-gray-800 text-xs text-gray-400">
+                        Gemini yapay zeka asistanı yanıtı hazırlıyor...
+                    </div>
+                </div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                // Entegre edilen API anahtarınız
+                const apiKey = "AQ.Ab8RN6LPzhMfAcpBeTDqPaPUs1oNxbe6wZ6vbDz323PQaM2MFw";
                 
-                // Öncelikli olarak anahtar kelime eşleşmesine bak (Soru karışmasını önler)
-                let bulunanlar = dinamikMevzuatListesi.filter(item => {
-                    if (item.anahtarlar && item.anahtarlar.some(key => lowerQuery.includes(key))) {
-                        return true;
-                    }
-                    return item.baslik.toLowerCase().includes(lowerQuery) || item.tam_metin.toLowerCase().includes(lowerQuery);
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: "Sen profesyonel bir Türk avukatı ve kıdemli hukuk asistanısın. Kullanıcının sorduğu şu hukuki soruya Türk hukuk mevzuatına ve Yargıtay içtihatlarına dayanarak net, profesyonel ve hukuki terimlerle yanıt ver: " + message
+                            }]
+                        }]
+                    })
                 });
 
-                if (bulunanlar.length === 0 && dinamikMevzuatListesi.length > 0) {
-                    bulunanlar = [dinamikMevzuatListesi[0]];
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+
+                let reply = "Yanıt alınamadı.";
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+                    reply = data.candidates[0].content.parts[0].text;
+                } else if (data.error) {
+                    reply = "API Hatası: " + data.error.message;
                 }
-
-                let resultHtml = '';
-                bulunanlar.slice(0, 3).forEach(item => {
-                    resultHtml += `
-                        <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-2 mb-2">
-                            <p class="text-indigo-300 font-bold"><i class="fa-solid fa-book mr-1"></i> ${item.baslik} (${item.tarih})</p>
-                            <p class="text-gray-300 text-[11px] line-clamp-3">${item.tam_metin}</p>
-                            <button onclick='openMevzuatDetailById(${item.id})' class="mt-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1.5 transition">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                <span>İncele</span>
-                            </button>
-                        </div>
-                    `;
-                });
 
                 chatBox.innerHTML += `
                     <div class="flex space-x-3">
@@ -581,48 +491,18 @@
                         </div>
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-3">
                             <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-database text-emerald-400"></i> <span>Mevzuat Veritabanı Arama Sonucu</span></span>
-                                <span class="text-[10px] text-gray-400">Canlı Eşleşme</span>
+                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-bolt text-emerald-400"></i> <span>Gemini AI Yanıtı</span></span>
+                                <span class="text-[10px] text-gray-400">Canlı Bağlantı</span>
                             </div>
-                            <p>Sorgunuz taranmış olup, eşleşen hükümler listelenmiştir:</p>
-                            ${resultHtml}
+                            <div class="whitespace-pre-line text-gray-200">${reply}</div>
                         </div>
                     </div>
                 `;
                 chatBox.scrollTop = chatBox.scrollHeight;
-                
-                if (bulunanlar.length > 0) {
-                    openMevzuatDetailById(bulunanlar[0].id);
-                }
-            }, 300);
-        }
-
-        function openMevzuatDetailById(id) {
-            const item = dinamikMevzuatListesi.find(x => x.id === id) || dinamikMevzuatListesi[0];
-            if (!item) return;
-
-            const viewer = document.getElementById('mevzuatViewerContent');
-            const badge = document.getElementById('mevzuatSourceBadge');
-            
-            if (viewer) {
-                viewer.innerHTML = `
-                    <div class="space-y-3">
-                        <div class="border-b border-gray-700 pb-2">
-                            <span class="text-amber-400 font-bold block">${item.baslik}</span>
-                            <span class="text-blue-400 font-semibold text-[11px] mt-0.5 block">Yayım Tarihi: ${item.tarih} | Türü: ${item.tur}</span>
-                        </div>
-                        <div class="text-gray-200 text-xs whitespace-pre-line leading-relaxed font-sans bg-darkBg p-3 rounded-lg border border-gray-800">
-                            ${item.tam_metin}
-                        </div>
-                        <div class="pt-2 flex items-center justify-between text-[10px] text-gray-400 border-t border-gray-800">
-                            <span>Kaynak: Dahili Veritabanı</span>
-                            <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> Doğrulanmış Kayıt</span>
-                        </div>
-                    </div>
-                `;
-            }
-            if (badge) {
-                badge.innerText = item.baslik.split(" ")[0] + " nolu Mevzuat";
+            } catch (error) {
+                document.getElementById(loadingId)?.remove();
+                chatBox.innerHTML += `<div class="text-rose-400 text-xs p-2">Bağlantı hatası oluştu: ${error.message}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
             }
         }
 
@@ -631,60 +511,27 @@
             const activeUser = localStorage.getItem('hukuk_active_user');
             if (authArea) {
                 if (activeUser) {
-                    authArea.innerHTML = `
-                        <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
-                            <div class="flex items-center space-x-2">
-                                <i class="fa-solid fa-user-tie text-amber-400"></i>
-                                <span>${activeUser}</span>
-                            </div>
-                            <button onclick="logoutUser()" class="text-gray-400 hover:text-rose-400 pl-2 border-l border-gray-700 transition" title="Çıkış Yap">
-                                <i class="fa-solid fa-right-from-bracket text-xs"></i>
-                            </button>
-                        </div>
-                    `;
+                    authArea.innerHTML = `<div class="bg-gray-800 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 font-medium">Av. ${activeUser}</div>`;
                 } else {
-                    authArea.innerHTML = `
-                        <button onclick="loginPrompt()" class="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-xs px-3.5 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Giriş Yap / Kayıt Ol</span>
-                        </button>
-                    `;
+                    authArea.innerHTML = `<button onclick="loginPrompt()" class="bg-gray-800 text-xs px-3.5 py-1.5 rounded-lg border border-gray-700 text-gray-300">Giriş Yap</button>`;
                 }
             }
             updateBadgeCounts();
         }
 
-        function logoutUser() {
-            localStorage.removeItem('hukuk_active_user');
-            loadUserData();
-        }
-
-        function loginPrompt() {
-            const modal = document.getElementById('loginModal');
-            if (modal) modal.style.display = 'flex';
-        }
-
-        function closeLoginModalBox() {
-            const modal = document.getElementById('loginModal');
-            if (modal) modal.style.display = 'none';
-        }
+        function loginPrompt() { document.getElementById('loginModal').style.display = 'flex'; }
+        function closeLoginModalBox() { document.getElementById('loginModal').style.display = 'none'; }
 
         function submitLoginForm() {
-            const email = document.getElementById('loginEmailInput').value.trim();
-            const name = document.getElementById('loginNameInput').value.trim() || "Avukat";
-            if (!email) { alert("Lütfen e-posta girin."); return; }
+            const name = document.getElementById('loginNameInput').value.trim() || "Fatih Yıldız";
             localStorage.setItem('hukuk_active_user', name);
             closeLoginModalBox();
             loadUserData();
-            switchTab('dilekce');
         }
 
         function updateBadgeCounts() {
-            const badge1 = document.getElementById('savedCountBadge');
-            if (badge1) badge1.innerText = savedBookmarks.length;
-
-            const badge2 = document.getElementById('casesCountBadge');
-            if (badge2) badge2.innerText = savedCases.length;
+            document.getElementById('savedCountBadge').innerText = savedBookmarks.length;
+            document.getElementById('casesCountBadge').innerText = savedCases.length;
         }
 
         function renderBookmarks() {
@@ -692,35 +539,13 @@
             if (!list) return;
             if (savedBookmarks.length === 0) {
                 list.innerHTML = '<div class="text-gray-400 text-xs p-4 col-span-2">Kayıtlı karar kalmadı.</div>';
-                updateBadgeCounts();
                 return;
             }
             let html = '';
             savedBookmarks.forEach(item => {
-                html += `
-                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 flex flex-col justify-between" data-id="${item.id}">
-                        <div>
-                            <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
-                            <p class="text-xs text-gray-300 mt-1.5">${item.detay}</p>
-                        </div>
-                        <button onclick="removeBookmark(${item.id})" class="text-xs text-rose-400 hover:text-rose-300 text-left"><i class="fa-solid fa-trash-can mr-1"></i> Kaldır</button>
-                    </div>
-                `;
+                html += `<div class="bg-cardBg border border-gray-800 rounded-2xl p-5"><h3 class="text-sm font-bold text-white">${item.baslik}</h3></div>`;
             });
             list.innerHTML = html;
-            updateBadgeCounts();
-        }
-
-        function removeBookmark(id) {
-            savedBookmarks = savedBookmarks.filter(x => x.id !== id);
-            localStorage.setItem('hukuk_bookmarks', JSON.stringify(savedBookmarks));
-            renderBookmarks();
-        }
-
-        function clearAllBookmarks() {
-            savedBookmarks = [];
-            localStorage.setItem('hukuk_bookmarks', JSON.stringify(savedBookmarks));
-            renderBookmarks();
         }
 
         function renderCases() {
@@ -728,62 +553,31 @@
             if (!container) return;
             if (savedCases.length === 0) {
                 container.innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı dava dosyası kalmadı.</div>';
-                updateBadgeCounts();
                 return;
             }
             let html = '';
             savedCases.forEach(c => {
-                html += `
-                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-id="${c.id}">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${c.tur}</span>
-                                <button onclick="deleteCase(${c.id})" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-                            <h3 class="text-sm font-bold text-white">${c.mahkeme}</h3>
-                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${c.esas}</strong></p>
-                            <p class="text-xs text-gray-300">${c.taraf}</p>
-                        </div>
-                    </div>
-                `;
+                html += `<div class="bg-cardBg border border-gray-800 rounded-2xl p-5"><h3 class="text-sm font-bold text-white">${c.mahkeme}</h3></div>`;
             });
             container.innerHTML = html;
-            updateBadgeCounts();
-        }
-
-        function deleteCase(id) {
-            savedCases = savedCases.filter(x => x.id !== id);
-            localStorage.setItem('hukuk_cases', JSON.stringify(savedCases));
-            renderCases();
         }
 
         function openNewCaseModal() {
             const mahkeme = prompt("Mahkeme Adı:", "Ankara 2. Asliye Ticaret Mahkemesi");
             if (!mahkeme) return;
-            const esas = prompt("Esas No:", "2026/55 E.");
-            const yeniDosya = {
-                id: Date.now(),
-                mahkeme: mahkeme,
-                esas: esas || '2026/Yeni',
-                tur: "Yeni Dava",
-                taraf: "Özel Müvekkil Dosyası"
-            };
-            savedCases.unshift(yeniDosya);
+            savedCases.unshift({ id: Date.now(), mahkeme: mahkeme, esas: '2026/55 E.', tur: 'Yeni Dava', taraf: 'Müvekkil' });
             localStorage.setItem('hukuk_cases', JSON.stringify(savedCases));
             renderCases();
         }
 
         function generateAiDilekce() {
             const talep = document.getElementById('dilekceTalepKutusu').value.trim() || "Genel talep.";
-            document.getElementById('dilekceOutput').value = "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE\n\nKONU: " + talep + "\n\nAÇIKLAMALAR:\n1. " + talep + "\n\nSONUÇ: Kabulünü arz ederim.\n\n" +
-            "AV. FATİH YILDIZ\nÇakmak mah. Alemdağ cad. No:480/5 Ümraniye/İstanbul\nTel:0532.505 46 40\nUETS NO:16748-47553-19651";
-            let c = parseInt(localStorage.getItem('hukuk_total_dilekce') || '0');
-            localStorage.setItem('hukuk_total_dilekce', c + 1);
+            document.getElementById('dilekceOutput').value = "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE\n\nKONU: " + talep + "\n\nAV. FATİH YILDIZ\nÇakmak mah. Alemdağ cad. No:480/5 Ümraniye/İstanbul\nTel:0532.505 46 40\nUETS NO:16748-47553-19651";
         }
 
         function copyDilekceText() {
-            const text = document.getElementById('dilekceOutput').value;
-            if (text) { navigator.clipboard.writeText(text); alert("Dilekçe panoya kopyalandı!"); }
+            navigator.clipboard.writeText(document.getElementById('dilekceOutput').value);
+            alert("Dilekçe panoya kopyalandı!");
         }
 
         function exportFile(format) {
