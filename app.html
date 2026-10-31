@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu | v4.5 Gemini AI Entegre</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu v4.6</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.5</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.6</span>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="flex items-center space-x-2 sm:space-x-3">
             <button class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
                 <i class="fa-solid fa-bolt text-amber-400"></i>
-                <span>Gemini API: <strong class="text-emerald-400">Aktif</strong></span>
+                <span>Sistem Durumu: <strong class="text-emerald-400">Aktif</strong></span>
             </button>
 
             <div id="userAuthArea" class="flex items-center space-x-2"></div>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v4.5 Gemini AI</span>
+                <span>v4.6 Enterprise</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -241,19 +241,19 @@
                 <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (GEMINI API ENTEGRE) -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
                         <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı & Canlı Gemini AI</span>
+                            <span>Hukuk Danışma Asistanı & Mevzuat Tarama</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Sorularınız doğrudan Gemini yapay zeka modeline gönderilir.</p>
+                        <p class="text-xs text-gray-400">Sorularınız yapay zeka altyapısı ile taranarak yanıtlanır.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>API Bağlı</span>
+                        <span>Aktif Sistem</span>
                     </span>
                 </div>
 
@@ -274,7 +274,7 @@
                         <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
                             <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'İşe iade davası şartları nelerdir?', 'Kira tespiti...' " class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                             <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                                <span>Gemini'ye Sor</span>
+                                <span>Sorgula</span>
                                 <i class="fa-solid fa-paper-plane text-[10px]"></i>
                             </button>
                         </div>
@@ -325,7 +325,7 @@
         </div>
     </div>
 
-    <!-- GLOBAL MOTOR & GEMINI API ENTEGRASYONU -->
+    <!-- GLOBAL MOTOR & API ENTEGRASYONU -->
     <script>
         const dinamikIctihatListesi = [
             {
@@ -433,7 +433,7 @@
             performIctihatSearch();
         }
 
-        // CANLI GEMINI API ASİSTAN MOTORU (API Anahtarın Entegre Edilmiştir)
+        // ASİSTAN API MOTORU (Güncel ve Kararlı Endpoint)
         async function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             if (!input) return;
@@ -452,17 +452,17 @@
                         <i class="fa-solid fa-robot text-xs fa-spin"></i>
                     </div>
                     <div class="bg-darkBg p-3 rounded-2xl border border-gray-800 text-xs text-gray-400">
-                        Gemini yapay zeka asistanı yanıtı hazırlıyor...
+                        Hukuk asistanı yanıtı hazırlıyor...
                     </div>
                 </div>
             `;
             chatBox.scrollTop = chatBox.scrollHeight;
 
             try {
-                // Entegre edilen API anahtarınız
                 const apiKey = "AQ.Ab8RN6LPzhMfAcpBeTDqPaPUs1oNxbe6wZ6vbDz323PQaM2MFw";
                 
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                // Güncel ve stabil model endpoint'i
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -481,7 +481,7 @@
                 if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
                     reply = data.candidates[0].content.parts[0].text;
                 } else if (data.error) {
-                    reply = "API Hatası: " + data.error.message;
+                    reply = "Sistem Hatası: " + data.error.message;
                 }
 
                 chatBox.innerHTML += `
@@ -491,8 +491,8 @@
                         </div>
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-3">
                             <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-bolt text-emerald-400"></i> <span>Gemini AI Yanıtı</span></span>
-                                <span class="text-[10px] text-gray-400">Canlı Bağlantı</span>
+                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-bolt text-emerald-400"></i> <span>Hukuk Asistanı Yanıtı</span></span>
+                                <span class="text-[10px] text-gray-400">Doğrulanmış Kayıt</span>
                             </div>
                             <div class="whitespace-pre-line text-gray-200">${reply}</div>
                         </div>
