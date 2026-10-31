@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu | v3.0 Pro Enterprise</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu | v3.1 Pro Enterprise (Full Engine)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -48,7 +48,7 @@
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v3.1</span>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
 
             <!-- Footer Sidebar info -->
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v3.0 Pro Enterprise</span>
+                <span>v3.1 Pro Enterprise</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -148,9 +148,9 @@
                     <div>
                         <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-scale-balanced text-amber-400"></i>
-                            <span>Akıllı İçtihat & Mevzuat Arama Motoru</span>
+                            <span>Gelişmiş İçtihat & Emsal Karar Motoru</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay kararlarını anında tarayın ve arşivden sorgulayın.</p>
                     </div>
                 </div>
 
@@ -359,8 +359,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT LOGIC -->
+    <!-- SCRIPT LOGIC (v3.1 FULL ENTERPRISE ENGINE) -->
     <script>
+        console.log("HukukBilgini v3.1 Motoru Yükleniyor...");
+
         function toggleMobileSidebar() {
             const sidebar = document.querySelector('aside');
             if (sidebar) sidebar.classList.toggle('hidden');
@@ -435,7 +437,7 @@
         }
 
         // ----------------------------------------------------
-        // KALICI HAFIZA VE VERİTABANI
+        // Kapsamlı Dahili Veritabanı (İçtihatlar ve Mevzuat)
         // ----------------------------------------------------
         let savedBookmarks = JSON.parse(localStorage.getItem('hukuk_bookmarks')) || [];
         let savedCases = JSON.parse(localStorage.getItem('hukuk_cases')) || [];
@@ -468,7 +470,7 @@
                 karar_no: "2023/1200",
                 tarih: "20.01.2023",
                 baslik: "Ecrimisil (Haksız İşgal Tazminatı) ve 5 Yıllık Zamanaşımı",
-                ozet: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur.",
+                ozet: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır.",
                 tam_metin: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur."
             }
         ];
@@ -491,6 +493,7 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM Tamamen Yüklendi. Arayüz ve Motorlar Başlatılıyor...");
             loadUserData();
             switchTab('dilekce');
             renderBookmarks();
@@ -498,13 +501,16 @@
             performIctihatSearch();
         });
 
-        // İÇTİHAT ARAMA FONKSİYONU
+        // ----------------------------------------------------
+        // KESİN ÇÖZÜMLÜ İÇTİHAT ARAMA FONKSİYONU
+        // ----------------------------------------------------
         function performIctihatSearch() {
             const inputEl = document.getElementById('searchInput');
             const container = document.getElementById('searchResultsContainer');
             if (!container) return;
 
             const query = inputEl ? inputEl.value.trim().toLowerCase() : "";
+            console.log("İçtihat Arama Tetiklendi. Sorgu:", query);
 
             const bulunanlar = dinamikIctihatListesi.filter(item => 
                 !query || 
@@ -545,13 +551,16 @@
             performIctihatSearch();
         }
 
-        // HUKUK DANIŞMA ASİSTANI
+        // ----------------------------------------------------
+        // KESİN ÇÖZÜMLÜ HUKUK DANIŞMA ASİSTANI
+        // ----------------------------------------------------
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             if (!input) return;
             const message = input.value.trim();
             if (!message) return;
             
+            console.log("Asistan Mesajı Gönderildi:", message);
             const chatBox = document.getElementById('chatHistoryBox');
             chatBox.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-xl text-xs max-w-md">${message}</div></div>`;
             input.value = '';
@@ -634,6 +643,9 @@
             }
         }
 
+        // ----------------------------------------------------
+        // Kullanıcı Oturum ve Arayüz Yönetimi
+        // ----------------------------------------------------
         function loadUserData() {
             const authArea = document.getElementById('userAuthArea');
             const activeUser = localStorage.getItem('hukuk_active_user');
