@@ -255,13 +255,7 @@
                     <button onclick="clearAllBookmarks()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-lg border border-gray-700 transition">Tümünü Temizle</button>
                 </div>
                 <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-sm font-bold text-white">Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi</h3>
-                            <p class="text-xs text-gray-300 mt-1.5">Yargıtay 9. HD, E. 2023/14520</p>
-                        </div>
-                        <button onclick="removeBookmarkCard(this)" class="text-xs text-rose-400 hover:text-rose-300 text-left"><i class="fa-solid fa-trash-can mr-1"></i> Kaldır</button>
-                    </div>
+                    <!-- Dinamik olarak doldurulacak -->
                 </div>
             </div>
 
@@ -338,17 +332,7 @@
                     </button>
                 </div>
                 <div id="casesListContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-case-id="1">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">İş Hukuku</span>
-                                <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-                            <h3 class="text-sm font-bold text-white">İstanbul 12. İş Mahkemesi</h3>
-                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">2026/412 E.</strong></p>
-                            <p class="text-xs text-gray-300"><strong>Davacı:</strong> Ahmet Yılmaz<br><strong>Davalı:</strong> XYZ Lojistik A.Ş.</p>
-                        </div>
-                    </div>
+                    <!-- Dinamik olarak doldurulacak -->
                 </div>
             </div>
 
@@ -365,7 +349,7 @@
             <div class="space-y-4 pt-1">
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">E-posta Adresi</label>
-                    <input type="email" id="loginEmailInput" placeholder="avukat@hukukburosu.com" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none">
+                    <input type="email" id="loginEmailInput" placeholder="ornek@hukukburosu.com" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Şifre</label>
@@ -373,7 +357,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Ad Soyad / Unvan</label>
-                    <input type="text" id="loginNameInput" placeholder="Av. Mehmet Ege Yıldız" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none" value="Av. Mehmet Ege Yıldız">
+                    <input type="text" id="loginNameInput" placeholder="Av. Ad Soyad" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none">
                 </div>
             </div>
             <div class="flex items-center justify-end space-x-3 pt-3 border-t border-gray-700/60">
@@ -460,8 +444,109 @@
         }
 
         // ----------------------------------------------------
-        // GÖMÜLÜ İÇTİHAT VE MEVZUAT VERİTABANI
+        // KALICI HAFIZA (LOCALSTORAGE) İLE KAYDEDİLENLER VE DOSYALAR
         // ----------------------------------------------------
+        let savedBookmarks = JSON.parse(localStorage.getItem('hukuk_bookmarks')) || [
+            { id: 1, baslik: "Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi", detay: "Yargıtay 9. HD, E. 2023/14520" }
+        ];
+
+        let savedCases = JSON.parse(localStorage.getItem('hukuk_cases')) || [
+            { id: 1, mahkeme: "İstanbul 12. İş Mahkemesi", esas: "2026/412 E.", tur: "İş Hukuku", taraf: "Davacı: Ahmet Yılmaz<br>Davalı: XYZ Lojistik A.Ş." }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+            switchTab('dilekce');
+            renderBookmarks();
+            renderCases();
+        });
+
+        function renderBookmarks() {
+            const list = document.getElementById('savedCardsList');
+            if (!list) return;
+            if (savedBookmarks.length === 0) {
+                list.innerHTML = '<div class="text-gray-400 text-xs p-4 col-span-2">Kayıtlı karar kalmadı.</div>';
+                updateBadgeCounts();
+                return;
+            }
+            let html = '';
+            savedBookmarks.forEach(item => {
+                html += `
+                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 flex flex-col justify-between" data-id="${item.id}">
+                        <div>
+                            <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
+                            <p class="text-xs text-gray-300 mt-1.5">${item.detay}</p>
+                        </div>
+                        <button onclick="removeBookmark(${item.id})" class="text-xs text-rose-400 hover:text-rose-300 text-left"><i class="fa-solid fa-trash-can mr-1"></i> Kaldır</button>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+            updateBadgeCounts();
+        }
+
+        function removeBookmark(id) {
+            savedBookmarks = savedBookmarks.filter(x => x.id !== id);
+            localStorage.setItem('hukuk_bookmarks', JSON.stringify(savedBookmarks));
+            renderBookmarks();
+        }
+
+        function clearAllBookmarks() {
+            savedBookmarks = [];
+            localStorage.setItem('hukuk_bookmarks', JSON.stringify(savedBookmarks));
+            renderBookmarks();
+        }
+
+        function renderCases() {
+            const container = document.getElementById('casesListContainer');
+            if (!container) return;
+            if (savedCases.length === 0) {
+                container.innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı dava dosyası kalmadı.</div>';
+                updateBadgeCounts();
+                return;
+            }
+            let html = '';
+            savedCases.forEach(c => {
+                html += `
+                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-id="${c.id}">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${c.tur}</span>
+                                <button onclick="deleteCase(${c.id})" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <h3 class="text-sm font-bold text-white">${c.mahkeme}</h3>
+                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${c.esas}</strong></p>
+                            <p class="text-xs text-gray-300">${c.taraf}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            updateBadgeCounts();
+        }
+
+        function deleteCase(id) {
+            savedCases = savedCases.filter(x => x.id !== id);
+            localStorage.setItem('hukuk_cases', JSON.stringify(savedCases));
+            renderCases();
+        }
+
+        function openNewCaseModal() {
+            const mahkeme = prompt("Mahkeme Adı:", "Ankara 2. Asliye Ticaret Mahkemesi");
+            if (!mahkeme) return;
+            const esas = prompt("Esas No:", "2026/55 E.");
+            const yeniDosya = {
+                id: Date.now(),
+                mahkeme: mahkeme,
+                esas: esas || '2026/Yeni',
+                tur: "Yeni Dava",
+                taraf: "Özel Müvekkil Dosyası"
+            };
+            savedCases.unshift(yeniDosya);
+            localStorage.setItem('hukuk_cases', JSON.stringify(savedCases));
+            renderCases();
+        }
+
         const dinamikIctihatListesi = [
             {
                 id: 101,
@@ -511,11 +596,6 @@
                 tam_metin: "Madde 14 - Kıdem tazminatı: İş sözleşmesinin kıdem tazminatını gerektiren hallerde feshi durumunda işçiye her geçen tam yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
             }
         ];
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadUserData();
-            switchTab('dilekce');
-        });
 
         // İçtihat Arama Sekmesi Fonksiyonu
         function performIctihatSearch() {
@@ -705,54 +785,11 @@
         }
 
         function updateBadgeCounts() {
-            const list = document.getElementById('savedCardsList');
-            if (list) {
-                const cards = list.querySelectorAll('.bg-cardBg');
-                const badge = document.getElementById('savedCountBadge');
-                if (badge) badge.innerText = cards.length;
-            }
-            const container = document.getElementById('casesListContainer');
-            if (container) {
-                const cases = container.querySelectorAll('.case-card');
-                const badge = document.getElementById('casesCountBadge');
-                if (badge) badge.innerText = cases.length;
-            }
-        }
+            const badge1 = document.getElementById('savedCountBadge');
+            if (badge1) badge1.innerText = savedBookmarks.length;
 
-        function deleteSingleCase(btn) {
-            const card = btn.closest('.case-card');
-            if (card) { card.remove(); updateBadgeCounts(); }
-        }
-
-        function removeBookmarkCard(btn) {
-            const card = btn.closest('.bg-cardBg');
-            if (card) { card.remove(); updateBadgeCounts(); }
-        }
-
-        function clearAllBookmarks() {
-            document.getElementById('savedCardsList').innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı karar kalmadı.</div>';
-            updateBadgeCounts();
-        }
-
-        function openNewCaseModal() {
-            const mahkeme = prompt("Mahkeme Adı:", "Ankara 2. Asliye Ticaret Mahkemesi");
-            if (!mahkeme) return;
-            const esas = prompt("Esas No:", "2026/55 E.");
-            const container = document.getElementById('casesListContainer');
-            const card = document.createElement('div');
-            card.className = "case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between";
-            card.innerHTML = `
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">Yeni Dava</span>
-                        <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
-                    <h3 class="text-sm font-bold text-white">${mahkeme}</h3>
-                    <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${esas || '2026/Yeni'}</strong></p>
-                </div>
-            `;
-            container.prepend(card);
-            updateBadgeCounts();
+            const badge2 = document.getElementById('casesCountBadge');
+            if (badge2) badge2.innerText = savedCases.length;
         }
 
         function generateAiDilekce() {
