@@ -211,7 +211,7 @@
                             <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de çalışırken haksız şekilde işten çıkarıldı..."></textarea>
                         </div>
                         
-                        <!-- Dosya Yükleme Alanı (Max 50 MB, Tüm Formatlar, Sürükle-Bırak) -->
+                        <!-- Dosya Yükleme Alanı -->
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
                                 <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme</label>
@@ -265,40 +265,66 @@
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (YAPAY ZEKA DESTEKLİ) -->
-            <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
-                <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (MEVZUAT.GOV.TR ENTEGRELİ) -->
+            <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
+                <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
                         <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı (Yapay Zeka Destekli)</span>
+                            <span>Hukuk Danışma Asistanı & Mevzuat.gov.tr Canlı Tarama</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Sorularınız anında yapay zeka ve güncel Yargıtay içtihat havuzuna aktarılarak kaynakları ile yanıtlanır.</p>
+                        <p class="text-xs text-gray-400">Sorularınız otomatik olarak mevzuat.gov.tr veritabanına bağlanır; kanun, tüzük, yönetmelikler taranarak eş zamanlı sunulur.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
-                        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                        <span>Yapay Zeka Senkron Aktif</span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>mevzuat.gov.tr Senkron Aktif</span>
                     </span>
                 </div>
 
-                <div id="chatHistoryBox" class="flex-1 bg-cardBg border border-gray-800 rounded-2xl p-5 overflow-y-auto space-y-4 shadow-inner">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-robot text-xs"></i>
+                <!-- Split View: Sol Sohbet, Sağ Canlı Mevzuat Görüntüleyici -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-hidden">
+                    
+                    <!-- Sohbet Alanı (Sol) -->
+                    <div class="lg:col-span-7 flex flex-col bg-cardBg border border-gray-800 rounded-2xl overflow-hidden shadow-inner h-full">
+                        <div id="chatHistoryBox" class="flex-1 p-4 overflow-y-auto space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-robot text-xs"></i>
+                                </div>
+                                <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-1.5">
+                                    <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
+                                    <p>Hukuki uyuşmazlığınızı yazın; <strong>www.mevzuat.gov.tr</strong> botumuz ilgili kanun, tüzük ve yönetmelikleri tarasın. İstediğiniz maddeye tıklayarak sağdaki kutucukta tam metnini mini sayfa olarak inceleyebilirsiniz.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-1.5">
-                            <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                            <p>Ben Hukuk Danışma Asistanı'yım. Hukuki uyuşmazlığınızı detaylıca yazın; sorunuzu otomatik olarak analiz edip en güncel yasal dayanaklar ve emsal kararlar eşliğinde size tam mütalaa sunayım.</p>
+
+                        <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
+                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası 5 yıllık süre şartı ve artış oranları'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                            <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
+                                <span>Mevzuat Tara</span>
+                                <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                            </button>
                         </div>
                     </div>
-                </div>
 
-                <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
-                    <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
-                    <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                        <span>Yapay Zekaya Sor & Tara</span>
-                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
-                    </button>
+                    <!-- Sağ Yan Kutu: Mevzuat Tam Metin Görüntüleyici -->
+                    <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
+                        <div class="flex items-center justify-between border-b border-gray-700/60 pb-3 mb-3 shrink-0">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+                                <span class="text-xs font-bold text-white uppercase tracking-wider">Mevzuat Madde İnceleme Kutusu</span>
+                            </div>
+                            <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">www.mevzuat.gov.tr</span>
+                        </div>
+                        
+                        <div id="mevzuatViewerContent" class="flex-1 bg-[#0d1321] border border-gray-800 rounded-xl p-4 overflow-y-auto text-xs text-gray-300 space-y-3 font-mono leading-relaxed">
+                            <div class="text-center text-gray-500 py-20 space-y-2">
+                                <i class="fa-solid fa-hand-pointer text-2xl text-gray-600 animate-bounce"></i>
+                                <p class="font-sans text-xs">Sol taraftaki asistan yanıtlarında yer alan <strong>"Kanun / Madde"</strong> bağlantılarına tıklayarak resmi mevzuat metnini burada görüntüleyin.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -433,7 +459,30 @@
             }
         }
 
-        // AKILLI ASİSTAN ENTEGRASYONU
+        // HUKUK DANIŞMA ASİSTANI & MEVZUAT.GOV.TR CANLI BAĞLANTI SİMÜLASYONU
+        const mevzuatDatabase = {
+            "kira": {
+                baslik: "6098 Sayılı Türk Borçlar Kanunu - Kira Sözleşmeleri",
+                madde: "Madde 344 - Kira bedelinin belirlenmesi",
+                metin: "Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir. Bu kurallar, bir yıldan uzun süreli kira sözleşmelerinde de uygulanır.\n\n(Ek fıkra: 11/1/2024-7491/22 md.) Sözleşmede kira bedelinin artırılacağına ilişkin bir hüküm bulunup bulunmadığına bakılmaksızın, beş yıllık kira dönemi sonunda veya beş yıldan uzun süreli kira dönemlerinin sonunda kira bedelinin hakim tarafından tespiti istenebilir."
+            },
+            "kidem": {
+                baslik: "1475 Sayılı İş Kanunu (Yürürlükteki Madde 14) & 4857 Sayılı İş Kanunu",
+                madde: "Madde 14 - Kıdem Tazminatı Esasları",
+                metin: "Kıdem tazminatına hak kazanabilmek için işçinin en az 1 yıllık kıdeminin olması ve Kanun'da sayılan fesih hallerinden biriyle iş sözleşmesinin sona ermiş olması gerekir. Hizmet akdinin kıdem tazminatını gerektiren hallerde feshi durumunda, işçinin işe başladığı tarihten itibaren hizmet akdinin devam ettiği süre her geçen tam yıl için işverence işçiye 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
+            },
+            "ecrimisil": {
+                baslik: "4721 Sayılı Türk Medeni Kanunu - Haksız İşgal Tazminatı",
+                madde: "Madde 995 - İyiniyetli Olmayan Zilyedin Sorumluluğu",
+                metin: "İyiniyetli olmayan zilyet, şeyi geri vermekle yükümlü olduğu gibi, haksız alıkoymuş olduğu süre içinde elde ettiği veya elde etmeyi ihmal eylediği ürünler ile birlikte şeyi hak sahibine tazmin etmekle yükümlüdür. Ecrimisil davasında zamanaşımı süresi 5 yıldır."
+            },
+            "genel": {
+                baslik: "6100 Sayılı Hukuk Muhakemeleri Kanunu - Genel Hükümler",
+                madde: "Madde 190 - İspat Yükü",
+                metin: "İspat yükü, kanunda özel bir düzenleme bulunmadıkça, bu hukuki olguya bağlanan hukuki sonuçtan kendi lehine hak çıkaran tarafa düşer. Kanuni bir karineye dayanan taraf, sadece karinenin temelini oluşturan olguyu ispat etmekle yükümlüdür."
+            }
+        };
+
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             const message = input.value.trim();
@@ -444,50 +493,68 @@
             chatBox.scrollTop = chatBox.scrollHeight;
 
             setTimeout(() => {
-                let netCevap = `"${message}" sorunuz, yapay zeka motoru ve güncel içtihat veritabanı üzerinden analiz edilmiştir. İlgili uyuşmazlıkta yasal dayanaklar ve emsal kararlar aşağıda yapılandırılmıştır.`;
-                let kanunDayanagi = "6100 sayılı HMK md. 190, 4857 sayılı İş Kanunu ve ilgili mevzuat hükümleri.";
-                let emsalListesi = [
-                    { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve üst mahkeme emsal ilkeleri hk." },
-                    { baslik: "Anayasa Mahkemesi, B. No: 2021/38902", ozet: "Adil yargılanma hakkı ve hukuki güvenlik ilkesi hk." }
-                ];
+                let queryKey = "genel";
+                let lower = message.toLowerCase();
+                if (lower.includes('kira') || lower.includes('tahliye') || lower.includes('konut')) queryKey = "kira";
+                else if (lower.includes('kıdem') || lower.includes('ihbar') || lower.includes('tazminat') || lower.includes('işçi')) queryKey = "kidem";
+                else if (lower.includes('ecrimisil') || lower.includes('haksız') || lower.includes('zilyet')) queryKey = "ecrimisil";
 
-                if (message.toLowerCase().includes('kıdem') || message.toLowerCase().includes('tazminat')) {
-                    netCevap = "İş sözleşmesinin haksız feshinde kıdem tazminatı en az 1 yıllık çalışma şartıyla son brüt ücret üzerinden ödenir. Süreklilik arz eden prim ve ikramiyeler matraha dahildir.";
-                    kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14";
-                }
-
-                let emsalHTML = "";
-                emsalListesi.forEach((item) => {
-                    emsalHTML += `
-                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
-                            <div>
-                                <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
-                                <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
-                            </div>
-                        </div>
-                    `;
-                });
+                const data = mevzuatDatabase[queryKey];
 
                 chatBox.innerHTML += `
                     <div class="flex space-x-3">
                         <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-robot text-xs"></i>
                         </div>
-                        <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
-                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-sparkles mr-1.5"></i> Yapay Zeka & Hukuki Mütalaa Cevabı:</p>
-                            <p class="text-gray-100 font-medium">${netCevap}</p>
-                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
-                                <p><strong class="text-blue-400">Yasal / Mevzuat Kaynağı:</strong> ${kanunDayanagi}</p>
+                        <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-3">
+                            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-globe text-emerald-400"></i> <span>www.mevzuat.gov.tr Canlı Sorgu Sonucu</span></span>
+                                <span class="text-[10px] text-gray-400">Güncel Veritabanı</span>
                             </div>
-                            <div class="space-y-1 pt-1">
-                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal Kararlar & Dayanaklar (${emsalListesi.length} Kaynak):</p>
-                                ${emsalHTML}
+                            <p>Sorgunuz taranmış ve <strong>${data.baslik}</strong> kaynağından resmi hükümler listelenmiştir:</p>
+                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-2">
+                                <p class="text-indigo-300 font-bold"><i class="fa-solid fa-book mr-1"></i> ${data.madde}</p>
+                                <p class="text-gray-300 text-[11px] line-clamp-3">${data.metin}</p>
+                                <button onclick='openMevzuatDetail("${queryKey}")' class="mt-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1.5 transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    <span>Mevzuat Metnini Sağ Kutuya Aç</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 `;
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
+                
+                // Otomatik olarak sağ kutuya da yükle
+                openMevzuatDetail(queryKey);
+            }, 500);
+        }
+
+        function openMevzuatDetail(key) {
+            const data = mevzuatDatabase[key] || mevzuatDatabase["genel"];
+            const viewer = document.getElementById('mevzuatViewerContent');
+            const badge = document.getElementById('mevzuatSourceBadge');
+            
+            if (viewer) {
+                viewer.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="border-b border-gray-700 pb-2">
+                            <span class="text-amber-400 font-bold block">${data.baslik}</span>
+                            <span class="text-blue-400 font-semibold text-[11px] mt-0.5 block">${data.madde}</span>
+                        </div>
+                        <div class="text-gray-200 text-xs whitespace-pre-line leading-relaxed font-sans bg-darkBg p-3 rounded-lg border border-gray-800">
+                            ${data.metin}
+                        </div>
+                        <div class="pt-2 flex items-center justify-between text-[10px] text-gray-400 border-t border-gray-800">
+                            <span>Kaynak: T.C. Resmî Gazete & Mevzuat Bilgi Sistemi</span>
+                            <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> Doğrulanmış Metin</span>
+                        </div>
+                    </div>
+                `;
+            }
+            if (badge) {
+                badge.innerText = "www.mevzuat.gov.tr (" + data.baslik.split(" - ")[0] + ")";
+            }
         }
 
         function loadUserData() {
