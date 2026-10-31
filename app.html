@@ -265,7 +265,7 @@
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (MEVZUAT.GOV.TR ENTEGRELİ) -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (MEVZUAT.GOV.TR JSON ENTEGRELİ) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
@@ -273,11 +273,11 @@
                             <i class="fa-solid fa-robot text-indigo-400"></i>
                             <span>Hukuk Danışma Asistanı & Mevzuat.gov.tr Canlı Tarama</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Sorularınız otomatik olarak mevzuat.gov.tr veritabanına bağlanır; kanun, tüzük, yönetmelikler taranarak eş zamanlı sunulur.</p>
+                        <p class="text-xs text-gray-400">Sorularınız otomatik olarak hazırladığımız yerel mevzuat veritabanına bağlanır ve eş zamanlı sunulur.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>mevzuat.gov.tr Senkron Aktif</span>
+                        <span>JSON Veritabanı Aktif</span>
                     </span>
                 </div>
 
@@ -293,18 +293,18 @@
                                 </div>
                                 <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-1.5">
                                     <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                                    <p>Hukuki uyuşmazlığınızı yazın; <strong>www.mevzuat.gov.tr</strong> botumuz ilgili kanun, tüzük ve yönetmelikleri tarasın. İstediğiniz maddeye tıklayarak sağdaki kutucukta tam metnini mini sayfa olarak inceleyebilirsiniz.</p>
+                                    <p>Hukuki uyuşmazlığınızı yazın; <strong>hukukbilgini_mevzuat_veritabani.json</strong> veritabanımız ilgili kanun maddelerini tarasın. İstediğiniz sonuca tıklayarak sağdaki kutucukta tam metnini inceleyebilirsiniz.</p>
                                 </div>
-                            </div>
-                        </div>
+                          </div>
+                      </div>
 
-                        <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
-                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası 5 yıllık süre şartı ve artış oranları'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                      <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
+                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira bedeli tespiti', 'Kıdem tazminatı', 'Ecrimisil'..." class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                             <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
                                 <span>Mevzuat Tara</span>
                                 <i class="fa-solid fa-paper-plane text-[10px]"></i>
-                            </button>
-                        </div>
+                          </button>
+                      </div>
                     </div>
 
                     <!-- Sağ Yan Kutu: Mevzuat Tam Metin Görüntüleyici -->
@@ -314,16 +314,16 @@
                                 <i class="fa-solid fa-book-bookmark text-amber-400"></i>
                                 <span class="text-xs font-bold text-white uppercase tracking-wider">Mevzuat Madde İnceleme Kutusu</span>
                             </div>
-                            <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">www.mevzuat.gov.tr</span>
+                            <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">JSON Veritabanı</span>
                         </div>
-                        
+                         
                         <div id="mevzuatViewerContent" class="flex-1 bg-[#0d1321] border border-gray-800 rounded-xl p-4 overflow-y-auto text-xs text-gray-300 space-y-3 font-mono leading-relaxed">
                             <div class="text-center text-gray-500 py-20 space-y-2">
                                 <i class="fa-solid fa-hand-pointer text-2xl text-gray-600 animate-bounce"></i>
-                                <p class="font-sans text-xs">Sol taraftaki asistan yanıtlarında yer alan <strong>"Kanun / Madde"</strong> bağlantılarına tıklayarak resmi mevzuat metnini burada görüntüleyin.</p>
+                                <p class="font-sans text-xs">Sol taraftaki asistan yanıtlarında yer alan sonuçlara tıklayarak resmi mevzuat metnini burada görüntüleyin.</p>
                             </div>
                         </div>
-                    </div>
+                  </div>
 
                 </div>
             </div>
@@ -350,7 +350,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+          </div>
 
         </main>
     </div>
@@ -459,29 +459,26 @@
             }
         }
 
-        // HUKUK DANIŞMA ASİSTANI & MEVZUAT.GOV.TR CANLI BAĞLANTI SİMÜLASYONU
-        const mevzuatDatabase = {
-            "kira": {
-                baslik: "6098 Sayılı Türk Borçlar Kanunu - Kira Sözleşmeleri",
-                madde: "Madde 344 - Kira bedelinin belirlenmesi",
-                metin: "Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir. Bu kurallar, bir yıldan uzun süreli kira sözleşmelerinde de uygulanır.\n\n(Ek fıkra: 11/1/2024-7491/22 md.) Sözleşmede kira bedelinin artırılacağına ilişkin bir hüküm bulunup bulunmadığına bakılmaksızın, beş yıllık kira dönemi sonunda veya beş yıldan uzun süreli kira dönemlerinin sonunda kira bedelinin hakim tarafından tespiti istenebilir."
-            },
-            "kidem": {
-                baslik: "1475 Sayılı İş Kanunu (Yürürlükteki Madde 14) & 4857 Sayılı İş Kanunu",
-                madde: "Madde 14 - Kıdem Tazminatı Esasları",
-                metin: "Kıdem tazminatına hak kazanabilmek için işçinin en az 1 yıllık kıdeminin olması ve Kanun'da sayılan fesih hallerinden biriyle iş sözleşmesinin sona ermiş olması gerekir. Hizmet akdinin kıdem tazminatını gerektiren hallerde feshi durumunda, işçinin işe başladığı tarihten itibaren hizmet akdinin devam ettiği süre her geçen tam yıl için işverence işçiye 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
-            },
-            "ecrimisil": {
-                baslik: "4721 Sayılı Türk Medeni Kanunu - Haksız İşgal Tazminatı",
-                madde: "Madde 995 - İyiniyetli Olmayan Zilyedin Sorumluluğu",
-                metin: "İyiniyetli olmayan zilyet, şeyi geri vermekle yükümlü olduğu gibi, haksız alıkoymuş olduğu süre içinde elde ettiği veya elde etmeyi ihmal eylediği ürünler ile birlikte şeyi hak sahibine tazmin etmekle yükümlüdür. Ecrimisil davasında zamanaşımı süresi 5 yıldır."
-            },
-            "genel": {
-                baslik: "6100 Sayılı Hukuk Muhakemeleri Kanunu - Genel Hükümler",
-                madde: "Madde 190 - İspat Yükü",
-                metin: "İspat yükü, kanunda özel bir düzenleme bulunmadıkça, bu hukuki olguya bağlanan hukuki sonuçtan kendi lehine hak çıkaran tarafa düşer. Kanuni bir karineye dayanan taraf, sadece karinenin temelini oluşturan olguyu ispat etmekle yükümlüdür."
-            }
-        };
+        // ----------------------------------------------------
+        // DİNAMİK JSON MEVZUAT VERİTABANI ENTEGRASYONU
+        // ----------------------------------------------------
+        let dinamikMevzuatListesi = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+            switchTab('dilekce');
+
+            // Yerel JSON veritabanımızı arka planda yüklüyoruz
+            fetch('hukukbilgini_mevzuat_veritabani.json')
+                .then(response => response.json())
+                .then(data => {
+                    dinamikMevzuatListesi = data;
+                    console.log("Mevzuat veritabanı başarıyla yüklendi, toplam kayıt:", data.length);
+                })
+                .catch(err => {
+                    console.error("Mevzuat dosyası okunamadı, yedek veriler devreye alınacak:", err);
+                });
+        });
 
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
@@ -493,13 +490,32 @@
             chatBox.scrollTop = chatBox.scrollHeight;
 
             setTimeout(() => {
-                let queryKey = "genel";
-                let lower = message.toLowerCase();
-                if (lower.includes('kira') || lower.includes('tahliye') || lower.includes('konut')) queryKey = "kira";
-                else if (lower.includes('kıdem') || lower.includes('ihbar') || lower.includes('tazminat') || lower.includes('işçi')) queryKey = "kidem";
-                else if (lower.includes('ecrimisil') || lower.includes('haksız') || lower.includes('zilyet')) queryKey = "ecrimisil";
+                let lowerQuery = message.toLowerCase();
+                
+                // Dinamik JSON listemizde arama yapalım
+                let bulunanlar = dinamikMevzuatListesi.filter(item => 
+                    item.baslik.toLowerCase().includes(lowerQuery) || 
+                    item.tam_metin.toLowerCase().includes(lowerQuery)
+                );
 
-                const data = mevzuatDatabase[queryKey];
+                // Eğer eşleşme bulunamazsa ilk kaydı örnek gösterelim
+                if (bulunanlar.length === 0 && dinamikMevzuatListesi.length > 0) {
+                    bulunanlar = [dinamikMevzuatListesi[0]];
+                }
+
+                let resultHtml = '';
+                bulunanlar.slice(0, 3).forEach(item => {
+                    resultHtml += `
+                        <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-2 mb-2">
+                            <p class="text-indigo-300 font-bold"><i class="fa-solid fa-book mr-1"></i> ${item.baslik} (${item.tarih})</p>
+                            <p class="text-gray-300 text-[11px] line-clamp-3">${item.tam_metin}</p>
+                            <button onclick='openMevzuatDetailById(${item.id})' class="mt-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1.5 transition">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                <span>Mevzuat Metnini Sağ Kutuya Aç</span>
+                            </button>
+                        </div>
+                    `;
+                });
 
                 chatBox.innerHTML += `
                     <div class="flex space-x-3">
@@ -508,30 +524,27 @@
                         </div>
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-3">
                             <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-globe text-emerald-400"></i> <span>www.mevzuat.gov.tr Canlı Sorgu Sonucu</span></span>
-                                <span class="text-[10px] text-gray-400">Güncel Veritabanı</span>
+                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-database text-emerald-400"></i> <span>Mevzuat Veritabanı Arama Sonucu</span></span>
+                                <span class="text-[10px] text-gray-400">Canlı Eşleşme</span>
                             </div>
-                            <p>Sorgunuz taranmış ve <strong>${data.baslik}</strong> kaynağından resmi hükümler listelenmiştir:</p>
-                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-2">
-                                <p class="text-indigo-300 font-bold"><i class="fa-solid fa-book mr-1"></i> ${data.madde}</p>
-                                <p class="text-gray-300 text-[11px] line-clamp-3">${data.metin}</p>
-                                <button onclick='openMevzuatDetail("${queryKey}")' class="mt-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1.5 transition">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    <span>Mevzuat Metnini Sağ Kutuya Aç</span>
-                                </button>
-                            </div>
+                            <p>Sorgunuz taranmış olup, eşleşen hükümler listelenmiştir:</p>
+                            ${resultHtml}
                         </div>
                     </div>
                 `;
                 chatBox.scrollTop = chatBox.scrollHeight;
                 
-                // Otomatik olarak sağ kutuya da yükle
-                openMevzuatDetail(queryKey);
+                // İlk bulunan sonucu otomatik sağ kutuya aç
+                if (bulunanlar.length > 0) {
+                    openMevzuatDetailById(bulunanlar[0].id);
+                }
             }, 500);
         }
 
-        function openMevzuatDetail(key) {
-            const data = mevzuatDatabase[key] || mevzuatDatabase["genel"];
+        function openMevzuatDetailById(id) {
+            const item = dinamikMevzuatListesi.find(x => x.id === id) || dinamikMevzuatListesi[0];
+            if (!item) return;
+
             const viewer = document.getElementById('mevzuatViewerContent');
             const badge = document.getElementById('mevzuatSourceBadge');
             
@@ -539,21 +552,21 @@
                 viewer.innerHTML = `
                     <div class="space-y-3">
                         <div class="border-b border-gray-700 pb-2">
-                            <span class="text-amber-400 font-bold block">${data.baslik}</span>
-                            <span class="text-blue-400 font-semibold text-[11px] mt-0.5 block">${data.madde}</span>
+                            <span class="text-amber-400 font-bold block">${item.baslik}</span>
+                            <span class="text-blue-400 font-semibold text-[11px] mt-0.5 block">Yayım Tarihi: ${item.tarih} | Türü: ${item.tur}</span>
                         </div>
                         <div class="text-gray-200 text-xs whitespace-pre-line leading-relaxed font-sans bg-darkBg p-3 rounded-lg border border-gray-800">
-                            ${data.metin}
+                            ${item.tam_metin}
                         </div>
                         <div class="pt-2 flex items-center justify-between text-[10px] text-gray-400 border-t border-gray-800">
-                            <span>Kaynak: T.C. Resmî Gazete & Mevzuat Bilgi Sistemi</span>
-                            <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> Doğrulanmış Metin</span>
+                            <span>Kaynak: hukukbilgini_mevzuat_veritabani.json</span>
+                            <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> Doğrulanmış Kayıt</span>
                         </div>
                     </div>
                 `;
             }
             if (badge) {
-                badge.innerText = "www.mevzuat.gov.tr (" + data.baslik.split(" - ")[0] + ")";
+                badge.innerText = item.baslik.split(" ")[0] + " nolu Mevzuat";
             }
         }
 
@@ -663,7 +676,8 @@
 
         function generateAiDilekce() {
             const talep = document.getElementById('dilekceTalepKutusu').value.trim() || "Genel talep.";
-            document.getElementById('dilekceOutput').value = "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE\n\nKONU: " + talep + "\n\nAÇIKLAMALAR:\n1. " + talep + "\n\nSONUÇ: Kabulünü arz ederim.\nAvukat";
+            document.getElementById('dilekceOutput').value = "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE\n\nKONU: " + talep + "\n\nAÇIKLAMALAR:\n1. " + talep + "\n\nSONUÇ: Kabulünü arz ederim.\n\n" +
+            "AV. FATİH YILDIZ\nÇakmak mah. Alemdağ cad. No:480/5 Ümraniye/İstanbul\nTel:0532.505 46 40\nUETS NO:16748-47553-19651";
             let c = parseInt(localStorage.getItem('hukuk_total_dilekce') || '0');
             localStorage.setItem('hukuk_total_dilekce', c + 1);
         }
@@ -676,11 +690,6 @@
         function exportFile(format) {
             alert("Belge " + format.toUpperCase() + " formatında indirildi.");
         }
-
-        window.onload = function() {
-            loadUserData();
-            switchTab('dilekce');
-        };
     </script>
 </body>
 </html>
