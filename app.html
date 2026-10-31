@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu v4.9 Kararlı Sürüm</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu v5.0 AI Entegre</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.9</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v5.0</span>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="flex items-center space-x-2 sm:space-x-3">
             <button class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
                 <i class="fa-solid fa-bolt text-amber-400"></i>
-                <span>Sistem Durumu: <strong class="text-emerald-400">Aktif ve Kararlı</strong></span>
+                <span>Yapay Zeka: <strong class="text-emerald-400">Aktif</strong></span>
             </button>
 
             <div id="userAuthArea" class="flex items-center space-x-2"></div>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v4.9 Enterprise</span>
+                <span>v5.0 Pro</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -241,7 +241,7 @@
                 <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (YAPAY ZEKA ENTEGRE) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
@@ -249,7 +249,7 @@
                             <i class="fa-solid fa-robot text-indigo-400"></i>
                             <span>Hukuk Danışma Asistanı & Mevzuat Tarama</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Hukuki uyuşmazlığınızı yazın; ilgili kanun maddelerini ve içtihatları tarayalım.</p>
+                        <p class="text-xs text-gray-400">Hukuki uyuşmazlığınızı yazın; yapay zeka analiz ederek yanıtlasın.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -325,7 +325,7 @@
         </div>
     </div>
 
-    <!-- GLOBAL MOTOR & AKILLI ASİSTAN VERİTABANI -->
+    <!-- GLOBAL MOTOR & DOĞRUDAN YAPAY ZEKA ENTEGRASYONU -->
     <script>
         const dinamikIctihatListesi = [
             {
@@ -336,19 +336,6 @@
                 baslik: "Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi",
                 ozet: "İşçiye düzenli olarak ödenen prim, ikramiye ve yakacak yardımı gibi ek menfaatlerin hesaplanması hk.",
                 tam_metin: "Davacı işçi, kıdem ve ihbar tazminatına esas ücretin tespitinde düzenli ödenen primlerin dikkate alınmadığını ileri sürerek fark tazminat talep etmiştir."
-            }
-        ];
-
-        const hukukiVeritabani = [
-            {
-                anahtarlar: ["işe iade", "fesih", "işten çıkarıldı", "işçi", "işveren", "tazminat", "ihbar", "kıdem"],
-                baslik: "4857 sayılı İş Kanunu ve İşe İade Hükümleri",
-                metin: "Madde 18 - Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır."
-            },
-            {
-                anahtarlar: ["kira", "kira bedeli", "tüfe", "tahliye", "konut", "işyeri", "artış"],
-                baslik: "6098 sayılı Türk Borçlar Kanunu (Kira Hükümleri)",
-                metin: "Madde 344 - Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir."
             }
         ];
 
@@ -446,8 +433,8 @@
             performIctihatSearch();
         }
 
-        // AKILLI YEREL ASİSTAN MOTORU (API Hatasız, Hızlı ve Güvenli)
-        function sendAssistantMessage() {
+        // DOĞRUDAN YAPAY ZEKA BAĞLANTI MOTORU (v5.0 Kararlı)
+        async function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             if (!input) return;
             const message = input.value.trim();
@@ -458,14 +445,42 @@
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            setTimeout(() => {
-                let lowerQuery = message.toLowerCase();
-                let eslesenKayit = hukukiVeritabani.find(item => 
-                    item.anahtarlar.some(key => lowerQuery.includes(key))
-                );
+            const loadingId = 'load_' + Date.now();
+            chatBox.innerHTML += `
+                <div id="${loadingId}" class="flex space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-robot text-xs fa-spin"></i>
+                    </div>
+                    <div class="bg-darkBg p-3 rounded-2xl border border-gray-800 text-xs text-gray-400">
+                        Yapay zeka asistanı yanıtı hazırlıyor...
+                    </div>
+                </div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
 
-                if (!eslesenKayit) {
-                    eslesenKayit = hukukiVeritabani[0]; // Varsayılan hukuk açıklaması
+            try {
+                const apiKey = "AQ.Ab8RN6IgIBPPH4P-gURfzbwnsmSGFBuIGYHTVQ9nRHyVQwuWNw";
+                
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: "Sen profesyonel bir Türk avukatı ve kıdemli hukuk asistanısın. Kullanıcının sorduğu şu hukuki soruya Türk hukuk mevzuatına ve Yargıtay içtihatlarına dayanarak net, profesyonel ve hukuki terimlerle yanıt ver: " + message
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+
+                let reply = "Yanıt alınamadı.";
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+                    reply = data.candidates[0].content.parts[0].text;
+                } else if (data.error) {
+                    reply = "Sistem Hatası: " + data.error.message;
                 }
 
                 chatBox.innerHTML += `
@@ -475,15 +490,19 @@
                         </div>
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-3">
                             <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-book text-emerald-400"></i> <span>${eslesenKayit.baslik}</span></span>
-                                <span class="text-[10px] text-gray-400">Doğrulanmış Mevzuat</span>
+                                <span class="font-bold text-amber-400 flex items-center space-x-1.5"><i class="fa-solid fa-bolt text-emerald-400"></i> <span>Yapay Zeka Asistanı Yanıtı</span></span>
+                                <span class="text-[10px] text-gray-400">Canlı Bağlantı</span>
                             </div>
-                            <div class="whitespace-pre-line text-gray-200 leading-relaxed">${eslesenKayit.metin}</div>
+                            <div class="whitespace-pre-line text-gray-200">${reply}</div>
                         </div>
                     </div>
                 `;
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 300);
+            } catch (error) {
+                document.getElementById(loadingId)?.remove();
+                chatBox.innerHTML += `<div class="text-rose-400 text-xs p-2">Bağlantı hatası oluştu: ${error.message}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
         }
 
         function loadUserData() {
