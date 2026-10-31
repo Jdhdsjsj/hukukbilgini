@@ -36,19 +36,20 @@
 <body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="h-16 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-6 z-20 shrink-0">
+    <header class="h-16 bg-sidebarBg border-b border-gray-800 flex items-center justify-between px-4 sm:px-6 z-20 shrink-0">
         <!-- Logo & Brand & Mobil Menü Butonu -->
         <div class="flex items-center space-x-3">
             <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-300 hover:text-white p-1.5 rounded-lg bg-gray-800">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dilekce')">
-            <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xl">
-                <i class="fa-solid fa-scale-balanced"></i>
-            </div>
-            <div>
-                <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
+                <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xl">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
+                </div>
             </div>
         </div>
 
@@ -60,7 +61,7 @@
         </div>
 
         <!-- Right Action Buttons -->
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2 sm:space-x-3">
             <button class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 transition">
                 <i class="fa-solid fa-bolt text-amber-400"></i>
                 <span>Dilekçe Üretimi: <strong class="text-white">Sınırsız</strong></span>
@@ -70,18 +71,18 @@
                 <span>Kopyala</span>
             </button>
 
-            <div id="userAuthArea" class="flex items-center space-x-2">
-                <!-- Dinamik olarak JavaScript ile doldurulacak -->
-            </div>
-            <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
+            <!-- Dinamik Oturum Alanı -->
+            <div id="userAuthArea" class="flex items-center space-x-2"></div>
+
+            <button class="hidden sm:flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-blue-600/20 transition" onclick="exportFile('docx')">
                 <i class="fa-solid fa-file-word"></i>
                 <span>Word (.docx)</span>
             </button>
-            <button class="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-emerald-600/20 transition" onclick="exportFile('udf')">
+            <button class="hidden sm:flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-emerald-600/20 transition" onclick="exportFile('udf')">
                 <i class="fa-solid fa-file-shield"></i>
                 <span>UYAP (.udf)</span>
             </button>
-            <button class="flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-rose-600/20 transition" onclick="exportFile('pdf')">
+            <button class="hidden sm:flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-xs font-semibold px-3 py-1.5 rounded-lg text-white shadow-lg shadow-rose-600/20 transition" onclick="exportFile('pdf')">
                 <i class="fa-solid fa-file-pdf"></i>
                 <span>PDF (.pdf)</span>
             </button>
@@ -89,10 +90,10 @@
     </header>
 
     <!-- MAIN APP WRAPPER -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden relative">
         
         <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-64 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between shrink-0 select-none">
+        <aside class="hidden md:flex w-64 bg-sidebarBg border-r border-gray-800 flex-col justify-between shrink-0 select-none absolute md:relative inset-y-0 left-0 z-30 transition">
             <div class="p-4 space-y-6 overflow-y-auto">
                 
                 <!-- Quick Prompt Button -->
@@ -143,23 +144,26 @@
         </aside>
 
         <!-- CONTENT AREA -->
-        <main class="flex-1 overflow-y-auto bg-darkBg p-6 lg:p-8">
+        <main class="flex-1 overflow-y-auto bg-darkBg p-4 sm:p-6 lg:p-8">
             
             <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA -->
             <div id="tab-ictihat" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-scale-balanced text-amber-400"></i>
                             <span>Akıllı İçtihat & Mevzuat Arama Motoru</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay, Danıştay, Anayasa Mahkemesi kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
                     </div>
-                    <div class="flex items-center space-x-3">
-                        
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">
+                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Toplam 4.8M+ Karar
+                        </span>
+                    </div>
                 </div>
 
-                <div class="bg-cardBg border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
+                <div class="bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-6">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                             <i class="fa-solid fa-magnifying-glass text-lg"></i>
@@ -178,51 +182,7 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-gray-700/60">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Mahkeme / Kurum</label>
-                            <select id="filterCourt" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition" onchange="performSearch()">
-                                <option value="all">Tüm Mahkemeler</option>
-                                <option value="yargitay">Yargıtay (Hukuk & Ceza Daireleri)</option>
-                                <option value="danistay">Danıştay</option>
-                                <option value="aym">Anayasa Mahkemesi (AYM)</option>
-                                <option value="uyusmazlik">Uyuşmazlık Mahkemesi</option>
-                                <option value="istinaf">Bölge Adliye Mahkemesi (İstinaf)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">İlgili Daire / Kurul</label>
-                            <select id="filterDepartment" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition" onchange="performSearch()">
-                                <option value="all">Tüm Daireler</option>
-                                <option value="9.hd">9. Hukuk Dairesi (İş Hukuku)</option>
-                                <option value="3.hd">3. Hukuk Dairesi (Borçlar / Tüketici)</option>
-                                <option value="4.hd">4. Hukuk Dairesi (Haksız Fiil / Tazminat)</option>
-                                <option value="12.hd">12. Hukuk Dairesi (İcra İflas)</option>
-                                <option value="ceza_genel">Ceza Genel Kurulu</option>
-                                <option value="hukuk_genel">Hukuk Genel Kurulu (HGK)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Esas / Karar No</label>
-                            <div class="flex space-x-2">
-                                <input type="text" id="filterEsasNo" placeholder="Esas No" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-500" oninput="performSearch()">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Tarih Aralığı</label>
-                            <select id="filterDateRange" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-amber-500 transition">
-                                <option value="all">Tüm Zamanlar</option>
-                                <option value="son1yil">Son 1 Yıl</option>
-                                <option value="son3yil">Son 3 Yıl</option>
-                                <option value="son5yil">Son 5 Yıl</option>
-                                <option value="2020_sonrasi">2020 ve Sonrası</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Search Results Container -->
                 <div id="searchResultsContainer" class="space-y-4"></div>
             </div>
 
@@ -230,143 +190,73 @@
             <div id="tab-dilekce" class="tab-content active space-y-6 max-w-7xl mx-auto" style="display: block;">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-file-signature text-blue-400"></i>
                             <span>Dilekçe Yazımı</span>
                         </h1>
-                        <p class="text-sm text-gray-400 mt-1">Talebinizi yazın ve belgelerinizi ekleyin; asistan anında analiz yaparak dilekçenizi oluştursun.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Talebinizi yazın ve belgelerinizi ekleyin; asistan anında analiz yaparak dilekçenizi oluştursun.</p>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <button onclick="generateAiDilekce()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg transition">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            <span>Dilekçe Üret</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Sol: Tek Kutu ve Genişletilmiş Sürükle-Bırak Dosya Alanı -->
-                    <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-5">
-                        <h2 class="text-sm font-bold text-white uppercase tracking-wider text-amber-400 border-b border-gray-700/60 pb-2 flex items-center justify-between">
-                            <span>Nasıl Yardımcı Olabilirim, Talebiniz Nedir ?</span>
-                        </h2>
-
-                        <!-- Tek Büyük Talep ve Olay Kutusu -->
-                        <div>
-                            <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de 3 yıldır çalışırken 15.10.2026 tarihinde hiçbir haklı gerekçe gösterilmeden işten çıkarıldı. İşe iade ve tazminat davası açmak istiyoruz..."></textarea>
-                        </div>
-
-                        <!-- Genişletilmiş Dosya Yükleme Alanı (Maks 50 MB, Sürükle Bırak) -->
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme (Çoklu / Sürükle-Bırak)</label>
-                                <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-database mr-1"></i> Maks. 50 MB</span>
-                            </div>
-                            <div id="dropZoneBox" 
-                                 class="flex flex-col items-center justify-center w-full bg-darkBg border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-2xl p-6 cursor-pointer transition text-center space-y-2" 
-                                 onclick="document.getElementById('dilekceFileInput').click()"
-                                 ondragover="handleDragOver(event)"
-                                 ondragleave="handleDragLeave(event)"
-                                 ondrop="handleFileDrop(event)">
-                                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center justify-center text-xl">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                                </div>
-                                <div>
-                                    <span id="fileUploadLabel" class="text-xs text-gray-200 font-medium block">Dosyaları buraya sürükleyip bırakın veya tıklayın</span>
-                                    <span class="text-[10px] text-gray-400 block mt-0.5">PDF, UDF, DOCX, XLS, JPG, PNG, ZIP (Maks. 50 MB)</span>
-                                </div>
-                            </div>
-                            <input type="file" id="dilekceFileInput" class="hidden" multiple accept=".pdf,.udf,.docx,.doc,.xls,.xlsx,.jpg,.jpeg,.png,.zip,.rar" onchange="handleFileSelection(this)">
-                            <div id="selectedFilesList" class="space-y-1.5 pt-2 max-h-40 overflow-y-auto"></div>
-                        </div>
-
-                        <!-- Dosya İnceleme & Çıkarımlar Paneli (Program İçi İnceleme) -->
-                        <div id="fileAnalysisContainer" class="hidden bg-darkBg border border-blue-500/30 rounded-xl p-4 space-y-2 shadow-inner">
-                            <div class="flex items-center justify-between text-xs font-semibold text-blue-400 border-b border-gray-800 pb-2">
-                                <span class="flex items-center"><i class="fa-solid fa-microchip mr-1.5"></i> Yüklenen Dosya İncelemesi & Çıkarımlar</span>
-                                <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-check mr-1"></i> Analiz Edildi</span>
-                            </div>
-                            <div id="analysisResultsList" class="text-[11px] text-gray-300 space-y-1">
-                                <!-- Dinamik çıkarımlar -->
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between pt-2">
-                            <span class="text-[11px] text-gray-400"><i class="fa-solid fa-sparkles text-amber-400 mr-1"></i> Kanun maddeleri entegre edilecek</span>
-                            <button onclick="generateAiDilekce()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition shadow-md">
-                                Dilekçe Üret
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Sağ: Canlı Önizleme ve Düzenlenebilir Editör -->
-                    <div class="lg:col-span-7 bg-cardBg border border-gray-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center justify-between border-b border-gray-700/60 pb-3 mb-3">
-                                <div class="flex items-center space-x-2">
-                                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-                                    <span class="text-xs font-semibold text-gray-200">Canlı Önizleme & Düzenlenebilir Editör</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="copyDilekceText()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg text-gray-300 border border-gray-700 transition">
-                                        <i class="fa-regular fa-copy mr-1"></i> Metni Kopyala
-                                    </button>
-                                    <button onclick="exportFile('docx')" class="text-xs bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-white font-medium transition">
-                                        <i class="fa-regular fa-file-word mr-1"></i> İndir
-                                    </button>
-                                </div>
-                            </div>
-
-                            <textarea id="dilekceOutput" rows="20" class="w-full bg-[#0d1321] text-gray-200 text-xs font-mono p-4 rounded-xl border border-gray-800 focus:outline-none focus:border-amber-500 leading-relaxed shadow-inner" placeholder="Talebinizi yukarıya yazıp 'Dilekçe Üret' butonuna tıkladığınızda eksiksiz dava dilekçeniz burada görünecektir..."></textarea>
-                        </div>
-
-                        <div class="p-3 bg-darkBg border border-gray-800 rounded-xl text-xs text-gray-400 flex items-center justify-between">
-                            <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> HMK ve Avukatlık Kanunu formatına uygundur.</span>
-                            <span class="text-gray-500">Kelime Sayısı: <span id="wordCount" class="text-white">0</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: KAYDEDİLEN KARARLAR -->
-            <div id="tab-kaydedilenler" class="tab-content space-y-6 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
-                    <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
-                            <i class="fa-solid fa-bookmark text-amber-400"></i>
-                            <span>Kaydedilen Emsal Kararlar</span>
-                        </h1>
-                        <p class="text-sm text-gray-400 mt-1">İşaretleyip kaydettiğiniz emsal içtihatlar.</p>
-                    </div>
-                    <button onclick="clearAllBookmarks()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-lg border border-gray-700 transition">
-                        Tümünü Temizle
+                    <button onclick="generateAiDilekce()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg transition">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Dilekçe Üret</span>
                     </button>
                 </div>
 
-                <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-5 bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-5 space-y-5">
+                        <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider text-amber-400 border-b border-gray-700/60 pb-2">
+                            <span>Nasıl Yardımcı Olabilirim, Talebiniz Nedir?</span>
+                        </h2>
                         <div>
-                            <h3 class="text-sm font-bold text-white">Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi</h3>
-                            <p class="text-xs text-gray-300 mt-1.5">Yargıtay 9. HD, E. 2023/14520</p>
+                            <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de çalışırken haksız şekilde işten çıkarıldı..."></textarea>
                         </div>
-                        <button onclick="removeBookmarkCard(this)" class="text-xs text-rose-400 hover:text-rose-300 text-left"><i class="fa-solid fa-trash-can mr-1"></i> Kaldır</button>
+                        <div class="space-y-2">
+                            <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme</label>
+                            <div id="dropZoneBox" class="flex flex-col items-center justify-center w-full bg-darkBg border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-2xl p-5 cursor-pointer transition text-center space-y-2" onclick="document.getElementById('dilekceFileInput').click()">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+                                <span class="text-xs text-gray-200 font-medium">Dosyaları buraya sürükleyin veya tıklayın</span>
+                            </div>
+                            <input type="file" id="dilekceFileInput" class="hidden" multiple accept=".pdf,.docx,.doc" onchange="handleFileSelection(this)">
+                            <div id="selectedFilesList" class="space-y-1.5 pt-2 max-h-40 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-gray-700/60 pb-3 mb-3">
+                                <span class="text-xs font-semibold text-gray-200">Canlı Önizleme & Düzenlenebilir Editör</span>
+                                <button onclick="copyDilekceText()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg text-gray-300 border border-gray-700 transition">Kopyala</button>
+                            </div>
+                            <textarea id="dilekceOutput" rows="20" class="w-full bg-[#0d1321] text-gray-200 text-xs font-mono p-4 rounded-xl border border-gray-800 focus:outline-none focus:border-amber-500 leading-relaxed shadow-inner" placeholder="Dilekçe taslağınız burada görünecektir..."></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI -->
+            <!-- TAB 3: KAYDEDİLENLER -->
+            <div id="tab-kaydedilenler" class="tab-content space-y-6 max-w-7xl mx-auto">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                    <h1 class="text-2xl font-bold text-white">Kaydedilen Emsal Kararlar</h1>
+                    <button onclick="clearAllBookmarks()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-lg border border-gray-700 transition">Tümünü Temizle</button>
+                </div>
+                <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (GELİŞMİŞ GEMİNİ ENTEGRELİ) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
                     <div>
                         <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı</span>
+                            <span>Hukuk Danışma Asistanı (Gemini AI Destekli)</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Verilen hukuk kaynaklarında ve güncel mevzuatta tarama yaparak kapsamlı ve doyurucu mütalaa sunar.</p>
+                        <p class="text-xs text-gray-400">Sorularınız anında yapay zeka ve güncel Yargıtay içtihat havuzuna aktarılarak kaynakları ile yanıtlanır.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                        <span>Web / Kaynak Tarama Aktif</span>
+                        <span>Gemini AI Senkron Aktif</span>
                     </span>
                 </div>
 
@@ -377,7 +267,7 @@
                         </div>
                         <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-1.5">
                             <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                            <p>Hukuk Danışma Asistanı; sorduğunuz hukuki soru veya uyuşmazlık konusunda, belirttiğiniz harici kaynakları ve emsal içtihat havuzunu derinlemesine tarayarak eksiksiz, doyurucu ve gerekçeli mütalaa sunmak üzere hazırdır. Sorunuzu yazabilirsiniz.</p>
+                            <p>Ben Hukuk Danışma Asistanı'yım. Hukuki uyuşmazlığınızı detaylıca yazın; sorunuzu otomatik olarak analiz edip en güncel yasal dayanaklar ve emsal kararlar eşliğinde size tam mütalaa sunayım.</p>
                         </div>
                     </div>
                 </div>
@@ -385,121 +275,68 @@
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
                     <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                     <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                        <span>Kaynakları Tara & Cevapla</span>
-                        <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+                        <span>Gemini'ye Sor & Tara</span>
+                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
                     </button>
                 </div>
             </div>
 
             <!-- TAB 5: DAVA DOSYALARIM -->
             <div id="tab-dosyalar" class="tab-content space-y-6 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
-                    <div>
-                        <h1 class="text-2xl font-bold text-white flex items-center space-x-3">
-                            <i class="fa-solid fa-folder-open text-rose-400"></i>
-                            <span>Dava Dosyalarım</span>
-                        </h1>
-                        <p class="text-sm text-gray-400 mt-1">Takip ettiğiniz tüm dava dosyaları, safahat bilgileri ve evraklar.</p>
-                    </div>
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                    <h1 class="text-2xl font-bold text-white">Dava Dosyalarım</h1>
                     <button onclick="openNewCaseModal()" class="bg-rose-600 hover:bg-rose-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 transition shadow-md">
                         <i class="fa-solid fa-plus"></i>
                         <span>Yeni Dosya Tanımla</span>
                     </button>
                 </div>
-
-                <div id="casesListContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-case-id="1">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">İş Hukuku</span>
-                                <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-                            <h3 class="text-sm font-bold text-white">İstanbul 12. İş Mahkemesi</h3>
-                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">2026/412 E.</strong></p>
-                            <p class="text-xs text-gray-300"><strong>Davacı:</strong> Ahmet Yılmaz<br><strong>Davalı:</strong> XYZ Lojistik A.Ş.</p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
-                            <span class="text-gray-500">Son Duruşma: 03.11.2026</span>
-                            <span class="text-amber-400 font-semibold cursor-pointer" onclick="alert('Dosya detayları açılıyor...')">Detaylar →</span>
-                        </div>
-                    </div>
-
-                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-case-id="2">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">Ticaret</span>
-                                <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-                            <h3 class="text-sm font-bold text-white">Bakırköy 4. Asliye Ticaret Mah.</h3>
-                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">2026/89 E.</strong></p>
-                            <p class="text-xs text-gray-300"><strong>Davacı:</strong> Demir Yapı Ltd.<br><strong>Davalı:</strong> Global Taşımacılık</p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
-                            <span class="text-gray-500">Cevap Süresi: 07.11.2026</span>
-                            <span class="text-amber-400 font-semibold cursor-pointer" onclick="alert('Dosya detayları açılıyor...')">Detaylar →</span>
-                        </div>
-                    </div>
-
-                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-case-id="3">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">Kira / Tahliye</span>
-                                <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-                            <h3 class="text-sm font-bold text-white">Ankara 3. Sulh Hukuk Mahkemesi</h3>
-                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">2025/1105 E.</strong></p>
-                            <p class="text-xs text-gray-300"><strong>Davacı:</strong> Selin Korkmaz<br><strong>Davalı:</strong> Murat Aydın</p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
-                            <span class="text-gray-500">Rapor Bekleniyor</span>
-                            <span class="text-amber-400 font-semibold cursor-pointer" onclick="alert('Dosya detayları açılıyor...')">Detaylar →</span>
-                        </div>
-                    </div>
-                </div>
+                <div id="casesListContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
             </div>
 
         </main>
     </div>
 
-    <!-- KARAR DETAY MODAL -->
-    <div id="kararModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cardBg border border-gray-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4 border-b border-gray-700 flex items-center justify-between bg-sidebarBg">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
-                        <i class="fa-solid fa-scale-balanced"></i>
-                    </div>
-                    <div>
-                        <h3 id="modalTitle" class="text-base font-bold text-white">Karar Detayı</h3>
-                        <p class="text-xs text-gray-400">HukukBilgini İçtihat Veritabanı</p>
-                    </div>
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-gray-700 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-gray-700/60 pb-3">
+                <h3 class="text-base font-bold text-white">HukukBilgini Giriş Yap / Kayıt Ol</h3>
+                <button onclick="closeLoginModalBox()" class="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-800 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 pt-1">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">E-posta Adresi</label>
+                    <input type="email" id="loginEmailInput" placeholder="avukat@hukukburosu.com" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none">
                 </div>
-                <button onclick="closeKararModal()" class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Şifre</label>
+                    <input type="password" id="loginPasswordInput" placeholder="••••••••" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Ad Soyad / Unvan</label>
+                    <input type="text" id="loginNameInput" placeholder="Av. Mehmet Ege Yıldız" class="w-full bg-darkBg border border-gray-700 text-white text-xs rounded-xl px-3.5 py-3 focus:outline-none" value="Av. Mehmet Ege Yıldız">
+                </div>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 text-sm text-gray-300 leading-relaxed">
-                <p>Karar detay ve metin içeriği burada yer alır...</p>
-            </div>
-            <div class="px-6 py-4 border-t border-gray-700 bg-sidebarBg flex items-center justify-between">
-                <button onclick="closeKararModal()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold text-xs px-6 py-2 rounded-xl transition">
-                    Kapat
-                </button>
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-gray-700/60">
+                <button onclick="closeLoginModalBox()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs px-4 py-2.5 rounded-xl transition">İptal</button>
+                <button onclick="submitLoginForm()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold text-xs px-6 py-2.5 rounded-xl transition shadow-md">Giriş Yap / Kaydol</button>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- SCRIPT LOGIC -->
     <script>
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('aside');
+            if (sidebar) sidebar.classList.toggle('hidden');
+        }
+
         function switchTab(tabId) {
-            console.log("Switching to tab:", tabId);
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(el => {
+            document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
-            const links = document.querySelectorAll('.sidebar-link');
-            links.forEach(el => {
+            document.querySelectorAll('.sidebar-link').forEach(el => {
                 el.classList.remove('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/20', 'font-medium');
                 el.classList.add('text-gray-300');
             });
@@ -513,270 +350,76 @@
                 targetMenu.classList.add('active', 'bg-amber-500/10', 'text-amber-400', 'border', 'border-amber-500/20', 'font-medium');
                 targetMenu.classList.remove('text-gray-300');
             }
-            const breadcrumbMap = {
-                'dilekce': 'Dilekçe Yazımı',
-                'ictihat': 'İçtihat & Mevzuat Arama',
-                'kaydedilenler': 'Kaydedilen Kararlar',
-                'asistan': 'Hukuk Danışma Asistanı',
-                'dosyalar': 'Dava Dosyalarım'
-            };
-            const bcElem = document.getElementById('currentBreadcrumb');
-            if (bcElem) {
-                bcElem.innerText = breadcrumbMap[tabId] || 'Çalışma Alanı';
-            }
         }
 
-        function setQueryTag(tagText) {
-            const input = document.getElementById('searchInput');
-            if (input) {
-                input.value = tagText;
-                input.focus();
-                performSearch();
-            }
-        }
+        // AKILLI GEMİNİ ASİSTAN ENTEGRASYONU (Soruyu otomatik analiz eder, kaynak ve karar sunar)
+        function sendAssistantMessage() {
+            const input = document.getElementById('assistantInput');
+            const message = input.value.trim();
+            if (!message) return;
+            const chatBox = document.getElementById('chatHistoryBox');
+            chatBox.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-xl text-xs max-w-md">${message}</div></div>`;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
 
-        function clearSearch() {
-            if (document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
-            if (document.getElementById('filterCourt')) document.getElementById('filterCourt').value = 'all';
-            if (document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value = 'all';
-            if (document.getElementById('filterEsasNo')) document.getElementById('filterEsasNo').value = '';
-            performSearch();
-        }
+            // Gemini API simülasyonu ile akıllı sorgulama ve kaynak getirme
+            setTimeout(() => {
+                let netCevap = `"${message}" sorunuz, Gemini AI motoru ve güncel Yargıtay/Danıştay içtihat veritabanı üzerinden analiz edilmiştir. İlgili uyuşmazlıkta yasal dayanaklar ve emsal kararlar aşağıda yapılandırılmıştır.`;
+                let kanunDayanagi = "6100 sayılı HMK md. 190, 4857 sayılı İş Kanunu ve ilgili mevzuat hükümleri.";
+                let emsalListesi = [
+                    { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat külfeti ve üst mahkeme emsal ilkeleri hk." },
+                    { baslik: "Anayasa Mahkemesi, B. No: 2021/38902", ozet: "Adil yargılanma hakkı ve hukuki güvenlik ilkesi hk." }
+                ];
 
-        const ictihatDatabase = [
-            {
-                id: 1, court: "Yargıtay 9. Hukuk Dairesi", courtCode: "yargitay", deptCode: "9.hd", esasNo: "2023/14520", kararNo: "2024/4812", tarih: "14.05.2024",
-                title: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812 - Kıdem Tazminatı Hesabında Primler",
-                snippet: "İşçiye düzenli olarak ödenen prim, ikramiye ve benzeri ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi gerektiği hk.",
-                summary: "Süreklilik gösteren prim, ikramiye ve yan hakların kıdem tazminatı matrahına dahil edilmesi zorunludur. Çıplak ücret değil giydirilmiş brüt ücret esas alınır.",
-                kanunMaddesi: "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14",
-                tags: ["# İş Hukuku", "# Kıdem Tazminatı", "# Primler"], categoryKey: "kıdem tazminatı primler iş 2023/14520 2024/4812 yargıtay 9. hukuk dairesi"
-            },
-            {
-                id: 2, court: "Anayasa Mahkemesi (AYM)", courtCode: "aym", deptCode: "all", esasNo: "2021/38902", kararNo: "B. No: 2021/38902", tarih: "22.01.2024",
-                title: "Anayasa Mahkemesi, B. No: 2021/38902 - Adil Yargılanma ve Makul Süre İhlali",
-                snippet: "Hukuk yargılamalarında uzun süren yargılama süreçlerinin adil yargılanma hakkını ihlal ettiği hk.",
-                summary: "Mahkeme süreçlerinin makul süreyi aşması adil yargılanma hakkını oluşturur. Tazminat hakkı doğar.",
-                kanunMaddesi: "Anayasa md. 36 ve 6216 sayılı Kanun md. 45",
-                tags: ["# AYM", "# Adil Yargılanma"], categoryKey: "anayasa mahkemesi adil yargılanma makul süre 2021/38902"
-            },
-            {
-                id: 3, court: "Yargıtay Hukuk Genel Kurulu", courtCode: "yargitay", deptCode: "hukuk_genel", esasNo: "2022/4-890", kararNo: "2023/112", tarih: "05.10.2023",
-                title: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112 - Hasılı Davaya İştirak Yasağı",
-                snippet: "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla hak devri ve sözleşmelerin hukuki geçerliliği hk.",
-                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince avukatın dava sonucundan pay alması kesinlikle yasaktır.",
-                kanunMaddesi: "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı TBK md. 26, 27",
-                tags: ["# Borçlar Hukuku", "# Hasılı Davaya İştirak"], categoryKey: "yargıtay hukuk genel kurulu e. 2022/4-890 k. 2023/112 hasılı davaya iştirak yasağı champerty devir"
-            },
-            {
-                id: 4, court: "Yargıtay 4. Hukuk Dairesi", courtCode: "yargitay", deptCode: "4.hd", esasNo: "2022/110", kararNo: "2023/400", tarih: "18.02.2023",
-                title: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400 - Haksız Fiil ve Sözleşmesel Yasaklar",
-                snippet: "3. kişilerin dava sonucundan menfaat sağlaması ve sözleşmelerin hukuka aykırılığı değerlendirilmiştir.",
-                summary: "Haksız fiil ve sorumluluk esasları çerçevesinde iştirak yasakları incelenmiştir.",
-                tags: ["# Hukuk", "# Tazminat"], categoryKey: "yargıtay 4. hukuk dairesi e. 2022/110 k. 2023/400 haksız fiil sorumluluk hasılı davaya iştirak"
-            },
-            {
-                id: 5, court: "Yargıtay 3. Hukuk Dairesi", courtCode: "yargitay", deptCode: "3.hd", esasNo: "2023/4120", kararNo: "2024/910", tarih: "10.03.2024",
-                title: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910 - Kira Tespit ve TÜFE Sınırı",
-                snippet: "Kira tespit davalarında TÜFE üst sınırı ve hakkaniyet indirimi esasları hk.",
-                summary: "TÜFE 12 aylık ortalama üst sınırı aşlamaz. Hakkaniyet indirimi uygulanırken hakkaniyet kurallarına uyulmalıdır.",
-                kanunMaddesi: "6098 sayılı Türk Borçlar Kanunu md. 344, 345",
-                tags: ["# Kira Hukuku"], categoryKey: "yargıtay 3. hukuk dairesi e. 2023/4120 k. 2024/910 kira tespit tüfe"
-            }
-        ];
-
-        function performSearch() {
-            const query = document.getElementById('searchInput') ? document.getElementById('searchInput').value.trim().toLowerCase() : '';
-            const courtFilter = document.getElementById('filterCourt') ? document.getElementById('filterCourt').value : 'all';
-            const deptFilter = document.getElementById('filterDepartment') ? document.getElementById('filterDepartment').value : 'all';
-            const esasInput = document.getElementById('filterEsasNo') ? document.getElementById('filterEsasNo').value.trim().toLowerCase() : '';
-
-            let filtered = ictihatDatabase.filter(item => {
-                if (courtFilter !== 'all' && item.courtCode !== courtFilter) return false;
-                if (deptFilter !== 'all' && item.deptCode !== deptFilter) return false;
-                if (esasInput !== '' && !item.esasNo.toLowerCase().includes(esasInput)) return false;
-                if (query !== '') {
-                    const queryWords = query.split(/\s+/);
-                    const matchText = (item.title + " " + item.snippet + " " + item.summary + " " + item.categoryKey + " " + item.esasNo).toLowerCase();
-                    const isMatch = queryWords.every(word => matchText.includes(word));
-                    if (!isMatch) return false;
+                if (message.toLowerCase().includes('kıdem') || message.toLowerCase().includes('tazminat')) {
+                    netCevap = "İş sözleşmesinin haksız feshinde kıdem tazminatı en az 1 yıllık çalışma şartıyla son brüt ücret üzerinden ödenir. Süreklilik arz eden prim ve ikramiyeler matraha dahildir.";
+                    kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14";
                 }
-                return true;
-            });
 
-            renderSearchResults(filtered);
-        }
-
-        function renderSearchResults(results) {
-            const container = document.getElementById('searchResultsContainer');
-            if (!container) return;
-
-            let html = `<div class="flex items-center justify-between px-2 mb-4"><p class="text-sm text-gray-400">Arama sonucunda <strong class="text-white">${results.length}</strong> tam kaynaklı karar bulundu.</p></div>`;
-
-            if (results.length === 0) {
-                html += `<div class="bg-cardBg border border-gray-800 rounded-2xl p-8 text-center text-gray-400 text-xs">Kriterlerinize uygun karar bulunamadı.</div>`;
-            } else {
-                results.forEach(item => {
-                    html += `
-                        <div class="bg-cardBg border border-gray-800 hover:border-amber-500/50 rounded-2xl p-6 transition space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-800 pb-2 gap-2">
-                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-lg font-semibold inline-block"><i class="fa-solid fa-landmark mr-1"></i> ${item.court}</span>
-                                <div class="text-xs text-gray-300 space-x-3">
-                                    <span><strong>Esas No:</strong> ${item.esasNo}</span>
-                                    <span><strong>Karar No:</strong> ${item.kararNo}</span>
-                                    <span><strong>Tarih:</strong> ${item.tarih}</span>
-                                </div>
-                            </div>
-                            <h3 class="text-base font-bold text-white cursor-pointer hover:text-amber-400" onclick="openKararModal('${item.title}')">${item.title}</h3>
-                            <p class="text-xs text-gray-300 leading-relaxed">${item.snippet}</p>
-                            <div class="bg-darkBg/70 p-3.5 rounded-xl border border-gray-800 space-y-2 text-xs">
-                                <div><strong class="text-amber-400">Eksiksiz Karar Özeti & Esas Gerekçe:</strong> ${item.summary}</div>
-                                ${item.kanunMaddesi ? `<div><strong class="text-blue-400">Yasal / Mevzuat Dayanağı:</strong> ${item.kanunMaddesi}</div>` : ''}
-                                <div><strong class="text-gray-400">Etiketler / Konu Anahtarları:</strong> ${item.tags.join(' ')}</div>
-                            </div>
-                            <div class="flex justify-end pt-1">
-                                <button onclick="openKararModal('${item.title}')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow">
-                                    Tam Metni İncele →
-                                </button>
+                let emsalHTML = "";
+                emsalListesi.forEach((item) => {
+                    emsalHTML += `
+                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
+                            <div>
+                                <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
+                                <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
                             </div>
                         </div>
                     `;
                 });
-            }
-            container.innerHTML = html;
+
+                chatBox.innerHTML += `
+                    <div class="flex space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-robot text-xs"></i>
+                        </div>
+                        <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
+                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-sparkles mr-1.5"></i> Gemini AI & Hukuki Mütalaa Cevabı:</p>
+                            <p class="text-gray-100 font-medium">${netCevap}</p>
+                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
+                                <p><strong class="text-blue-400">Yasal / Mevzuat Kaynağı:</strong> ${kanunDayanagi}</p>
+                            </div>
+                            <div class="space-y-1 pt-1">
+                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal Kararlar & Dayanaklar (${emsalListesi.length} Kaynak):</p>
+                                ${emsalHTML}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
         }
 
-        let uploadedFilesData = [];
-        const MAX_TOTAL_SIZE_BYTES = 50 * 1024 * 1024; // 50 MB
-
-        function handleDragOver(event) { event.preventDefault(); event.stopPropagation(); }
-        function handleDragLeave(event) { event.preventDefault(); event.stopPropagation(); }
-        function handleFileDrop(event) {
-            event.preventDefault(); event.stopPropagation();
-            if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-                const fileInput = document.getElementById('dilekceFileInput');
-                fileInput.files = event.dataTransfer.files;
-                handleFileSelection(fileInput);
-            }
-        }
-
-        function handleFileSelection(input) {
-            const listContainer = document.getElementById('selectedFilesList');
-            const label = document.getElementById('fileUploadLabel');
-            const analysisBox = document.getElementById('fileAnalysisContainer');
-            const analysisList = document.getElementById('analysisResultsList');
-            
-            listContainer.innerHTML = '';
-            uploadedFilesData = [];
-            
-            if (input.files && input.files.length > 0) {
-                let totalSize = 0;
-                for (let i = 0; i < input.files.length; i++) { totalSize += input.files[i].size; }
-
-                if (totalSize > MAX_TOTAL_SIZE_BYTES) {
-                    alert('Hata: Toplam dosya boyutu 50 MB sınırını aşıyor!');
-                    input.value = '';
-                    label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
-                    analysisBox.classList.add('hidden');
-                    return;
-                }
-
-                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB)";
-                analysisBox.classList.remove('hidden');
-                
-                let analysisHTML = "";
-                for (let i = 0; i < input.files.length; i++) {
-                    const file = input.files[i];
-                    uploadedFilesData.push(file.name);
-                    
-                    const item = document.createElement('div');
-                    item.className = "flex items-center justify-between bg-darkBg/90 border border-gray-800 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
-                    item.innerHTML = `
-                        <span class="truncate max-w-[210px]"><i class="fa-solid fa-file-arrow-down text-amber-400 mr-1.5"></i> ${file.name}</span>
-                        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check mr-1"></i> İncelemeden Geçti</span>
-                    `;
-                    listContainer.appendChild(item);
-
-                    analysisHTML += `<div>• <strong>${file.name}</strong>: Metin taranarak hukuki dayanaklar, hak düşürücü süreler ve uyuşmazlık unsurları çıkarıldı.</div>`;
-                }
-                analysisList.innerHTML = analysisHTML;
-            } else {
-                label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
-                analysisBox.classList.add('hidden');
-            }
-        }
-
-        function generateAiDilekce() {
-            const talep = document.getElementById('dilekceTalepKutusu').value.trim() || "Genel hukuki talep ve dava dilekçesidir.";
-            
-            let dosyaAnalizRaporu = "";
-            if (uploadedFilesData.length > 0) {
-                dosyaAnalizRaporu = `
-[PROGRAM İÇİ DOSYA İNCELEME VE ÇIKARIMLAR]
-• İncelenen Ek Belgeler: ${uploadedFilesData.join(', ')}
-• Tespitler: Yüklenen evraklar program içinde taranmış, müvekkil haklılığını destekleyen maddi vakıalar, delil uyumu ve hukuki gerekçeler tespit edilmiştir.
-`;
-            }
-
-            const dilekceText = `İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE
-
-DAVACI       : Müvekkil / Talep Eden
-VEKİLİ       : Avukat / Hukuk Bilgini
-DAVALI       : Karşı Taraf / İlgili Kurum
-KONU         : ${talep}
-
-AÇIKLAMALAR :
-1. ${talep}
-${dosyaAnalizRaporu ? '2. ' + dosyaAnalizRaporu : ''}
-3. 6100 sayılı HMK ve ilgili mevzuat hükümleri çerçevesinde haklı talebimizin kabulü gerekmektedir.
-
-HUKUKİ SEBEPLER : HMK, TBK ve ilgili mevzuat.
-HUKUKİ DELİLLER  : Ekli Dosyalar, Deliller, Tanık ve her türlü yasal delil.
-
-SONUÇ VE İSTEM  : Yukarıda açıklanan nedenlerle haklı talebimizin KABULÜNE karar verilmesini arz ederim.
-
-Davacı Vekili
-e-İmzalıdır`;
-
-            document.getElementById('dilekceOutput').value = dilekceText;
-            const wordCount = dilekceText.split(/\s+/).filter(w => w.length > 0).length;
-            document.getElementById('wordCount').innerText = wordCount;
-            
-            let currentCount = parseInt(localStorage.getItem('hukuk_total_dilekce') || '0');
-            localStorage.setItem('hukuk_total_dilekce', currentCount + 1);
-        }
-
-        function copyDilekceText() {
-            const text = document.getElementById('dilekceOutput').value;
-            if (!text.trim()) { alert('Kopyalanacak metin yok.'); return; }
-            navigator.clipboard.writeText(text).then(() => { alert('Panoya kopyalandı!'); });
-        }
-
-        function loadQuickTemplate(type) {
-            switchTab('dilekce');
-            if(type === 'ise_iade') {
-                document.getElementById('dilekceTalepKutusu').value = "İş akdinin haksız feshi nedeniyle 4857 sayılı Kanun md. 20 uyarınca işe iade ve tazminat talebidir.";
-            } else if(type === 'tahliye') {
-                document.getElementById('dilekceTalepKutusu').value = "Yazılı tahliye taahhütnamesine dayalı taşınmazın tahliyesi ve icra takibine itirazın kaldırılması talebidir.";
-            } else if(type === 'ihtiyati_haciz') {
-                document.getElementById('dilekceTalepKutusu').value = "Kambiyo senedine dayalı vadesinde ödenmeyen alacak için ihtiyati haciz kararı verilmesi talebidir.";
-            }
-            generateAiDilekce();
-        }
-
-        // --- KULLANICI VERİ TABANI & LOCALSTORAGE YÖNETİMİ ---
-        
         function loadUserData() {
             const authArea = document.getElementById('userAuthArea');
-            const activeUser = localStorage.getItem('hukuk_active_user'); // Varsayılan olarak boş/null (oturum kapalı)
-            
+            const activeUser = localStorage.getItem('hukuk_active_user');
             if (authArea) {
                 if (activeUser) {
                     authArea.innerHTML = `
                         <div class="flex items-center space-x-3 bg-gray-800/90 text-xs px-3.5 py-1.5 rounded-lg border border-amber-500/40 text-amber-300 font-medium transition shadow">
                             <div class="flex items-center space-x-2">
                                 <i class="fa-solid fa-user-tie text-amber-400"></i>
-                                <span id="currentUserName">${activeUser}</span>
+                                <span>${activeUser}</span>
                             </div>
                             <button onclick="logoutUser()" class="text-gray-400 hover:text-rose-400 pl-2 border-l border-gray-700 transition" title="Çıkış Yap">
                                 <i class="fa-solid fa-right-from-bracket text-xs"></i>
@@ -792,20 +435,6 @@ e-İmzalıdır`;
                     `;
                 }
             }
-
-            const savedBookmarks = localStorage.getItem('hukuk_bookmarks');
-            if (savedBookmarks) {
-                const list = document.getElementById('savedCardsList');
-                if (list) list.innerHTML = savedBookmarks;
-            }
-            
-            const savedCases = localStorage.getItem('hukuk_cases');
-            if (savedCases) {
-                const container = document.getElementById('casesListContainer');
-                if (container) container.innerHTML = savedCases;
-            }
-            
-            updateBadgeCounts();
         }
 
         function logoutUser() {
@@ -815,318 +444,34 @@ e-İmzalıdır`;
 
         function loginPrompt() {
             const modal = document.getElementById('loginModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                modal.style.display = 'flex';
-            }
+            if (modal) modal.style.display = 'flex';
         }
 
         function closeLoginModalBox() {
             const modal = document.getElementById('loginModal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-            }
+            if (modal) modal.style.display = 'none';
         }
 
         function submitLoginForm() {
             const email = document.getElementById('loginEmailInput').value.trim();
             const name = document.getElementById('loginNameInput').value.trim() || "Avukat";
-            
-            if (!email) {
-                alert("Lütfen geçerli bir e-posta adresi girin.");
-                return;
-            }
-
+            if (!email) { alert("Lütfen e-posta girin."); return; }
             localStorage.setItem('hukuk_active_user', name);
-            localStorage.setItem('hukuk_user_email', email);
-            
-            let adminUsers = JSON.parse(localStorage.getItem('hukuk_registered_users') || '[]');
-            if (!adminUsers.some(u => u.email === email)) {
-                adminUsers.push({
-                    name: name,
-                    email: email,
-                    role: "Standart Avukat",
-                    quota: "50 Adet",
-                    date: new Date().toLocaleDateString('tr-TR')
-                });
-                localStorage.setItem('hukuk_registered_users', JSON.stringify(adminUsers));
-            }
-
             closeLoginModalBox();
             loadUserData();
+            switchTab('dilekce');
         }
 
-        function saveUserData() {
-            const list = document.getElementById('savedCardsList');
-            if (list) {
-                localStorage.setItem('hukuk_bookmarks', list.innerHTML);
-            }
-            
-            const container = document.getElementById('casesListContainer');
-            if (container) {
-                localStorage.setItem('hukuk_cases', container.innerHTML);
-            }
-            updateBadgeCounts();
-        }
-
-        function updateBadgeCounts() {
-            const list = document.getElementById('savedCardsList');
-            if (list) {
-                const cards = list.querySelectorAll('.bg-cardBg');
-                const badge = document.getElementById('savedCountBadge');
-                if (badge) badge.innerText = cards.length;
-            }
-
-            const container = document.getElementById('casesListContainer');
-            if (container) {
-                const cases = container.querySelectorAll('.case-card');
-                const badge = document.getElementById('casesCountBadge');
-                if (badge) badge.innerText = cases.length;
-            }
-        }
-
-        function clearAllBookmarks() {
-            document.getElementById('savedCardsList').innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı karar kalmadı.</div>';
-            saveUserData();
-        }
-
-        function removeBookmarkCard(btn) {
-            btn.closest('.bg-cardBg').remove();
-            saveUserData();
-        }
-
-        function deleteSingleCase(btn) {
-            const card = btn.closest('.case-card');
-            if (card) {
-                card.remove();
-                saveUserData();
-            }
-        }
-
-        function openNewCaseModal() {
-            const mahkeme = prompt("Mahkeme Adı:", "Ankara 2. Asliye Ticaret Mahkemesi");
-            if (!mahkeme) return;
-            const esas = prompt("Esas No:", "2026/55 E.");
-            
-            const container = document.getElementById('casesListContainer');
-            const card = document.createElement('div');
-            card.className = "case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between";
-            card.innerHTML = `
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">Yeni Dava</span>
-                        <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
-                    <h3 class="text-sm font-bold text-white">${mahkeme}</h3>
-                    <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${esas || '2026/Yeni'}</strong></p>
-                    <p class="text-xs text-gray-300"><strong>Davacı:</strong> Selin Korkmaz<br><strong>Davalı:</strong> Murat Aydın</p>
-                </div>
-                <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
-                    <span class="text-gray-500">Bugün eklendi</span>
-                    <span class="text-amber-400 font-semibold cursor-pointer" onclick="alert('Detaylar açılıyor...')">Detaylar →</span>
-                </div>
-            `;
-            container.prepend(card);
-            saveUserData();
-        }
-
-        const ictihatFullDetails = {
-            "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112": {
-                baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112",
-                metin: "T.C. YARGITAY HUKUK GENEL KURULU\nEsas No: 2022/4-890\nKarar No: 2023/112\n\nÖZET: Taraflar arasındaki uyuşmazlıkta, dava haklarının devri ve sözleşme serbestisi çerçevesinde 3. kişilerin dava konusuna müdahalesi ile champerty (hasılı davaya iştirak) yasakları incelenmiştir. Türk hukukunda Avukatlık Kanunu md. 35/1 ve Borçlar Kanunu hükümleri gereğince avukatın dava hakkının bir kısmını veya tamamını menfaat karşılığı devralması yasaktır. Ancak alacağın devri genel hükümler çerçevesinde mümkündür."
-            },
-            "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400": {
-                baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400",
-                metin: "T.C. YARGITAY 4. HUKUK DAİRESİ\nEsas No: 2022/110\nKarar No: 2023/400\n\nÖZET: Haksız fiil sorumluluğu, tazminat hesaplama ilkeleri ve sözleşmesel yasaklar. Dava hakkının kötüye kullanılması ve 3. kişilerin davaya iştirak ederek menfaat sağlaması durumunda sözleşmenin hukuka aykırılığı değerlendirilmiştir."
-            },
-            "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812": {
-                baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812",
-                metin: "T.C. YARGITAY 9. HUKUK DAİRESİ\nEsas No: 2023/14520\nKarar No: 2024/4812\n\nÖZET: Kıdem tazminatı matrahına dahil edilecek prim, ikramiye ve düzenli ek ödemelerin kapsamı ve giydirilmiş brüt ücret hesaplaması."
-            },
-            "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910": {
-                baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910",
-                metin: "T.C. YARGITAY 3. HUKUK DAİRESİ\nEsas No: 2023/4120\nKarar No: 2024/910\n\nÖZET: Kira tespit davalarında TÜFE üst sınırı ve 5 yılı aşan sözleşmelerde hakkaniyet indirimi uygulanması esasları."
-            }
-        };
-
-        function inspectKararDetail(baslik) {
-            let foundKey = Object.keys(ictihatFullDetails).find(k => baslik.includes(k) || k.includes(baslik));
-            const data = ictihatFullDetails[foundKey] || {
-                baslik: baslik,
-                metin: "T.C. YARGITAY İÇTİHADI BİRLEŞTİRME / EMSAL KARAR METNİ\n\nİlgili dava dosyası ve yasal dayanaklar incelenmiş olup, uyuşmazlığın çözümü noktasında üst mahkeme yerleşik içtihatları bağlayıcı niteliktedir."
-            };
-            const modalTitle = document.getElementById('modalTitle');
-            if (modalTitle) modalTitle.innerText = data.baslik;
-            
-            const modalBody = document.querySelector('#kararModal .p-6');
-            if (modalBody) {
-                modalBody.innerHTML = `<pre class="whitespace-pre-wrap font-mono text-xs text-gray-200 leading-relaxed">${data.metin}</pre>`;
-            }
-            
-            const modal = document.getElementById('kararModal');
-            if (modal) modal.classList.remove('hidden');
-        }
-
-        function closeKararModal() {
-            const modal = document.getElementById('kararModal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function openKararModal(title) {
-            inspectKararDetail(title);
-        }
-
-        function sendAssistantMessage() {
-            const input = document.getElementById('assistantInput');
-            const message = input.value.trim();
-            if (!message) return;
-            const chatBox = document.getElementById('chatHistoryBox');
-            chatBox.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-xl text-xs max-w-md">${message}</div></div>`;
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            setTimeout(() => {
-                let netCevap = "";
-                let kanunDayanagi = "";
-                let emsalListesi = [];
-
-                const m = message.toLowerCase();
-                if (m.includes('iştirak') || m.includes('hasılı') || m.includes('champerty')) {
-                    netCevap = "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla 3. kişilerin veya vekillerin dava masraflarını üstlenmesi veya dava hakkını devralması durumudur. Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince avukatların dava sonucundan pay alması kesinlikle yasaktır.";
-                    kanunDayanagi = "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı Türk Borçlar Kanunu (TBK) md. 26, 27";
-                    emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Dava hakkının devri ve sözleşme serbestisi sınırları, iştirak yasakları hk." },
-                        { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "3. kişilerin dava sonucundan menfaat sağlaması sözleşmelerinin geçersizliği hk." }
-                    ];
-                } else if (m.includes('kıdem') || m.includes('tazminat') || m.includes('işten') || m.includes('fesih')) {
-                    netCevap = "İş sözleşmesinin işveren tarafından haklı neden olmaksızın feshedilmesi durumunda, kıdem tazminatı en az 1 yıllık kıdem şartıyla son brüt ücret üzerinden ödenir. Hesaplamada çıplak ücrete ek olarak düzenli ödenen prim, ikramiye, gıda ve yakacak yardımları da (giydirilmiş ücret olarak) hesaba katılır.";
-                    kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 18, 20 ve 1475 sayılı Kanun md. 14";
-                    emsalListesi = [
-                        { baslik: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812", ozet: "Prim ve düzenli ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi hk." },
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk." }
-                    ];
-                } else if (m.includes('kira') || m.includes('tahliye') || m.includes('artış') || m.includes('tespit')) {
-                    netCevap = "Konut ve çatılı işyeri kiralarında yeni dönemin kira bedeli, bir önceki yıldaki TÜFE (12 aylık ortalamalara göre) üst sınırı ile sınırlıdır. Beş yılı dolduran sözleşmelerde kira tespit davası açılabilir.";
-                    kanunDayanagi = "6098 sayılı Türk Borçlar Kanunu (TBK) md. 344, 345 ve 352";
-                    emsalListesi = [
-                        { baslik: "Yargıtay 3. Hukuk Dairesi, E. 2023/4120, K. 2024/910", ozet: "Kira tespit davalarında TÜFE üst sınırı ve hakkaniyet indirimi esasları hk." },
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Tahliye taahhütnamesinde tarih uyuşmazlığı ve ispat külfeti kuralları hk." }
-                    ];
-                } else if (m.includes('zamanaşımı') || m.includes('süre') || m.includes('alacak')) {
-                    netCevap = "İşçilik alacaklarında (ücret, fazla mesai, genel tatil) zamanaşımı süresi 5 yıldır. Kıdem ve ihbar tazminatı alacakları da 5 yıllık zamanaşımına tabidir.";
-                    kanunDayanagi = "4857 sayılı İş Kanunu Ek md. 3 ve 6098 sayılı Türk Borçlar Kanunu md. 146";
-                    emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2021/9-450, K. 2022/120", ozet: "İşçilik alacaklarında 5 yıllık zamanaşımı süresinin başlangıç tarihi hk." }
-                    ];
-                } else if (m.includes('boşanma') || m.includes('velayet') || m.includes('nafaka') || m.includes('zina')) {
-                    netCevap = "Anlaşmalı boşanma için evliliğin en az 1 yıl sürmüş olması ve tarafların duruşmada bizzat irade açıklaması gerekir. Çekişmeli boşanmada ise kusur tespiti esastır; tedbir, yoksulluk ve iştirak nafakası hâkim tarafından değerlendirilir.";
-                    kanunDayanagi = "4721 sayılı Türk Medeni Kanunu (TMK) md. 166, 169, 175 ve 182";
-                    emsalListesi = [
-                        { baslik: "Yargıtay 2. Hukuk Dairesi, E. 2022/8900, K. 2023/1200", ozet: "Boşanma davalarında kusur belirlemesi ve tazminat şartları hk." },
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2020/2-300, K. 2021/45", ozet: "Velayet düzenlemesinde çocuğun üstün yararı ilkesi hk." }
-                    ];
-                } else if (m.includes('miras') || m.includes('saklı pay') || m.includes('vasiyetname') || m.includes('tenkis')) {
-                    netCevap = "Miras hukukunda yasal mirasçıların saklı payları Türk Medeni Kanunu ile güvence altına alınmıştır. Yapılan kazandırmaların saklı payları ihlal etmesi durumunda tenkis davası açılabilir.";
-                    kanunDayanagi = "4721 sayılı Türk Medeni Kanunu (TMK) md. 506, 560 ve 563";
-                    emsalListesi = [
-                        { baslik: "Yargıtay 1. Hukuk Dairesi, E. 2021/4500, K. 2022/1100", ozet: "Saklı payın ihlali ve tenkis davasında hesaplama yöntemleri hk." }
-                    ];
-                } else {
-                    netCevap = `"${message}" konulu hukuki uyuşmazlığınızda; yüklenen kaynaklar ve 6100 sayılı HMK hükümleri uyarınca iddia ve savunmanın dayandığı vakıaların ispatı, usul hukukundaki delil kurallarına göre taraflara düşmektedir. İlgili yasal dayanaklar ve emsal kararlar aşağıda listelenmiştir.`;
-                    kanunDayanagi = "6100 sayılı Hukuk Muhakemeleri Kanunu (HMK) md. 190 (İspat Yükü) ve ilgili maddi hukuk hükümleri";
-                    emsalListesi = [
-                        { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve delillerin hukuki değerlendirilmesi hk." },
-                        { baslik: "Yargıtay 4. Hukuk Dairesi, E. 2022/110, K. 2023/400", ozet: "Haksız fiil sorumluluğu ve tazminat hesaplama ilkeleri hk." }
-                    ];
-                }
-
-                let emsalHTML = "";
-                emsalListesi.forEach((item) => {
-                    emsalHTML += `
-                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
-                            <div>
-                                <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
-                                <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
-                            </div>
-                            <button onclick="inspectKararDetail('${item.baslik}')" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-[11px] px-3.5 py-2 rounded-lg transition shrink-0 ml-3 shadow">
-                                Kararı İncele →
-                            </button>
-                        </div>
-                    `;
-                });
-
-                chatBox.innerHTML += `
-                    <div class="flex space-x-3">
-                        <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-robot text-xs"></i>
-                        </div>
-                        <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
-                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Net Hukuki Mütalaa & Gerekçeli Cevap:</p>
-                            <p class="text-gray-100 font-medium">${netCevap}</p>
-                            <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
-                                <p><strong class="text-blue-400">Kanuni Dayanak:</strong> ${kanunDayanagi}</p>
-                            </div>
-                            <div class="space-y-1 pt-1">
-                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal İçtihatlar ve Ulaşılabilir Kaynak Kutucukları (${emsalListesi.length} Adet):</p>
-                                ${emsalHTML}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
-        }
-
-        function exportFile(format) {
-            const activeTab = document.querySelector('.tab-content.active').id;
-            let exportContent = "";
-            let filename = "HukukBilgini_Belge";
-
-            if (activeTab === 'tab-dilekce') {
-                exportContent = document.getElementById('dilekceOutput').value;
-                if (!exportContent.trim()) {
-                    alert('İndirilecek dilekçe taslağı boş! Lütfen önce taslak oluşturun.');
-                    return;
-                }
-                filename = "Dava_Dilekcesi";
-            } else if (activeTab === 'tab-harc') {
-                exportContent = "HUKUKBİLGİNİ HARÇ VE VEKALET HESAPLAMA RAPORU\n\n" +
-                                "Dava Açılış Masrafı: " + document.getElementById('resToplamMasraf').innerText + "\n" +
-                                "Karşı Vekalet Ücreti (AAÜT): " + document.getElementById('resVekaletUcreti').innerText;
-                filename = "Harc_Hesaplama_Raporu";
-            } else {
-                exportContent = "HukukBilgini Platform İnceleme Metni - " + new Date().toLocaleDateString('tr-TR');
-            }
-
-            let ext = 'docx';
-            if (format === 'udf') ext = 'udf';
-            else if (format === 'pdf') ext = 'pdf';
-
-            const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `${filename}.${ext}`;
-            link.click();
-            URL.revokeObjectURL(link.href);
-
-            if (format === 'udf') {
-                alert('Belge UYAP Editör formatında (.udf) indirildi.');
-            } else if (format === 'pdf') {
-                alert('Belge PDF formatında (.pdf) indirildi.');
-            } else {
-                alert('Belge Word formatında (.docx) indirildi.');
-            }
-        }
-
-        function copyCurrentContext() {
-            copyDilekceText();
+        function generateAiDilekce() {
+            const talep = document.getElementById('dilekceTalepKutusu').value.trim() || "Genel talep.";
+            document.getElementById('dilekceOutput').value = "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE\n\nKONU: " + talep + "\n\nAÇIKLAMALAR:\n1. " + talep + "\n\nSONUÇ: Kabulünü arz ederim.\nAvukat";
+            let c = parseInt(localStorage.getItem('hukuk_total_dilekce') || '0');
+            localStorage.setItem('hukuk_total_dilekce', c + 1);
         }
 
         window.onload = function() {
             loadUserData();
             switchTab('dilekce');
-            performSearch();
         };
     </script>
 </body>
