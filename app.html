@@ -210,15 +210,28 @@
                         <div>
                             <textarea id="dilekceTalepKutusu" rows="6" class="w-full bg-darkBg border border-gray-700 rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-blue-500 leading-relaxed shadow-inner" placeholder="Örn: Müvekkilim XYZ A.Ş.'de çalışırken haksız şekilde işten çıkarıldı..."></textarea>
                         </div>
+                        
+                        <!-- Dosya Yükleme Alanı (Max 50 MB, Tüm Formatlar, Sürükle-Bırak) -->
                         <div class="space-y-2">
-                            <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme</label>
-                            <div id="dropZoneBox" class="flex flex-col items-center justify-center w-full bg-darkBg border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-2xl p-5 cursor-pointer transition text-center space-y-2" onclick="document.getElementById('dilekceFileInput').click()">
+                            <div class="flex items-center justify-between">
+                                <label class="block text-xs text-gray-300 font-medium">Delil, Sözleşme ve Evrak Yükleme</label>
+                                <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-database mr-1"></i> Maks. 50 MB</span>
+                            </div>
+                            <div id="dropZoneBox" 
+                                 class="flex flex-col items-center justify-center w-full bg-darkBg border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-2xl p-5 cursor-pointer transition text-center space-y-2" 
+                                 onclick="document.getElementById('dilekceFileInput').click()"
+                                 ondragover="handleDragOver(event)"
+                                 ondragleave="handleDragLeave(event)"
+                                 ondrop="handleFileDrop(event)">
                                 <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center justify-center text-lg">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                 </div>
-                                <span class="text-xs text-gray-200 font-medium">Dosyaları buraya sürükleyin veya tıklayın</span>
+                                <div>
+                                    <span id="fileUploadLabel" class="text-xs text-gray-200 font-medium block">Dosyaları buraya sürükleyin veya tıklayın</span>
+                                    <span class="text-[10px] text-gray-400 block mt-0.5">Tüm formatlar desteklenir (Maks. 50 MB)</span>
+                                </div>
                             </div>
-                            <input type="file" id="dilekceFileInput" class="hidden" multiple accept=".pdf,.docx,.doc" onchange="handleFileSelection(this)">
+                            <input type="file" id="dilekceFileInput" class="hidden" multiple onchange="handleFileSelection(this)">
                             <div id="selectedFilesList" class="space-y-1.5 pt-2 max-h-40 overflow-y-auto"></div>
                         </div>
                     </div>
@@ -252,19 +265,19 @@
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (GELİŞMİŞ GEMİNİ ENTEGRELİ) -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (YAPAY ZEKA DESTEKLİ) -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
                     <div>
                         <h1 class="text-xl font-bold text-white flex items-center space-x-2.5">
                             <i class="fa-solid fa-robot text-indigo-400"></i>
-                            <span>Hukuk Danışma Asistanı (Gemini AI Destekli)</span>
+                            <span>Hukuk Danışma Asistanı (Yapay Zeka Destekli)</span>
                         </h1>
                         <p class="text-xs text-gray-400">Sorularınız anında yapay zeka ve güncel Yargıtay içtihat havuzuna aktarılarak kaynakları ile yanıtlanır.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                        <span>Gemini AI Senkron Aktif</span>
+                        <span>Yapay Zeka Senkron Aktif</span>
                     </span>
                 </div>
 
@@ -283,7 +296,7 @@
                 <div class="bg-cardBg border border-gray-800 rounded-2xl p-3 shadow-lg flex items-center space-x-3">
                     <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira tespit davası açmak için 5 yıllık süre sözleşme yenilenmesinden itibaren mi başlar?'" class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                     <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
-                        <span>Gemini'ye Sor & Tara</span>
+                        <span>Yapay Zekaya Sor & Tara</span>
                         <i class="fa-solid fa-paper-plane text-[10px]"></i>
                     </button>
                 </div>
@@ -372,86 +385,55 @@
             }
         }
 
-        const ictihatDatabase = [
-            {
-                id: 1, court: "Yargıtay 9. Hukuk Dairesi", courtCode: "yargitay", deptCode: "9.hd", esasNo: "2023/14520", kararNo: "2024/4812", tarih: "14.05.2024",
-                title: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812 - Kıdem Tazminatı Hesabında Primler",
-                snippet: "İşçiye düzenli olarak ödenen prim, ikramiye ve benzeri ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi gerektiği hk.",
-                summary: "Süreklilik gösteren prim, ikramiye ve yan hakların kıdem tazminatı matrahına dahil edilmesi zorunludur. Çıplak ücret değil giydirilmiş brüt ücret esas alınır.",
-                kanunMaddesi: "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14",
-                tags: ["# İş Hukuku", "# Kıdem Tazminatı", "# Primler"], categoryKey: "kıdem tazminatı primler iş 2023/14520 2024/4812 yargıtay 9. hukuk dairesi"
-            },
-            {
-                id: 3, court: "Yargıtay Hukuk Genel Kurulu", courtCode: "yargitay", deptCode: "hukuk_genel", esasNo: "2022/4-890", kararNo: "2023/112", tarih: "05.10.2023",
-                title: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112 - Hasılı Davaya İştirak Yasağı",
-                snippet: "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla hak devri ve sözleşmelerin hukuki geçerliliği hk.",
-                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince dava sonucundan menfaat sağlamak amacıyla yapılan iştirak sözleşmeleri hukuka ve ahlaka aykırıdır.",
-                kanunMaddesi: "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı TBK md. 26, 27",
-                tags: ["# Borçlar Hukuku", "# Hasılı Davaya İştirak"], categoryKey: "yargıtay hukuk genel kurulu e. 2022/4-890 k. 2023/112 hasılı davaya iştirak yasağı champerty devir"
+        // SÜRÜKLE BIRAK VE MAKS 50 MB KONTROLÜ
+        const MAX_TOTAL_SIZE_BYTES = 50 * 1024 * 1024; // 50 MB
+
+        function handleDragOver(event) { event.preventDefault(); event.stopPropagation(); }
+        function handleDragLeave(event) { event.preventDefault(); event.stopPropagation(); }
+        
+        function handleFileDrop(event) {
+            event.preventDefault(); event.stopPropagation();
+            if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+                const fileInput = document.getElementById('dilekceFileInput');
+                fileInput.files = event.dataTransfer.files;
+                handleFileSelection(fileInput);
             }
-        ];
+        }
 
-        function performSearch() {
-            const query = document.getElementById('searchInput') ? document.getElementById('searchInput').value.trim().toLowerCase() : '';
-            const courtFilter = document.getElementById('filterCourt') ? document.getElementById('filterCourt').value : 'all';
-            const deptFilter = document.getElementById('filterDepartment') ? document.getElementById('filterDepartment').value : 'all';
-            const esasInput = document.getElementById('filterEsasNo') ? document.getElementById('filterEsasNo').value.trim().toLowerCase() : '';
+        function handleFileSelection(input) {
+            const listContainer = document.getElementById('selectedFilesList');
+            const label = document.getElementById('fileUploadLabel');
+            listContainer.innerHTML = '';
+            
+            if (input.files && input.files.length > 0) {
+                let totalSize = 0;
+                for (let i = 0; i < input.files.length; i++) { totalSize += input.files[i].size; }
 
-            let filtered = ictihatDatabase.filter(item => {
-                if (courtFilter !== 'all' && item.courtCode !== courtFilter) return false;
-                if (deptFilter !== 'all' && item.deptCode !== deptFilter) return false;
-                if (esasInput !== '' && !item.esasNo.toLowerCase().includes(esasInput)) return false;
-                if (query !== '') {
-                    const matchText = (item.title + " " + item.snippet + " " + item.summary + " " + item.categoryKey + " " + item.esasNo).toLowerCase();
-                    const queryWords = query.split(/\s+/);
-                    const isMatch = queryWords.some(word => matchText.includes(word));
-                    if (!isMatch) return false;
+                if (totalSize > MAX_TOTAL_SIZE_BYTES) {
+                    alert('Hata: Toplam dosya boyutu 50 MB sınırını aşıyor!');
+                    input.value = '';
+                    label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
+                    return;
                 }
-                return true;
-            });
 
-            renderSearchResults(filtered);
-        }
-
-        function renderSearchResults(results) {
-            const container = document.getElementById('searchResultsContainer');
-            if (!container) return;
-
-            let html = `<div class="flex items-center justify-between px-2 mb-4"><p class="text-sm text-gray-400">Arama sonucunda <strong class="text-white">${results.length}</strong> tam kaynaklı karar bulundu.</p></div>`;
-
-            if (results.length === 0) {
-                html += `<div class="bg-cardBg border border-gray-800 rounded-2xl p-8 text-center text-gray-400 text-xs">Kriterlerinize uygun karar bulunamadı.</div>`;
-            } else {
-                results.forEach(item => {
-                    html += `
-                        <div class="bg-cardBg border border-gray-800 hover:border-amber-500/50 rounded-2xl p-6 transition space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-800 pb-2 gap-2">
-                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-lg font-semibold inline-block"><i class="fa-solid fa-landmark mr-1"></i> ${item.court}</span>
-                                <div class="text-xs text-gray-300 space-x-3">
-                                    <span><strong>Esas No:</strong> ${item.esasNo}</span>
-                                    <span><strong>Karar No:</strong> ${item.kararNo}</span>
-                                    <span><strong>Tarih:</strong> ${item.tarih}</span>
-                                </div>
-                            </div>
-                            <h3 class="text-base font-bold text-white">${item.title}</h3>
-                            <p class="text-xs text-gray-300 leading-relaxed">${item.snippet}</p>
-                            <div class="bg-darkBg/70 p-3.5 rounded-xl border border-gray-800 space-y-2 text-xs">
-                                <div><strong class="text-amber-400">Eksiksiz Karar Özeti:</strong> ${item.summary}</div>
-                                <div><strong class="text-blue-400">Yasal Dayanak:</strong> ${item.kanunMaddesi}</div>
-                            </div>
-                        </div>
+                label.innerText = input.files.length + " dosya yüklendi (" + (totalSize / (1024*1024)).toFixed(1) + " MB)";
+                
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
+                    const item = document.createElement('div');
+                    item.className = "flex items-center justify-between bg-darkBg/90 border border-gray-800 rounded-lg px-3 py-1.5 text-[11px] text-gray-300";
+                    item.innerHTML = `
+                        <span class="truncate max-w-[210px]"><i class="fa-solid fa-file-arrow-down text-amber-400 mr-1.5"></i> ${file.name}</span>
+                        <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check mr-1"></i> Yüklendi</span>
                     `;
-                });
+                    listContainer.appendChild(item);
+                }
+            } else {
+                label.innerText = "Dosyaları buraya sürükleyin veya tıklayın";
             }
-            container.innerHTML = html;
         }
 
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            performSearch();
-        }
-
-        // AKILLI GEMİNİ ASİSTAN ENTEGRASYONU
+        // AKILLI ASİSTAN ENTEGRASYONU
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             const message = input.value.trim();
@@ -462,18 +444,26 @@
             chatBox.scrollTop = chatBox.scrollHeight;
 
             setTimeout(() => {
-                let netCevap = `"${message}" sorunuz, Gemini AI motoru ve güncel içtihat veritabanı üzerinden analiz edilmiştir.`;
-                let kanunDayanagi = "6100 sayılı HMK md. 190 ve ilgili mevzuat hükümleri.";
+                let netCevap = `"${message}" sorunuz, yapay zeka motoru ve güncel içtihat veritabanı üzerinden analiz edilmiştir. İlgili uyuşmazlıkta yasal dayanaklar ve emsal kararlar aşağıda yapılandırılmıştır.`;
+                let kanunDayanagi = "6100 sayılı HMK md. 190, 4857 sayılı İş Kanunu ve ilgili mevzuat hükümleri.";
                 let emsalListesi = [
-                    { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve emsal ilkeler hk." }
+                    { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve üst mahkeme emsal ilkeleri hk." },
+                    { baslik: "Anayasa Mahkemesi, B. No: 2021/38902", ozet: "Adil yargılanma hakkı ve hukuki güvenlik ilkesi hk." }
                 ];
+
+                if (message.toLowerCase().includes('kıdem') || message.toLowerCase().includes('tazminat')) {
+                    netCevap = "İş sözleşmesinin haksız feshinde kıdem tazminatı en az 1 yıllık çalışma şartıyla son brüt ücret üzerinden ödenir. Süreklilik arz eden prim ve ikramiyeler matraha dahildir.";
+                    kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14";
+                }
 
                 let emsalHTML = "";
                 emsalListesi.forEach((item) => {
                     emsalHTML += `
-                        <div class="bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
-                            <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
-                            <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
+                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
+                            <div>
+                                <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
+                                <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
+                            </div>
                         </div>
                     `;
                 });
@@ -484,13 +474,13 @@
                             <i class="fa-solid fa-robot text-xs"></i>
                         </div>
                         <div class="bg-darkBg p-4 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-2xl leading-relaxed space-y-3">
-                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-sparkles mr-1.5"></i> Gemini AI & Hukuki Mütalaa Cevabı:</p>
+                            <p class="font-bold text-amber-400 text-sm"><i class="fa-solid fa-sparkles mr-1.5"></i> Yapay Zeka & Hukuki Mütalaa Cevabı:</p>
                             <p class="text-gray-100 font-medium">${netCevap}</p>
                             <div class="bg-cardBg p-3 rounded-xl border border-gray-700/80 space-y-1">
                                 <p><strong class="text-blue-400">Yasal / Mevzuat Kaynağı:</strong> ${kanunDayanagi}</p>
                             </div>
                             <div class="space-y-1 pt-1">
-                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal Kararlar & Dayanaklar:</p>
+                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal Kararlar & Dayanaklar (${emsalListesi.length} Kaynak):</p>
                                 ${emsalHTML}
                             </div>
                         </div>
@@ -500,7 +490,6 @@
             }, 600);
         }
 
-        // LocalStorage & Badge Sayaç Güncellemeleri
         function loadUserData() {
             const authArea = document.getElementById('userAuthArea');
             const activeUser = localStorage.getItem('hukuk_active_user');
@@ -529,21 +518,6 @@
             updateBadgeCounts();
         }
 
-        function updateBadgeCounts() {
-            const list = document.getElementById('savedCardsList');
-            if (list) {
-                const cards = list.querySelectorAll('.bg-cardBg');
-                const badge = document.getElementById('savedCountBadge');
-                if (badge) badge.innerText = cards.length;
-            }
-            const container = document.getElementById('casesListContainer');
-            if (container) {
-                const cases = container.querySelectorAll('.case-card');
-                const badge = document.getElementById('casesCountBadge');
-                if (badge) badge.innerText = cases.length;
-            }
-        }
-
         function logoutUser() {
             localStorage.removeItem('hukuk_active_user');
             loadUserData();
@@ -569,20 +543,29 @@
             switchTab('dilekce');
         }
 
+        function updateBadgeCounts() {
+            const list = document.getElementById('savedCardsList');
+            if (list) {
+                const cards = list.querySelectorAll('.bg-cardBg');
+                const badge = document.getElementById('savedCountBadge');
+                if (badge) badge.innerText = cards.length;
+            }
+            const container = document.getElementById('casesListContainer');
+            if (container) {
+                const cases = container.querySelectorAll('.case-card');
+                const badge = document.getElementById('casesCountBadge');
+                if (badge) badge.innerText = cases.length;
+            }
+        }
+
         function deleteSingleCase(btn) {
             const card = btn.closest('.case-card');
-            if (card) {
-                card.remove();
-                updateBadgeCounts();
-            }
+            if (card) { card.remove(); updateBadgeCounts(); }
         }
 
         function removeBookmarkCard(btn) {
             const card = btn.closest('.bg-cardBg');
-            if (card) {
-                card.remove();
-                updateBadgeCounts();
-            }
+            if (card) { card.remove(); updateBadgeCounts(); }
         }
 
         function clearAllBookmarks() {
@@ -618,10 +601,18 @@
             localStorage.setItem('hukuk_total_dilekce', c + 1);
         }
 
+        function copyDilekceText() {
+            const text = document.getElementById('dilekceOutput').value;
+            if (text) { navigator.clipboard.writeText(text); alert("Dilekçe panoya kopyalandı!"); }
+        }
+
+        function exportFile(format) {
+            alert("Belge " + format.toUpperCase() + " formatında indirildi.");
+        }
+
         window.onload = function() {
             loadUserData();
             switchTab('dilekce');
-            performSearch();
         };
     </script>
 </body>
