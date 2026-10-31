@@ -48,8 +48,7 @@
 
         <!-- Navigation Links / Actions -->
         <div class="flex items-center space-x-4">
-            <a href="#ozellikler" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition">Özellikler</a>
-            <!-- Hakkımızda butonuna tıklandığında modalı açacak şekilde güncellendi -->
+            <button onclick="openFeaturesModal()" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition bg-transparent border-none cursor-pointer">Özellikler</button>
             <button onclick="openAboutModal()" class="hidden md:inline-block text-sm text-gray-300 hover:text-amber-400 transition bg-transparent border-none cursor-pointer">Hakkımızda</button>
             <button onclick="openLoginModal()" class="bg-gray-800 hover:bg-gray-700 text-xs px-4 py-2.5 rounded-xl border border-gray-700 text-gray-200 transition font-medium flex items-center space-x-2">
                 <i class="fa-solid fa-user text-amber-400"></i>
@@ -94,8 +93,8 @@
             </button>
         </div>
 
-        <!-- Feature Cards Grid -->
-        <div id="ozellikler" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-16 w-full max-w-4xl mx-auto text-left">
+        <!-- Feature Cards Grid (Tıklandığında açılır pencereyi tetikler) -->
+        <div id="ozellikler" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-16 w-full max-w-4xl mx-auto text-left cursor-pointer" onclick="openFeaturesModal()">
             <div class="bg-cardBg/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-amber-500/40 transition">
                 <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
                     <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
@@ -115,7 +114,7 @@
 
     </main>
 
-    <!-- FOOTER (Sadece telif ve alt linkler kaldı) -->
+    <!-- FOOTER -->
     <footer class="bg-sidebarBg border-t border-gray-800 py-8 px-8 text-gray-400">
         <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div class="flex items-center space-x-2">
@@ -129,6 +128,60 @@
             </div>
         </div>
     </footer>
+
+    <!-- ÖZELLİKLER MODAL (Açılır Pencere) -->
+    <div id="featuresModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-gray-700 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-gray-700 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Özellikler & Platform Yetenekleri</h3>
+                </div>
+                <button onclick="closeFeaturesModal()" class="text-gray-400 hover:text-white p-1.5 rounded-lg transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-left text-xs sm:text-sm text-gray-300 leading-relaxed">
+                <p>
+                    <strong>HukukBilgini</strong>, hukukçuların ve hukuk bürolarının iş süreçlerini dijitalleştirmek, hızlandırmak ve hatasız hale getirmek için yapay zeka ile güçlendirilmiş iki temel ana modül üzerine kurulmuştur:
+                </p>
+                <div class="space-y-3 pt-2">
+                    <div class="bg-darkBg/50 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <h4 class="font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-magnifying-glass-arrow-right text-amber-400"></i>
+                            <span>1. Akıllı İçtihat ve Mevzuat Arama</span>
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400 pl-2">
+                            <li><strong>Kapsamlı Veri Tabanı:</strong> Yargıtay, Danıştay, Anayasa Mahkemesi (AYM) kararları ve güncel mevzuata saniyeler içinde erişim.</li>
+                            <li><strong>Yapay Zeka Destekli Filtreleme:</strong> Karmaşık arama sorguları yerine doğal dille arama yapabilme ve aradığınız kriterlere en uygun emsal kararları anında süzme.</li>
+                            <li><strong>Otomatik Karar Özetleri:</strong> Uzun ve karmaşık mahkeme ilamlarının ana fikrini, yasal dayanaklarını ve sonuç bölümünü kısa özetler halinde okuyabilme imkânı.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-darkBg/50 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <h4 class="font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-file-signature text-blue-400"></i>
+                            <span>2. Dilekçe Yazımı (Akıllı Asistan Desteği)</span>
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400 pl-2">
+                            <li><strong>Hatasız ve Eksiksiz Taslaklar:</strong> Kanun maddeleri ve güncel emsal içtihatlarla tam uyumlu dava dilekçeleri, cevap dilekçeleri ve ihtarnameler hazırlama.</li>
+                            <li><strong>Zaman Tasarrufu:</strong> Saatler süren hukuki yazım süreçlerini dakikalara indirgeyerek büro verimliliğini en üst düzeye çıkarma.</li>
+                            <li><strong>Kişiselleştirilebilir Şablonlar:</strong> Kendi büro formatınıza ve dosya detaylarınıza göre kolayca uyarlanabilen dinamik metin alanı.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closeFeaturesModal()" class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-200 font-semibold py-3 rounded-xl text-xs transition">
+                    Kapat
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- HAKKIMIZDA MODAL (Açılır Pencere) -->
     <div id="aboutModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -210,6 +263,13 @@
         }
         function closeAboutModal() {
             document.getElementById('aboutModal').classList.add('hidden');
+        }
+
+        function openFeaturesModal() {
+            document.getElementById('featuresModal').classList.remove('hidden');
+        }
+        function closeFeaturesModal() {
+            document.getElementById('featuresModal').classList.add('hidden');
         }
     </script>
 
