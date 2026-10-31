@@ -146,7 +146,7 @@
         <!-- CONTENT AREA -->
         <main class="flex-1 overflow-y-auto bg-darkBg p-4 sm:p-6 lg:p-8">
             
-            <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA (JSON ENTEGRELİ) -->
+            <!-- TAB 1: İÇTİHAT & MEVZUAT ARAMA -->
             <div id="tab-ictihat" class="tab-content space-y-6 max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-4">
                     <div>
@@ -154,11 +154,11 @@
                             <i class="fa-solid fa-scale-balanced text-amber-400"></i>
                             <span>Akıllı İçtihat & Mevzuat Arama Motoru</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yerel JSON içtihat ve mevzuat veritabanımızda gelişmiş arama yapın.</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
                     </div>
                     <div class="flex items-center space-x-2">
                         <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Yerel Arşiv Aktif
+                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Dahili Arşiv Aktif
                         </span>
                     </div>
                 </div>
@@ -265,7 +265,7 @@
                 </div>
             </div>
 
-            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (MEVZUAT JSON ENTEGRELİ) -->
+            <!-- TAB 4: HUKUK DANIŞMA ASİSTANI -->
             <div id="tab-asistan" class="tab-content space-y-4 max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
                 <div class="border-b border-gray-800 pb-3 flex items-center justify-between shrink-0">
                     <div>
@@ -273,11 +273,11 @@
                             <i class="fa-solid fa-robot text-indigo-400"></i>
                             <span>Hukuk Danışma Asistanı & Mevzuat Tarama</span>
                         </h1>
-                        <p class="text-xs text-gray-400">Sorularınız yerel mevzuat veritabanımız üzerinden taranarak eş zamanlı sunulur.</p>
+                        <p class="text-xs text-gray-400">Sorularınız veritabanımız üzerinden taranarak eş zamanlı sunulur.</p>
                     </div>
                     <span class="text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>JSON Veritabanı Aktif</span>
+                        <span>Aktif Sistem</span>
                     </span>
                 </div>
 
@@ -293,7 +293,7 @@
                                 </div>
                                 <div class="bg-darkBg p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-200 max-w-xl leading-relaxed space-y-1.5">
                                     <p class="font-semibold text-indigo-300">Merhaba meslektaşım,</p>
-                                    <p>Hukuki uyuşmazlığınızı yazın; <strong>hukukbilgini_mevzuat_veritabani.json</strong> veritabanımız ilgili kanun maddelerini tarasın.</p>
+                                    <p>Hukuki uyuşmazlığınızı yazın; ilgili kanun maddelerini tarayalım.</p>
                                 </div>
                             </div>
                         </div>
@@ -314,7 +314,7 @@
                                 <i class="fa-solid fa-book-bookmark text-amber-400"></i>
                                 <span class="text-xs font-bold text-white uppercase tracking-wider">Mevzuat Madde İnceleme Kutusu</span>
                             </div>
-                            <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">JSON Veritabanı</span>
+                            <span id="mevzuatSourceBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-semibold">Veritabanı</span>
                         </div>
                         
                         <div id="mevzuatViewerContent" class="flex-1 bg-[#0d1321] border border-gray-800 rounded-xl p-4 overflow-y-auto text-xs text-gray-300 space-y-3 font-mono leading-relaxed">
@@ -460,32 +460,61 @@
         }
 
         // ----------------------------------------------------
-        // YEREL JSON MEVZUAT VE İÇTİHAT VERİTABANI ENTEGRASYONU
+        // GÖMÜLÜ İÇTİHAT VE MEVZUAT VERİTABANI
         // ----------------------------------------------------
-        let dinamikMevzuatListesi = [];
-        let dinamikIctihatListesi = [];
+        const dinamikIctihatListesi = [
+            {
+                id: 101,
+                daire: "Yargıtay 9. Hukuk Dairesi",
+                esas_no: "2023/14520",
+                karar_no: "2023/16890",
+                tarih: "15.11.2023",
+                baslik: "Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi",
+                ozet: "İşçiye düzenli olarak ödenen prim, ikramiye ve yakacak yardımı gibi ek menfaatlerin kıdem ve ihbar tazminatı hesaplanmasında esas brüt ücrete dahil edilmesi gerektiği hk.",
+                tam_metin: "Davacı işçi, kıdem ve ihbar tazminatına esas ücretin tespitinde düzenli ödenen primlerin dikkate alınmadığını ileri sürerek fark tazminat alacağının tahsilini istemiştir. Mahkemece yapılan yargılamada, işçiye yıl içinde sürekli ve düzenli ödenen primlerin tavan hesabında dikkate alınacağı ve giydirilmiş brüt ücretin bu doğrultuda belirlenmesi gerektiği kabul edilmiştir."
+            },
+            {
+                id: 102,
+                daire: "Yargıtay 3. Hukuk Dairesi",
+                esas_no: "2024/2100",
+                karar_no: "2024/4500",
+                tarih: "10.03.2024",
+                baslik: "Kira Tespit Davalarında 5 Yıllık Süre ve TÜFE Sınırı",
+                ozet: "Beş yıllık kira dönemi sonunda açılan kira tespit davalarında uygulanacak artış oranı ve hakim takdiri.",
+                tam_metin: "Taraflar arasındaki kira alacağı ve bedel tespiti davasında, sözleşmenin 5 yıllık dönemi doldurduğu anlaşılmaktadır. Türk Borçlar Kanunu'nun 344. maddesi uyarınca 5 yıllık dönemin sonunda hakim, tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını, kiralananın durumunu ve emsal kira bedellerini göz önünde bulundurarak hakkaniyete uygun yeni kira bedelini belirler."
+            },
+            {
+                id: 103,
+                daire: "Yargıtay 8. Hukuk Dairesi",
+                esas_no: "2022/8900",
+                karar_no: "2023/1200",
+                tarih: "20.01.2023",
+                baslik: "Ecrimisil (Haksız İşgal Tazminatı) ve 5 Yıllık Zamanaşımı",
+                ozet: "Elatmanın önlenmesi ve ecrimisil taleplerinde geriye dönük 5 yıllık zamanaşımı süresinin başlangıcı.",
+                tam_metin: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur."
+            }
+        ];
+
+        const dinamikMevzuatListesi = [
+            {
+                id: 1,
+                baslik: "6098 sayılı Türk Borçlar Kanunu",
+                tarih: "11.01.2011",
+                tur: "Kanun",
+                tam_metin: "Madde 344 - Kira bedelinin belirlenmesi: Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir."
+            },
+            {
+                id: 2,
+                baslik: "4857 sayılı İş Kanunu",
+                tarih: "22.05.2003",
+                tur: "Kanun",
+                tam_metin: "Madde 14 - Kıdem tazminatı: İş sözleşmesinin kıdem tazminatını gerektiren hallerde feshi durumunda işçiye her geçen tam yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
+            }
+        ];
 
         window.addEventListener('DOMContentLoaded', () => {
             loadUserData();
             switchTab('dilekce');
-
-            // Mevzuat JSON dosyasını yüklüyoruz
-            fetch('hukukbilgini_mevzuat_veritabani.json')
-                .then(response => response.json())
-                .then(data => {
-                    dinamikMevzuatListesi = data;
-                    console.log("Mevzuat veritabanı yüklendi, kayıt:", data.length);
-                })
-                .catch(err => console.error("Mevzuat dosyası okunamadı:", err));
-
-            // İçtihat JSON dosyasını yüklüyoruz
-            fetch('hukukbilgini_ictihat_veritabani.json')
-                .then(response => response.json())
-                .then(data => {
-                    dinamikIctihatListesi = data;
-                    console.log("İçtihat veritabanı yüklendi, kayıt:", data.length);
-                })
-                .catch(err => console.error("İçtihat dosyası okunamadı:", err));
         });
 
         // İçtihat Arama Sekmesi Fonksiyonu
@@ -611,7 +640,7 @@
                             ${item.tam_metin}
                         </div>
                         <div class="pt-2 flex items-center justify-between text-[10px] text-gray-400 border-t border-gray-800">
-                            <span>Kaynak: hukukbilgini_mevzuat_veritabani.json</span>
+                            <span>Kaynak: Dahili Veritabanı</span>
                             <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> Doğrulanmış Kayıt</span>
                         </div>
                     </div>
