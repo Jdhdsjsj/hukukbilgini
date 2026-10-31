@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu v4.6</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu v4.7</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.6</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.7</span>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v4.6 Enterprise</span>
+                <span>v4.7 Enterprise</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -433,7 +433,7 @@
             performIctihatSearch();
         }
 
-        // ASİSTAN API MOTORU (Güncel ve Kararlı Endpoint)
+        // ASİSTAN API MOTORU (Kararlı gemini-1.5-flash Endpoint)
         async function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             if (!input) return;
@@ -461,8 +461,8 @@
             try {
                 const apiKey = "AQ.Ab8RN6LPzhMfAcpBeTDqPaPUs1oNxbe6wZ6vbDz323PQaM2MFw";
                 
-                // Güncel ve stabil model endpoint'i
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                // Kararlı ve her zaman erişilebilir gemini-1.5-flash modeli
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
