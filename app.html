@@ -152,38 +152,49 @@
                     <div>
                         <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center space-x-3">
                             <i class="fa-solid fa-scale-balanced text-amber-400"></i>
-                            <span>Akıllı İçtihat & Mevzuat Arama Motoru</span>
+                            <span>Detaylı Emsal İçtihat & Karar Arama Motoru</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay kararları ve güncel mevzuat havuzunda gelişmiş arama yapın.</p>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-xs bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-database text-amber-400 mr-1"></i> Dahili Arşiv Aktif
-                        </span>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Yargıtay daire kararlarını, esas/karar numaralarını veya hukuki kavramları filtreleyerek arayın.</p>
                     </div>
                 </div>
 
-                <div class="bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-6">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                            <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                <!-- Gelişmiş Arama Filtre Paneli -->
+                <div class="bg-cardBg border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <!-- Anahtar Kelime Arama -->
+                        <div class="md:col-span-2 relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <input type="text" id="searchInput" 
+                                class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-xs rounded-xl pl-10 pr-4 py-3.5 focus:outline-none transition shadow-inner"
+                                placeholder="Anahtar kelime yazın (Örn: Kıdem, Kira, Ecrimisil, İhbar...)"
+                                oninput="performIctihatSearch()"
+                                onkeydown="if(event.key==='Enter') performIctihatSearch()">
                         </div>
-                        <input type="text" id="searchInput" 
-                            class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-sm rounded-xl pl-12 pr-32 py-4 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition shadow-inner"
-                            placeholder="Örn: 'Kıdem tazminatı', 'Kira tespit', 'Ecrimisil'..."
-                            oninput="performIctihatSearch()"
-                            onkeydown="if(event.key==='Enter') performIctihatSearch()">
-                        <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
-                            <button onclick="clearSearch()" class="text-gray-400 hover:text-white px-2 py-1 text-xs transition" title="Temizle">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <button onclick="performIctihatSearch()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold px-6 py-2.5 rounded-lg text-sm shadow-md transition flex items-center space-x-2">
-                                <span>Ara</span>
-                                <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </button>
+
+                        <!-- Daire / Mahkeme Filtresi -->
+                        <div>
+                            <select id="daireFilterSelect" class="w-full bg-darkBg border border-gray-700 text-gray-300 text-xs rounded-xl px-3.5 py-3.5 focus:outline-none focus:border-amber-500 transition" onchange="performIctihatSearch()">
+                                <option value="">Tüm Mahkeme ve Daireler</option>
+                                <option value="Yargıtay 9. Hukuk Dairesi">Yargıtay 9. Hukuk Dairesi (İş)</option>
+                                <option value="Yargıtay 3. Hukuk Dairesi">Yargıtay 3. Hukuk Dairesi (Kira/Borçlar)</option>
+                                <option value="Yargıtay 8. Hukuk Dairesi">Yargıtay 8. Hukuk Dairesi (Eşya/Ecrimisil)</option>
+                                <option value="Yargıtay 4. Hukuk Dairesi">Yargıtay 4. Hukuk Dairesi (Haksız Fiil)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-gray-800 text-xs text-gray-400">
+                        <span id="resultCountText">Arşivde toplam 4 emsal karar taranıyor.</span>
+                        <div class="space-x-2">
+                            <button onclick="clearSearch()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700 transition">Sıfırla</button>
+                            <button onclick="performIctihatSearch()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-semibold px-4 py-1.5 rounded-lg transition shadow">Kararları Listele</button>
                         </div>
                     </div>
                 </div>
+
+                <!-- Sonuçların Listeleneceği Alan -->
                 <div id="searchResultsContainer" class="space-y-4"></div>
             </div>
 
@@ -445,7 +456,7 @@
         }
 
         // ----------------------------------------------------
-        // KALICI HAFIZA (LOCALSTORAGE) VE İÇTİHAT VERİTABANI
+        // KALICI HAFIZA VE VERİTABANLARI
         // ----------------------------------------------------
         let savedBookmarks = JSON.parse(localStorage.getItem('hukuk_bookmarks')) || [];
         let savedCases = JSON.parse(localStorage.getItem('hukuk_cases')) || [];
@@ -480,6 +491,16 @@
                 baslik: "Ecrimisil (Haksız İşgal Tazminatı) ve 5 Yıllık Zamanaşımı",
                 ozet: "Elatmanın önlenmesi ve ecrimisil taleplerinde geriye dönük 5 yıllık zamanaşımı süresinin başlangıcı.",
                 tam_metin: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur."
+            },
+            {
+                id: 104,
+                daire: "Yargıtay 4. Hukuk Dairesi",
+                esas_no: "2023/5100",
+                karar_no: "2023/8200",
+                tarih: "14.09.2023",
+                baslik: "Manevi Tazminat Taleplerinde Kusur Tespiti ve Hakkaniyet",
+                ozet: "Haksız fiil sonucu duyulan elem ve ıstırap nedeniyle hükmedilecek manevi tazminatın miktarının belirlenmesinde tarafların sosyal ve ekonomik durumlarının gözetilmesi.",
+                tam_metin: "Haksız fiil, sorumlunun malvarlığında veya kişilik değerlerinde zarara yol açmış olup manevi tazminat takdir edilirken tarafların sosyal ve ekonomik durumları, haksız fiilin işleniş biçimi ve tarafların kusur oranları hakkaniyet ilkesi çerçevesinde titizlikle değerlendirilmelidir."
             }
         ];
 
@@ -505,27 +526,36 @@
             switchTab('dilekce');
             renderBookmarks();
             renderCases();
+            performIctihatSearch();
         });
 
-        // KESİN ÇÖZÜMLÜ İÇTİHAT ARAMA FONKSİYONU
+        // İÇTİHAT ARAMA FONKSİYONU
         function performIctihatSearch() {
             const inputEl = document.getElementById('searchInput');
+            const selectEl = document.getElementById('daireFilterSelect');
             const container = document.getElementById('searchResultsContainer');
-            if (!inputEl || !container) return;
+            const countText = document.getElementById('resultCountText');
+            if (!container) return;
 
-            const query = inputEl.value.trim().toLowerCase();
+            const query = inputEl ? inputEl.value.trim().toLowerCase() : "";
+            const selectedDaire = selectEl ? selectEl.value : "";
 
-            if (!query) {
-                container.innerHTML = '';
-                return;
+            const bulunanlar = dinamikIctihatListesi.filter(item => {
+                const matchesQuery = !query || 
+                    item.baslik.toLowerCase().includes(query) || 
+                    item.ozet.toLowerCase().includes(query) || 
+                    item.daire.toLowerCase().includes(query) ||
+                    item.tam_metin.toLowerCase().includes(query) ||
+                    item.esas_no.toLowerCase().includes(query);
+
+                const matchesDaire = !selectedDaire || item.daire === selectedDaire;
+
+                return matchesQuery && matchesDaire;
+            });
+
+            if (countText) {
+                countText.innerText = `Arşivde eşleşen ${bulunanlar.length} emsal karar gösteriliyor.`;
             }
-
-            const bulunanlar = dinamikIctihatListesi.filter(item => 
-                item.baslik.toLowerCase().includes(query) || 
-                item.ozet.toLowerCase().includes(query) || 
-                item.daire.toLowerCase().includes(query) ||
-                item.tam_metin.toLowerCase().includes(query)
-            );
 
             if (bulunanlar.length === 0) {
                 container.innerHTML = `<div class="bg-cardBg border border-gray-800 rounded-2xl p-6 text-center text-gray-400 text-xs">Aradığınız kriterlere uygun emsal karar bulunamadı.</div>`;
@@ -535,14 +565,18 @@
             let html = '';
             bulunanlar.forEach(item => {
                 html += `
-                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 shadow-lg">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${item.daire}</span>
-                            <span class="text-xs text-gray-400">${item.tarih} | Esas: ${item.esas_no}</span>
+                    <div class="bg-cardBg border border-gray-800 hover:border-gray-700 transition rounded-2xl p-5 space-y-3 shadow-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800 pb-3">
+                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[11px] px-3 py-1 rounded-full font-semibold"><i class="fa-solid fa-landmark mr-1.5"></i>${item.daire}</span>
+                            <div class="flex items-center space-x-3 text-xs text-gray-400">
+                                <span><i class="fa-solid fa-calendar mr-1"></i> ${item.tarih}</span>
+                                <span class="bg-darkBg px-2.5 py-1 rounded-lg border border-gray-700 text-gray-200">Esas: <strong>${item.esas_no}</strong></span>
+                                <button onclick="saveBookmark(${item.id})" class="text-amber-400 hover:text-amber-300 bg-gray-800 hover:bg-gray-700 px-2.5 py-1 rounded-lg border border-gray-700 transition" title="Kararı Kaydet"><i class="fa-solid fa-bookmark"></i> Kaydet</button>
+                            </div>
                         </div>
                         <h3 class="text-sm font-bold text-white">${item.baslik}</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed">${item.ozet}</p>
-                        <div class="pt-2 border-t border-gray-800 text-[11px] text-gray-400 font-mono">
+                        <p class="text-xs text-gray-300 leading-relaxed bg-darkBg/50 p-3 rounded-xl border border-gray-800"><strong>Özet:</strong> ${item.ozet}</p>
+                        <div class="text-[11px] text-gray-400 font-mono bg-[#0d1321] p-3.5 rounded-xl border border-gray-800 leading-relaxed whitespace-pre-line">
                             ${item.tam_metin}
                         </div>
                     </div>
@@ -552,10 +586,26 @@
         }
 
         function clearSearch() {
-            const inputEl = document.getElementById('searchInput');
-            const container = document.getElementById('searchResultsContainer');
-            if (inputEl) inputEl.value = '';
-            if (container) container.innerHTML = '';
+            if (document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
+            if (document.getElementById('daireFilterSelect')) document.getElementById('daireFilterSelect').value = '';
+            performIctihatSearch();
+        }
+
+        function saveBookmark(id) {
+            const item = dinamikIctihatListesi.find(x => x.id === id);
+            if (!item) return;
+            if (savedBookmarks.some(x => x.id === id)) {
+                alert("Bu karar zaten kaydedilenler listenizde var.");
+                return;
+            }
+            savedBookmarks.push({
+                id: item.id,
+                baslik: item.baslik,
+                detay: `${item.daire}, E. ${item.esas_no}`
+            });
+            localStorage.setItem('hukuk_bookmarks', JSON.stringify(savedBookmarks));
+            renderBookmarks();
+            alert("Karar başarıyla kaydedilenlere eklendi!");
         }
 
         function renderBookmarks() {
@@ -644,11 +694,13 @@
             renderCases();
         }
 
-        // Danışma Asistanı Fonksiyonları
+        // HUKUK DANIŞMA ASİSTANI (DÜZELTİLMİŞ)
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
+            if (!input) return;
             const message = input.value.trim();
             if (!message) return;
+            
             const chatBox = document.getElementById('chatHistoryBox');
             chatBox.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-xl text-xs max-w-md">${message}</div></div>`;
             input.value = '';
