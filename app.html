@@ -241,7 +241,15 @@
                     <h1 class="text-2xl font-bold text-white">Kaydedilen Emsal Kararlar</h1>
                     <button onclick="clearAllBookmarks()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-lg border border-gray-700 transition">Tümünü Temizle</button>
                 </div>
-                <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="savedCardsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Kıdem Tazminatında Prim ve Ek Hakların Matraha Dahil Edilmesi</h3>
+                            <p class="text-xs text-gray-300 mt-1.5">Yargıtay 9. HD, E. 2023/14520</p>
+                        </div>
+                        <button onclick="removeBookmarkCard(this)" class="text-xs text-rose-400 hover:text-rose-300 text-left"><i class="fa-solid fa-trash-can mr-1"></i> Kaldır</button>
+                    </div>
+                </div>
             </div>
 
             <!-- TAB 4: HUKUK DANIŞMA ASİSTANI (GELİŞMİŞ GEMİNİ ENTEGRELİ) -->
@@ -290,7 +298,19 @@
                         <span>Yeni Dosya Tanımla</span>
                     </button>
                 </div>
-                <div id="casesListContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+                <div id="casesListContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between" data-case-id="1">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">İş Hukuku</span>
+                                <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <h3 class="text-sm font-bold text-white">İstanbul 12. İş Mahkemesi</h3>
+                            <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">2026/412 E.</strong></p>
+                            <p class="text-xs text-gray-300"><strong>Davacı:</strong> Ahmet Yılmaz<br><strong>Davalı:</strong> XYZ Lojistik A.Ş.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </main>
@@ -352,7 +372,86 @@
             }
         }
 
-        // AKILLI GEMİNİ ASİSTAN ENTEGRASYONU (Soruyu otomatik analiz eder, kaynak ve karar sunar)
+        const ictihatDatabase = [
+            {
+                id: 1, court: "Yargıtay 9. Hukuk Dairesi", courtCode: "yargitay", deptCode: "9.hd", esasNo: "2023/14520", kararNo: "2024/4812", tarih: "14.05.2024",
+                title: "Yargıtay 9. Hukuk Dairesi, E. 2023/14520, K. 2024/4812 - Kıdem Tazminatı Hesabında Primler",
+                snippet: "İşçiye düzenli olarak ödenen prim, ikramiye ve benzeri ek menfaatlerin kıdem tazminatı matrahına dahil edilmesi gerektiği hk.",
+                summary: "Süreklilik gösteren prim, ikramiye ve yan hakların kıdem tazminatı matrahına dahil edilmesi zorunludur. Çıplak ücret değil giydirilmiş brüt ücret esas alınır.",
+                kanunMaddesi: "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14",
+                tags: ["# İş Hukuku", "# Kıdem Tazminatı", "# Primler"], categoryKey: "kıdem tazminatı primler iş 2023/14520 2024/4812 yargıtay 9. hukuk dairesi"
+            },
+            {
+                id: 3, court: "Yargıtay Hukuk Genel Kurulu", courtCode: "yargitay", deptCode: "hukuk_genel", esasNo: "2022/4-890", kararNo: "2023/112", tarih: "05.10.2023",
+                title: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112 - Hasılı Davaya İştirak Yasağı",
+                snippet: "Hasılı davaya iştirak yasağı (champerty), dava sonucundan pay almak amacıyla hak devri ve sözleşmelerin hukuki geçerliliği hk.",
+                summary: "Avukatlık Kanunu md. 35/1 ve TBK hükümleri gereğince dava sonucundan menfaat sağlamak amacıyla yapılan iştirak sözleşmeleri hukuka ve ahlaka aykırıdır.",
+                kanunMaddesi: "1136 sayılı Avukatlık Kanunu md. 35/1 ve 6098 sayılı TBK md. 26, 27",
+                tags: ["# Borçlar Hukuku", "# Hasılı Davaya İştirak"], categoryKey: "yargıtay hukuk genel kurulu e. 2022/4-890 k. 2023/112 hasılı davaya iştirak yasağı champerty devir"
+            }
+        ];
+
+        function performSearch() {
+            const query = document.getElementById('searchInput') ? document.getElementById('searchInput').value.trim().toLowerCase() : '';
+            const courtFilter = document.getElementById('filterCourt') ? document.getElementById('filterCourt').value : 'all';
+            const deptFilter = document.getElementById('filterDepartment') ? document.getElementById('filterDepartment').value : 'all';
+            const esasInput = document.getElementById('filterEsasNo') ? document.getElementById('filterEsasNo').value.trim().toLowerCase() : '';
+
+            let filtered = ictihatDatabase.filter(item => {
+                if (courtFilter !== 'all' && item.courtCode !== courtFilter) return false;
+                if (deptFilter !== 'all' && item.deptCode !== deptFilter) return false;
+                if (esasInput !== '' && !item.esasNo.toLowerCase().includes(esasInput)) return false;
+                if (query !== '') {
+                    const matchText = (item.title + " " + item.snippet + " " + item.summary + " " + item.categoryKey + " " + item.esasNo).toLowerCase();
+                    const queryWords = query.split(/\s+/);
+                    const isMatch = queryWords.some(word => matchText.includes(word));
+                    if (!isMatch) return false;
+                }
+                return true;
+            });
+
+            renderSearchResults(filtered);
+        }
+
+        function renderSearchResults(results) {
+            const container = document.getElementById('searchResultsContainer');
+            if (!container) return;
+
+            let html = `<div class="flex items-center justify-between px-2 mb-4"><p class="text-sm text-gray-400">Arama sonucunda <strong class="text-white">${results.length}</strong> tam kaynaklı karar bulundu.</p></div>`;
+
+            if (results.length === 0) {
+                html += `<div class="bg-cardBg border border-gray-800 rounded-2xl p-8 text-center text-gray-400 text-xs">Kriterlerinize uygun karar bulunamadı.</div>`;
+            } else {
+                results.forEach(item => {
+                    html += `
+                        <div class="bg-cardBg border border-gray-800 hover:border-amber-500/50 rounded-2xl p-6 transition space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-800 pb-2 gap-2">
+                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-lg font-semibold inline-block"><i class="fa-solid fa-landmark mr-1"></i> ${item.court}</span>
+                                <div class="text-xs text-gray-300 space-x-3">
+                                    <span><strong>Esas No:</strong> ${item.esasNo}</span>
+                                    <span><strong>Karar No:</strong> ${item.kararNo}</span>
+                                    <span><strong>Tarih:</strong> ${item.tarih}</span>
+                                </div>
+                            </div>
+                            <h3 class="text-base font-bold text-white">${item.title}</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed">${item.snippet}</p>
+                            <div class="bg-darkBg/70 p-3.5 rounded-xl border border-gray-800 space-y-2 text-xs">
+                                <div><strong class="text-amber-400">Eksiksiz Karar Özeti:</strong> ${item.summary}</div>
+                                <div><strong class="text-blue-400">Yasal Dayanak:</strong> ${item.kanunMaddesi}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            container.innerHTML = html;
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            performSearch();
+        }
+
+        // AKILLI GEMİNİ ASİSTAN ENTEGRASYONU
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             const message = input.value.trim();
@@ -362,28 +461,19 @@
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Gemini API simülasyonu ile akıllı sorgulama ve kaynak getirme
             setTimeout(() => {
-                let netCevap = `"${message}" sorunuz, Gemini AI motoru ve güncel Yargıtay/Danıştay içtihat veritabanı üzerinden analiz edilmiştir. İlgili uyuşmazlıkta yasal dayanaklar ve emsal kararlar aşağıda yapılandırılmıştır.`;
-                let kanunDayanagi = "6100 sayılı HMK md. 190, 4857 sayılı İş Kanunu ve ilgili mevzuat hükümleri.";
+                let netCevap = `"${message}" sorunuz, Gemini AI motoru ve güncel içtihat veritabanı üzerinden analiz edilmiştir.`;
+                let kanunDayanagi = "6100 sayılı HMK md. 190 ve ilgili mevzuat hükümleri.";
                 let emsalListesi = [
-                    { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat külfeti ve üst mahkeme emsal ilkeleri hk." },
-                    { baslik: "Anayasa Mahkemesi, B. No: 2021/38902", ozet: "Adil yargılanma hakkı ve hukuki güvenlik ilkesi hk." }
+                    { baslik: "Yargıtay Hukuk Genel Kurulu, E. 2022/4-890, K. 2023/112", ozet: "Genel ispat yükü ve emsal ilkeler hk." }
                 ];
-
-                if (message.toLowerCase().includes('kıdem') || message.toLowerCase().includes('tazminat')) {
-                    netCevap = "İş sözleşmesinin haksız feshinde kıdem tazminatı en az 1 yıllık çalışma şartıyla son brüt ücret üzerinden ödenir. Süreklilik arz eden prim ve ikramiyeler matraha dahildir.";
-                    kanunDayanagi = "4857 sayılı İş Kanunu md. 17, 32 ve 1475 sayılı Kanun md. 14";
-                }
 
                 let emsalHTML = "";
                 emsalListesi.forEach((item) => {
                     emsalHTML += `
-                        <div class="flex items-center justify-between bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
-                            <div>
-                                <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
-                                <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
-                            </div>
+                        <div class="bg-cardBg border border-gray-700 rounded-xl p-3 my-1.5 text-xs shadow-md">
+                            <strong class="text-amber-400 block font-semibold">${item.baslik}</strong>
+                            <span class="text-[11px] text-gray-300 mt-0.5 block">${item.ozet}</span>
                         </div>
                     `;
                 });
@@ -400,7 +490,7 @@
                                 <p><strong class="text-blue-400">Yasal / Mevzuat Kaynağı:</strong> ${kanunDayanagi}</p>
                             </div>
                             <div class="space-y-1 pt-1">
-                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal Kararlar & Dayanaklar (${emsalListesi.length} Kaynak):</p>
+                                <p class="font-semibold text-gray-300 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-gavel text-amber-400 mr-1"></i> Emsal Kararlar & Dayanaklar:</p>
                                 ${emsalHTML}
                             </div>
                         </div>
@@ -410,6 +500,7 @@
             }, 600);
         }
 
+        // LocalStorage & Badge Sayaç Güncellemeleri
         function loadUserData() {
             const authArea = document.getElementById('userAuthArea');
             const activeUser = localStorage.getItem('hukuk_active_user');
@@ -434,6 +525,22 @@
                         </button>
                     `;
                 }
+            }
+            updateBadgeCounts();
+        }
+
+        function updateBadgeCounts() {
+            const list = document.getElementById('savedCardsList');
+            if (list) {
+                const cards = list.querySelectorAll('.bg-cardBg');
+                const badge = document.getElementById('savedCountBadge');
+                if (badge) badge.innerText = cards.length;
+            }
+            const container = document.getElementById('casesListContainer');
+            if (container) {
+                const cases = container.querySelectorAll('.case-card');
+                const badge = document.getElementById('casesCountBadge');
+                if (badge) badge.innerText = cases.length;
             }
         }
 
@@ -462,6 +569,48 @@
             switchTab('dilekce');
         }
 
+        function deleteSingleCase(btn) {
+            const card = btn.closest('.case-card');
+            if (card) {
+                card.remove();
+                updateBadgeCounts();
+            }
+        }
+
+        function removeBookmarkCard(btn) {
+            const card = btn.closest('.bg-cardBg');
+            if (card) {
+                card.remove();
+                updateBadgeCounts();
+            }
+        }
+
+        function clearAllBookmarks() {
+            document.getElementById('savedCardsList').innerHTML = '<div class="text-gray-400 text-xs p-4">Kayıtlı karar kalmadı.</div>';
+            updateBadgeCounts();
+        }
+
+        function openNewCaseModal() {
+            const mahkeme = prompt("Mahkeme Adı:", "Ankara 2. Asliye Ticaret Mahkemesi");
+            if (!mahkeme) return;
+            const esas = prompt("Esas No:", "2026/55 E.");
+            const container = document.getElementById('casesListContainer');
+            const card = document.createElement('div');
+            card.className = "case-card bg-cardBg border border-gray-800 hover:border-gray-700 rounded-2xl p-5 space-y-4 shadow-lg flex flex-col justify-between";
+            card.innerHTML = `
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">Yeni Dava</span>
+                        <button onclick="deleteSingleCase(this)" class="text-rose-400 hover:text-rose-300 text-xs transition" title="Dosyayı Sil"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                    <h3 class="text-sm font-bold text-white">${mahkeme}</h3>
+                    <p class="text-xs text-gray-400">Dosya No: <strong class="text-gray-200">${esas || '2026/Yeni'}</strong></p>
+                </div>
+            `;
+            container.prepend(card);
+            updateBadgeCounts();
+        }
+
         function generateAiDilekce() {
             const talep = document.getElementById('dilekceTalepKutusu').value.trim() || "Genel talep.";
             document.getElementById('dilekceOutput').value = "İSTANBUL NÖBETÇİ MAHKEMESİ HÂKİMLİĞİ'NE\n\nKONU: " + talep + "\n\nAÇIKLAMALAR:\n1. " + talep + "\n\nSONUÇ: Kabulünü arz ederim.\nAvukat";
@@ -472,6 +621,7 @@
         window.onload = function() {
             loadUserData();
             switchTab('dilekce');
+            performSearch();
         };
     </script>
 </body>
