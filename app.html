@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HukukBilgini - Hukuk & İçtihat Platformu | v4.3 Kararlı Sürüm</title>
+    <title>HukukBilgini - Hukuk & İçtihat Platformu | v4.4 Kararlı Sürüm</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-wide bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">HukukBilgini</span>
-                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu</span>
+                    <span class="block text-[10px] text-gray-400 tracking-wider">Hukuk & İçtihat Platformu v4.4</span>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="p-4 border-t border-gray-800 bg-sidebarBg/50 text-xs text-gray-500 flex items-center justify-between">
-                <span>v4.3 Pro Enterprise</span>
+                <span>v4.4 Pro Enterprise</span>
                 <span class="flex items-center text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Aktif</span>
             </div>
         </aside>
@@ -154,7 +154,7 @@
                         </div>
                         <input type="text" id="searchInput" 
                             class="w-full bg-darkBg border border-gray-700 focus:border-amber-500 text-white placeholder-gray-500 text-sm rounded-xl pl-12 pr-32 py-4 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition shadow-inner"
-                            placeholder="Örn: 'Kıdem tazminatı', 'Kira tespit', 'Ecrimisil'..."
+                            placeholder="Örn: 'Kıdem tazminatı', 'İşe iade', 'Kira tespit'..."
                             oninput="performIctihatSearch()"
                             onkeydown="if(event.key==='Enter') performIctihatSearch()">
                         <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
@@ -272,7 +272,7 @@
                         </div>
 
                         <div class="p-3 bg-sidebarBg border-t border-gray-800 flex items-center space-x-2">
-                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'Kira bedeli tespiti', 'Kıdem tazminatı'..." class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
+                            <input type="text" id="assistantInput" onkeydown="if(event.key==='Enter') sendAssistantMessage()" placeholder="Örn: 'İşe iade', 'Kıdem tazminatı', 'Kira tespiti'..." class="flex-1 bg-darkBg border border-gray-700 text-white placeholder-gray-500 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500">
                             <button onclick="sendAssistantMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 rounded-xl text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
                                 <span>Mevzuat Tara</span>
                                 <i class="fa-solid fa-paper-plane text-[10px]"></i>
@@ -344,7 +344,7 @@
 
     <!-- GLOBAL MOTOR & VERİTABANI TANIMLARI EN BAŞTADIR -->
     <script>
-        // 1. VERİTABANI VE LOKAL HAFIZA (ÖNCE TANIMLANIR)
+        // 1. VERİTABANI VE İZole KELİME EŞLEŞTİRME HAVUZU
         const dinamikIctihatListesi = [
             {
                 id: 101,
@@ -357,37 +357,47 @@
             },
             {
                 id: 102,
+                daire: "Yargıtay 9. Hukuk Dairesi",
+                esas_no: "2024/3150",
+                tarih: "12.02.2024",
+                baslik: "İş Güvencesi ve İşe İade Davalarında Geçersiz Fesih Sebepleri",
+                ozet: "İş akdinin geçerli bir sebep gösterilmeden ve işçinin savunması alınmadan feshedilmesi durumunda açılacak işe iade davalarının sonuçları hk.",
+                tam_metin: "4857 sayılı İş Kanunu'nun 18. maddesi uyarınca otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır. Feshin geçerli bir sebebe dayandığını ispat yükümlülüğü işverene aittir."
+            },
+            {
+                id: 103,
                 daire: "Yargıtay 3. Hukuk Dairesi",
                 esas_no: "2024/2100",
                 tarih: "10.03.2024",
                 baslik: "Kira Tespit Davalarında 5 Yıllık Süre ve TÜFE Sınırı",
                 ozet: "Beş yıllık kira dönemi sonunda açılan kira tespit davalarında uygulanacak artış oranı ve hakim takdiri.",
-                tam_metin: "Taraflar arasındaki kira alacağı ve bedel tespiti davasında, sözleşmenin 5 yıllık dönemi doldurduğu anlaşılmaktadır. Türk Borçlar Kanunu'nun 344. maddesi uyarınca 5 yıllık dönemin sonunda hakim, tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını, kiralananın durumunu ve emsal kira bedellerini göz önünde bulundurarak hakkaniyete uygun yeni kira bedelini belirler."
-            },
-            {
-                id: 103,
-                daire: "Yargıtay 8. Hukuk Dairesi",
-                esas_no: "2022/8900",
-                tarih: "20.01.2023",
-                baslik: "Ecrimisil (Haksız İşgal Tazminatı) ve 5 Yıllık Zamanaşımı",
-                ozet: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir.",
-                tam_metin: "Ecrimisil davaları, haksız işgal sebebiyle talep edilen tazminat niteliğinde olup, 5 yıllık zamanaşımına tabidir. Bu süre dava tarihinden geriye doğru hesaplanır. İyiniyetli olmayan zilyet, haksız alıkoyduğu süre boyunca elde ettiği veya elde etmeyi ihmal eylediği gelirlerden sorumludur."
+                tam_metin: "Taraflar arasındaki kira alacağı ve bedel tespiti davasında, sözleşmenin 5 yıllık dönemi doldurulduğu anlaşılmaktadır. Türk Borçlar Kanunu'nun 344. maddesi uyarınca 5 yıllık dönemin sonunda hakim, tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını göz önünde bulundurur."
             }
         ];
 
         const dinamikMevzuatListesi = [
             {
                 id: 1,
-                baslik: "6098 sayılı Türk Borçlar Kanunu",
+                baslik: "6098 sayılı Türk Borçlar Kanunu (Kira Hükümleri)",
                 tarih: "11.01.2011",
                 tur: "Kanun",
+                anahtarlar: ["kira", "kira bedeli", "tüfe", "tahliye", "konut", "işyeri", "depozito"],
                 tam_metin: "Madde 344 - Kira bedelinin belirlenmesi: Taraflarca yenilenen kira dönemlerinde uygulanacak kira bedeli anlaşması, önceki kira yılında tüketici fiyat endeksindeki on yıllık ortalamalara göre değişim oranını geçmemek koşuluyla geçerlidir."
             },
             {
                 id: 2,
-                baslik: "4857 sayılı İş Kanunu",
+                baslik: "4857 sayılı İş Kanunu (İşe İade & Fesih)",
                 tarih: "22.05.2003",
                 tur: "Kanun",
+                anahtarlar: ["işe iade", "kıdem", "ihbar", "fesih", "işçi", "işveren", "tazminat", "çalışan", "haksız fesih"],
+                tam_metin: "Madde 18 - Sınırlar ve Fesih Sebebi: Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır."
+            },
+            {
+                id: 3,
+                baslik: "4857 sayılı İş Kanunu (Kıdem Tazminatı)",
+                tarih: "22.05.2003",
+                tur: "Kanun",
+                anahtarlar: ["kıdem", "tazminat", "ihbar", "yıllık izin", "maaş"],
                 tam_metin: "Madde 14 - Kıdem tazminatı: İş sözleşmesinin kıdem tazminatını gerektiren hallerde feshi durumunda işçiye her geçen tam yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir."
             }
         ];
@@ -523,6 +533,7 @@
             performIctihatSearch();
         }
 
+        // İZOLE EDİLMİŞ AKILLI ASİSTAN EŞLEŞTİRME MOTORU
         function sendAssistantMessage() {
             const input = document.getElementById('assistantInput');
             if (!input) return;
@@ -531,17 +542,19 @@
             
             const chatBox = document.getElementById('chatHistoryBox');
             chatBox.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-xl text-xs max-w-md">${message}</div></div>`;
-            
-            // Girdi kutusunu anında sıfırla ve yeni soru için temiz tut
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
             setTimeout(() => {
                 let lowerQuery = message.toLowerCase();
-                let bulunanlar = dinamikMevzuatListesi.filter(item => 
-                    item.baslik.toLowerCase().includes(lowerQuery) || 
-                    item.tam_metin.toLowerCase().includes(lowerQuery)
-                );
+                
+                // Öncelikli olarak anahtar kelime eşleşmesine bak (Soru karışmasını önler)
+                let bulunanlar = dinamikMevzuatListesi.filter(item => {
+                    if (item.anahtarlar && item.anahtarlar.some(key => lowerQuery.includes(key))) {
+                        return true;
+                    }
+                    return item.baslik.toLowerCase().includes(lowerQuery) || item.tam_metin.toLowerCase().includes(lowerQuery);
+                });
 
                 if (bulunanlar.length === 0 && dinamikMevzuatListesi.length > 0) {
                     bulunanlar = [dinamikMevzuatListesi[0]];
